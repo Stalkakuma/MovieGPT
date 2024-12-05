@@ -32,10 +32,13 @@ To get MovieGPT up and running locally, follow these steps:
    ```bash
    git clone https://github.com/Stalkakuma/MovieGPT.git
 2. Navigate to the frontend directory:
+   ```bash
    cd MovieGPT/MovieGPT-ui
-3. Install dependencies:
+4. Install dependencies:
+   ```bash
    npm install
-4. Start the development server:
+6. Start the development server:
+   ```bash
    npm run dev
 
 The React-Vite app will run at http://localhost:5173.
@@ -45,8 +48,10 @@ The React-Vite app will run at http://localhost:5173.
 1. Navigate to the backend directory:
    TODO
 2. Build the project:
+   ```bash
    ./mvnw clean install
-3. Run the application:
+4. Run the application:
+   ```bash
    ./mvnw spring-boot:run
 
 The backend server will run at http://localhost:8080.
