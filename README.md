@@ -46,8 +46,9 @@ The React-Vite app will run at http://localhost:5173.
 ### **Backend Setup**
 
 1. Navigate to the backend directory:
-   TODO
-2. Build the project:
+   ```bash
+   cd MovieGPT/MovieGPT-ui
+3. Build the project:
    ```bash
    ./mvnw clean install
 4. Run the application:
