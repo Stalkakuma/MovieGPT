@@ -1,5 +1,6 @@
 package lt.techin.group.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,9 +19,10 @@ public class User {
 
     private String username;
     private String email;
+    @JsonIgnore
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
 }

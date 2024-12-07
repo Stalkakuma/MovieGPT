@@ -4,10 +4,12 @@ package lt.techin.group.project.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lt.techin.group.project.rest.dto.UserDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Map;
 
 @Service
 public class JwtService {
@@ -19,9 +21,14 @@ public class JwtService {
     private long expiration;
 
 
-    public String generateToken(String username){
+    public String generateToken(UserDto user) {
         return Jwts.builder()
-                .setSubject(username)
+                .setClaims(Map.of(
+                        "id", user.getId(),
+                        "username", user.getUsername(),
+                        "email", user.getEmail(),
+                        "roles", user.getRoles()
+                ))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, definitelyNotASecretKey )
@@ -41,11 +48,11 @@ public class JwtService {
             Claims claims = getClaimsFromToken(token);
             return !claims.getExpiration().before(new Date());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
     public String getUsernameFromToken(String token){
-        return getClaimsFromToken(token).getSubject();
+        return getClaimsFromToken(token).get("username").toString();
     }
 }
