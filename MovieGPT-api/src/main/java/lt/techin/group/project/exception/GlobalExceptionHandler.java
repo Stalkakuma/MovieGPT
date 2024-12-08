@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
-    @ExceptionHandler(GenreNotFoundException.class)
+    @ExceptionHandler(GenreAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleGenreAlreadyExistsException(GenreAlreadyExistsException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.CONFLICT.value(),
