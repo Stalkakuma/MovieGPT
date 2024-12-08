@@ -77,6 +77,7 @@ class GenreServiceTest {
 
     @Test
     void testDeleteGenre_shouldDeleteGenre() {
+        when(genreRepository.findAll()).thenReturn(Collections.emptyList());
         when(genreRepository.existsById(1L)).thenReturn(true);
 
         genreService.deleteGenre(1L);
@@ -124,12 +125,14 @@ class GenreServiceTest {
 
     @Test
     void testUpdateGenre_shouldUpdateGenre() {
+        GenreDto updatedGenreDto = new GenreDto(1L, "Sci-Fi");
+        Genre updatedGenre = new Genre(updatedGenreDto);
         when(genreRepository.findById(1L)).thenReturn(Optional.of(genre));
-        when(genreRepository.save(any(Genre.class))).thenReturn(genre);
-        genreDto.setName("Sci-Fi");
-        GenreDto updatedGenreDto = genreService.updateGenre(genreDto);
+        when(genreRepository.save(any(Genre.class))).thenReturn(updatedGenre);
 
-        assertEquals(genreDto.getName(), updatedGenreDto.getName());
+        GenreDto returnedGenreDto = genreService.updateGenre(updatedGenreDto);
+
+        assertEquals(updatedGenreDto.getName(), returnedGenreDto.getName());
 
     }
 }
