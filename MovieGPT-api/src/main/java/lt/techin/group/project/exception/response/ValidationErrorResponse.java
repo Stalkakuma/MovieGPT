@@ -1,4 +1,4 @@
-package lt.techin.group.project.exceptions.responses;
+package lt.techin.group.project.exception.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

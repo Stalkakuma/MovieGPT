@@ -1,8 +1,8 @@
-package lt.techin.group.project.exceptions;
+package lt.techin.group.project.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lt.techin.group.project.exceptions.responses.ErrorResponse;
-import lt.techin.group.project.exceptions.responses.ValidationErrorResponse;
+import lt.techin.group.project.exception.response.ErrorResponse;
+import lt.techin.group.project.exception.response.ValidationErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
