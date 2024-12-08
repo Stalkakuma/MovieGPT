@@ -13,8 +13,6 @@ import java.util.List;
 @RequestMapping("/v1/genres")
 public class GenreController {
 
-    //TODO: change back to Lombok once it starts working
-
     private final GenreService genreService;
 
     public GenreController(GenreService genreService) {

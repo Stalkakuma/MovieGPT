@@ -1,5 +1,7 @@
 package lt.techin.group.project.service;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lt.techin.group.project.exception.GenreAlreadyExistsException;
 import lt.techin.group.project.exception.GenreNotFoundException;
 import lt.techin.group.project.model.Genre;
@@ -11,16 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Data
+@AllArgsConstructor
 public class GenreService {
 
-    //TODO: change back to Lombok once it starts working
 
     public static final String GENRE_NOT_FOUND_WITH_ID = "Genre not found with id: ";
     private GenreRepository genreRepository;
 
-    public GenreService(GenreRepository genreRepository) {
-        this.genreRepository = genreRepository;
-    }
 
     public List<GenreDto> findAllGenres() {
         List<Genre> allGenres = genreRepository.findAll();
@@ -69,11 +69,4 @@ public class GenreService {
                 .collect(Collectors.toList());
     }
 
-    public GenreRepository getGenreRepository() {
-        return genreRepository;
-    }
-
-    public void setGenreRepository(GenreRepository genreRepository) {
-        this.genreRepository = genreRepository;
-    }
 }
