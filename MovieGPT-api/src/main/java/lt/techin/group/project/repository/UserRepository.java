@@ -1,4 +1,4 @@
-package lt.techin.group.project.respository;
+package lt.techin.group.project.repository;
 
 import lt.techin.group.project.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

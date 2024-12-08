@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.techin.group.project.model.Roles;
 import lt.techin.group.project.model.User;
-import lt.techin.group.project.respository.UserRepository;
+import lt.techin.group.project.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

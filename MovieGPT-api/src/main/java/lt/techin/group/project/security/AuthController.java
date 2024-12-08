@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lt.techin.group.project.model.Roles;
 import lt.techin.group.project.model.User;
-import lt.techin.group.project.respository.UserRepository;
+import lt.techin.group.project.repository.UserRepository;
 import lt.techin.group.project.rest.UserLoginRequest;
 import lt.techin.group.project.rest.UserSignupRequest;
 import lt.techin.group.project.rest.dto.UserDto;

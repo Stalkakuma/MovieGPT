@@ -2,7 +2,7 @@ package lt.techin.group.project.security;
 
 import lombok.AllArgsConstructor;
 import lt.techin.group.project.model.User;
-import lt.techin.group.project.respository.UserRepository;
+import lt.techin.group.project.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
