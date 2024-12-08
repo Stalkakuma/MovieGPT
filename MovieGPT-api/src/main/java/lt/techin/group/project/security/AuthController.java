@@ -2,9 +2,8 @@ package lt.techin.group.project.security;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lt.techin.group.project.model.Role;
+import lt.techin.group.project.model.Roles;
 import lt.techin.group.project.model.User;
-import lt.techin.group.project.respository.RoleRepository;
 import lt.techin.group.project.respository.UserRepository;
 import lt.techin.group.project.rest.UserLoginRequest;
 import lt.techin.group.project.rest.UserSignupRequest;
@@ -18,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -29,7 +27,6 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
     private JwtService jwtService;
     private UserRepository userRepository;
-    private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
 
@@ -41,12 +38,10 @@ public class AuthController {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         UserDto userDto = new UserDto(userRepository.findByUsername(userDetails.getUsername()));
-        System.out.println(userDto);
         return jwtService.generateToken(userDto);
     }
     @PostMapping("/signup")
     public ResponseEntity<UserDto> signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
-        Role user = roleRepository.findByName("USER");
 
         if (userRepository.findByUsername(userSignupRequest.getUsername()) != null) {
             return ResponseEntity.badRequest().body(new UserDto(userRepository.findByUsername(userSignupRequest.getUsername())));
@@ -55,7 +50,7 @@ public class AuthController {
         newUser.setUsername(userSignupRequest.getUsername());
         newUser.setPassword(passwordEncoder.encode(userSignupRequest.getPassword()));
         newUser.setEmail(userSignupRequest.getEmail());
-        newUser.setRoles(new HashSet<>(Set.of(user)));
+        newUser.setRoles(Set.of(Roles.USER));
         userRepository.save(newUser);
 
         return ResponseEntity.ok(new UserDto(newUser));

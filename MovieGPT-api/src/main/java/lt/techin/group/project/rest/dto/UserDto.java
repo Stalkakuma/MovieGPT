@@ -3,7 +3,6 @@ package lt.techin.group.project.rest.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lt.techin.group.project.model.Role;
 import lt.techin.group.project.model.User;
 
 import java.util.Set;
@@ -23,7 +22,7 @@ public class UserDto {
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
-        this.roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
+        this.roles = user.getRoles().stream().map(Enum::name).collect(Collectors.toSet());
     }
 
     @Override

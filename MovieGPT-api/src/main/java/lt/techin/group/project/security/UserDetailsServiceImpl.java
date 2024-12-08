@@ -1,7 +1,6 @@
 package lt.techin.group.project.security;
 
 import lombok.AllArgsConstructor;
-import lt.techin.group.project.model.Role;
 import lt.techin.group.project.model.User;
 import lt.techin.group.project.respository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .roles(user.getRoles().stream().map(Role::getName).toArray(String[]::new))
+                .roles(user.getRoles().stream().map(Enum::name).toArray(String[]::new))
                 .build();
     }
 }
