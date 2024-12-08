@@ -6,14 +6,16 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 @AllArgsConstructor
 public class ValidationErrorResponse {
     private int status;
     private String error;
     private List<FieldError> errors;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @AllArgsConstructor
     public static class FieldError {
         private String field;
