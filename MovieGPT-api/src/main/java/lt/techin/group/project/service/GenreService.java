@@ -29,7 +29,7 @@ public class GenreService {
 
     public GenreDto findGenreById(Long id) {
         Genre genre = genreRepository.findById(id).orElseThrow(() -> new GenreNotFoundException(GENRE_NOT_FOUND_WITH_ID + id));
-        return new GenreDto(genre);
+        return genre.toDto();
     }
 
 
@@ -60,7 +60,7 @@ public class GenreService {
         Genre genreToUpdate = genreRepository.findById(genreDto.getId()).orElseThrow(() -> new GenreNotFoundException(GENRE_NOT_FOUND_WITH_ID + genreDto.getId()));
         genreToUpdate.setName(genreDto.getName());
         genreRepository.save(genreToUpdate);
-        return new GenreDto(genreToUpdate);
+        return genreToUpdate.toDto();
     }
 
     private List<GenreDto> convertToDtoList(List<Genre> genres) {
