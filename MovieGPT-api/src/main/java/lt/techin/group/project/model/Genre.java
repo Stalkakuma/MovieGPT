@@ -19,6 +19,9 @@ public class Genre {
 
     public Genre(GenreDto genreDto) {
         this.name = genreDto.getName();
+        if (genreDto.getId() != null) {
+            this.id = genreDto.getId();
+        }
     }
 
     public Genre(Long id, String name) {
