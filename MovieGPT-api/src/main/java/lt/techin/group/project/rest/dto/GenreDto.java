@@ -15,7 +15,7 @@ public class GenreDto {
 
     private Long id;
     @NotNull(message = "Name cannot be null")
-    @Size(max = 20, message = "Name must be up to 20 characters")
+    @Size(min = 1, max = 20, message = "Name's length must 1 to 20 characters")
     private String name;
 
     public GenreDto(Genre genre) {
