@@ -107,10 +107,11 @@ class GenreServiceTest {
 
     @Test
     void testAddGenre_shouldAddGenre() {
-        Genre newGenre = new Genre(2L, "Sci-Fi");
+        GenreDto newGenreDto = new GenreDto(2L, "Sci-Fi");
+        Genre newGenre = new Genre(newGenreDto);
         when(genreRepository.save(any(Genre.class))).thenReturn(newGenre);
 
-        GenreDto addedGenreDto = genreService.addGenre(newGenre.toDto());
+        GenreDto addedGenreDto = genreService.addGenre(newGenreDto);
 
         assertEquals(newGenre.getName(), addedGenreDto.getName());
 
