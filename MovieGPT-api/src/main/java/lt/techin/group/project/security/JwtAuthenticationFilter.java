@@ -29,8 +29,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         boolean isSwaggerRequest = path.startsWith("/swagger-ui/") || path.startsWith("/v3/api-docs") ||
                 path.equals("/swagger-ui.html") || path.startsWith("/auth/");
         boolean isOptionsRequest = "OPTIONS".equalsIgnoreCase(request.getMethod());
-        return isSwaggerRequest || isOptionsRequest;
+        boolean isGenreRequest = path.startsWith("/v1/media");
+        boolean isMediaRequest = path.startsWith("/v1/genres");
+        return isSwaggerRequest || isOptionsRequest || isGenreRequest || isMediaRequest;
     }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
