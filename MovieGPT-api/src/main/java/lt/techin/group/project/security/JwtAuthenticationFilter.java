@@ -18,8 +18,19 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+
     private JwtService jwtService;
     private UserDetailsServiceImpl userDetailsService;
+
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getServletPath();
+        boolean isSwaggerRequest = path.startsWith("/swagger-ui/") || path.startsWith("/v3/api-docs") ||
+                path.equals("/swagger-ui.html") || path.startsWith("/auth/");
+        boolean isOptionsRequest = "OPTIONS".equalsIgnoreCase(request.getMethod());
+        return isSwaggerRequest || isOptionsRequest;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -35,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if(jwtService.isTokenValid(jwtToken)){
+            if (jwtService.isTokenValid(jwtToken)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -43,4 +54,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+
+
 }
