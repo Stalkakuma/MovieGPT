@@ -30,8 +30,8 @@ public class SecurityConfig {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     private UserDetailsServiceImpl userDetailsService;
 
-    public static final String GENRES = "v1/genres";
-    public static final String MEDIA = "v1/media";
+    public static final String GENRES = "v1/genres/**";
+    public static final String MEDIA = "v1/media/**";
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     @Bean
@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers(HttpMethod.GET, GENRES + "/**", MEDIA + "/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, GENRES, MEDIA).permitAll()
                                 .requestMatchers(HttpMethod.POST, GENRES).hasAuthority(ROLE_ADMIN)
                                 .requestMatchers(HttpMethod.DELETE, GENRES).hasAuthority(ROLE_ADMIN)
                                 .requestMatchers(HttpMethod.PUT, GENRES).hasAuthority(ROLE_ADMIN)
