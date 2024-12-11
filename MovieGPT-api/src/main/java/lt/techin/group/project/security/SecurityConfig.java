@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,6 +30,10 @@ public class SecurityConfig {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     private UserDetailsServiceImpl userDetailsService;
 
+    public static final String GENRES = "v1/genres/**";
+    public static final String MEDIA = "v1/media/**";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -36,16 +41,25 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/auth/**","/h2-console/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, GENRES, MEDIA).permitAll()
+                                .requestMatchers(HttpMethod.POST, GENRES).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.DELETE, GENRES).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.PUT, GENRES).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.POST, MEDIA).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.DELETE, MEDIA).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.PUT, MEDIA).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers("/auth/**", "/h2-console/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
                                 .anyRequest().authenticated()
-                        )
+                )
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
-                http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-                return http.build();
+                )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+
+        return http.build();
     }
 
     @Bean
@@ -56,7 +70,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder, UserDetailsServiceImpl userDetailsService) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-                authenticationManagerBuilder
+        authenticationManagerBuilder
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();
@@ -69,6 +83,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(allowedOrigins);
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
