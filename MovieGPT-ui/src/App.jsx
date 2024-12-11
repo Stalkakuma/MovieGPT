@@ -4,10 +4,14 @@ import { Movies } from './pages/movies/Movies';
 
 const App = () => {
   return (
+    <div>
+
+
     <Routes>
       <Route path="/" element={<Movies />} />
     </Routes>
-    // pirmas darbas
+
+    </div>
   );
 };
 
