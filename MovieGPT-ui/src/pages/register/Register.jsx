@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import axios from "axios";
 import "../../scss/register.scss";
-import svg from "../../assets/Movie.svg" 
+import svg from "../../assets/Movie.svg";
 import { Link } from "react-router-dom";
 
 export const Register = () => {
@@ -11,12 +11,15 @@ export const Register = () => {
     email: "",
     password: "",
   });
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   // Regex for password validation
   const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+
+  // Username validation: 2 to 30 characters
+  const usernameRegex = /^.{2,30}$/;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +27,15 @@ export const Register = () => {
       ...formData,
       [name]: value,
     });
+
+    // Validate username
+    if (name === "username") {
+      if (!usernameRegex.test(value)) {
+        setUsernameError("Username must be between 2 and 30 characters long.");
+      } else {
+        setUsernameError("");
+      }
+    }
 
     // Validate password as user types
     if (name === "password") {
@@ -40,7 +52,12 @@ export const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setSuccess(false);
+
+    // Check username validation
+    if (!usernameRegex.test(formData.username)) {
+      setUsernameError("Username must be between 2 and 30 characters long.");
+      return;
+    }
 
     // Check password validation
     if (!passwordRegex.test(formData.password)) {
@@ -56,13 +73,11 @@ export const Register = () => {
         formData
       );
       if (response.status === 200 || response.status === 201) {
-        setSuccess(true);
         setFormData({
           username: "",
           email: "",
           password: "",
         });
-        console.log(response);
       }
     } catch (err) {
       setError(
@@ -73,14 +88,9 @@ export const Register = () => {
 
   return (
     <main className="register-main">
-      <img src={svg} alt="movie svg"/>
+      <img src={svg} alt="movie svg" />
       <Container className="form-container" style={{ maxWidth: "400px" }}>
         <h3 className="text-right">Sign Up</h3>
-        {success && (
-          <Alert variant="success">
-            Sign up successful! You can now log in.
-          </Alert>
-        )}
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formUsername" className="mb-3">
@@ -92,7 +102,11 @@ export const Register = () => {
               value={formData.username}
               onChange={handleChange}
               required
+              isInvalid={usernameError !== ""}
             />
+            <Form.Control.Feedback type="invalid">
+              {usernameError}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formEmail" className="mb-3">
             <Form.Control
@@ -124,7 +138,9 @@ export const Register = () => {
             Create an account
           </Button>
         </Form>
-        <p>Already have an account? <Link to="/login" className="login-link">Login</Link></p>
+        <p>
+          Already have an account? <Link to="/login" className="login-link">Login</Link>
+        </p>
       </Container>
     </main>
   );

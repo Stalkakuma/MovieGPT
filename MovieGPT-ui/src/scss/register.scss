@@ -1,6 +1,15 @@
+$colors: (
+    primary: #ff0000,
+    secondary: #10141e,
+    background: #161D2F,
+    text-light: #ffffff,
+    text-gray: gray,
+    hover-red: #c51515
+);
+
 .register-main {
     height: 100vh;
-    background-color: #10141e;
+    background-color: map.get($colors, secondary);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +19,7 @@
         margin-bottom: 100px;
     }
     .form-container {
-        background-color: #161D2F;
+        background-color: map.get($colors, background);
         border-radius: 20px;
 
         * {
@@ -18,38 +27,38 @@
         }
         
         h3 {
-            color: white;
+            color: map.get($colors, text-light);
             padding: 10px;
             margin-top: 20px;
             font-weight: 400;
         }
 
         .form-input {
-            background-color: #161D2F;
+            background-color: map.get($colors, background);
             border: none;
-            border-bottom: 1px solid gray;
+            border-bottom: 1px solid map.get($colors, text-gray);
             border-radius: 0;
-            color: white;
+            color: map-get($colors, text-light);
             transition: 1s;
         }
 
         .form-input:focus {
             outline-style: none !important;
-            border-bottom: 1px solid white;
+            border-bottom: 1px solid map.get($colors, text-light);
             box-shadow: none;
             transition: 1s;
         }
 
         .form-input:active {
-            background-color: #161D2F !important;
+            background-color: map.get($colors, background) !important;
         }
 
         .form-input::placeholder {
-            color: gray;
+            color: map.get($colors, text-gray);
         }
 
         .form-button {
-            background-color: red;
+            background-color: map.get($colors, primary);
             border: none;
             padding: 10px;
             transition: 0.7s;
@@ -57,24 +66,25 @@
         }
 
         .form-button:hover {
-            background-color: white;
-            color: black;
+            background-color: map.get($colors, text-light);
+            color: map.get($colors, secondary);
             transition: 0.7s;
         }
 
         p {
-            color: white;
+            color: map.get($colors, text-light);
             text-align: center;
         }
 
         .login-link {
-            color: red;
+            color: map.get($colors, primary);
             text-decoration: none;
         }
 
         .login-link:hover {
-            color: rgb(197, 21, 21);
+            color: map.get($colors, hover-red);
         }
 
     }
 }
+

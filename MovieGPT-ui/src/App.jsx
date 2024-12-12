@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Routes } from 'react-router-dom';
 import { Movies } from './pages/movies/Movies';
-import { Register } from './pages/forms/Register';
-import { Login } from './pages/forms/Login';
+import { Register } from './pages/register/Register';
+import { Login } from './pages/login/Login';
 
 const App = () => {
   return (
