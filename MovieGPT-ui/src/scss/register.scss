@@ -8,7 +8,7 @@ $colors: (
 );
 
 .register-main {
-    height: 100vh;
+    min-height: 100vh;
     background-color: map-get($colors, secondary);
     display: flex;
     flex-direction: column;
