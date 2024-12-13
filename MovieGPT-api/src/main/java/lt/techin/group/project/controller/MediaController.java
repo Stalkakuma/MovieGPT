@@ -22,22 +22,10 @@ public class MediaController {
         this.mediaService = mediaService;
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<MediaDto> findMediaById(@PathVariable Long id) {
-//        MediaDto mediaDto = mediaService.findMediaById(id);
-//        return ResponseEntity.status(HttpStatus.OK).body(mediaDto);
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity<List<MediaDto>> findAllMedia() {
-//        List<MediaDto> listOfMedia = mediaService.findAllMedia();
-//        return ResponseEntity.status(HttpStatus.OK).body(listOfMedia);
-//    }
-
     @GetMapping("/{id}")
-    public ResponseEntity<Media> findMediaById(@PathVariable Long id) {
-        Media media = mediaService.findMediaById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(media);
+    public ResponseEntity<MediaDto> findMediaById(@PathVariable Long id) {
+        MediaDto mediaDto = mediaService.findMediaById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(mediaDto);
     }
 
     @GetMapping

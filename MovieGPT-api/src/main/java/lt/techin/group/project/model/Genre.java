@@ -37,7 +37,7 @@ public class Genre {
     }
 
     public GenreDto toDto() {
-        return new GenreDto(this);
+        return new GenreDto(this.id, this.name);
     }
 
 }

@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lt.techin.group.project.model.Genre;
 import lt.techin.group.project.model.Media;
 import lt.techin.group.project.model.MediaType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,9 +23,7 @@ public class MediaDto {
     private String thumbnailUrl;
     private Integer releaseYear;
     private MediaType mediaType;
-    private Set<GenreDto> genres;
-
-
+    private Set<GenreDto> genres = new HashSet<>();
 
 
     public MediaDto(Media media) {
@@ -41,8 +37,7 @@ public class MediaDto {
 
         if (media.getGenres() != null) {
             this.genres = media.getGenres().stream().map(Genre::toDto).collect(Collectors.toSet());
-        } else {
-            this.genres = new HashSet<>();
-        }}
 
+        }
+    }
 }

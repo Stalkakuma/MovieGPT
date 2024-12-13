@@ -20,13 +20,13 @@ public class MediaService {
     private MediaRepository mediaRepository;
 
 
-    public Media findMediaById(Long id) {
+    public MediaDto findMediaById(Long id) {
         Media media = mediaRepository.findById(id).orElseThrow(() -> new MediaNotFoundException(MEDIA_NOT_FOUND_WITH_ID + id));
-        return media;
+        return media.toDto();
     }
 
 
     public List<MediaDto> findAllMedia() {
-        return mediaRepository.findAll().stream().map(Media::toDto).collect(Collectors.toList());
+        return mediaRepository.findAll().stream().map(Media::toDto).toList();
     }
 }
