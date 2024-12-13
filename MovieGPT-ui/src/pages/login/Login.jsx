@@ -41,7 +41,6 @@ export const Login = () => {
         // Save the JWT token to localStorage
         const token = response.data.token;
         localStorage.setItem("jwtToken", token);
-        console.log("Login successful:", response.data);
         // Redirect to the desired path
         navigate(redirectPath);
       }
