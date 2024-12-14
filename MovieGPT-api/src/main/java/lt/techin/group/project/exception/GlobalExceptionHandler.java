@@ -16,6 +16,7 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    public static final String UNAUTHORIZED = "Unauthorized";
     public static final String NOTFOUND = "Not Found";
     public static final String DUPLICATED_VALUE = "Duplicated value";
 
@@ -118,5 +119,25 @@ public class GlobalExceptionHandler {
                 ex.getMessage()
         );
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(CommentNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                NOTFOUND,
+                ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(CannotEditAnotherUserException.class)
+    public ResponseEntity<ErrorResponse> handleCannotEditAnotherUserException(CannotEditAnotherUserException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.UNAUTHORIZED.value(),
+                UNAUTHORIZED,
+                ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 }
