@@ -21,8 +21,8 @@ public class JwtService {
     private long expiration;
 
 
-    public String generateToken(UserDto user) {
-        return Jwts.builder()
+    public Map<String, String> generateToken(UserDto user) {
+        String token = Jwts.builder()
                 .setClaims(Map.of(
                         "id", user.getId(),
                         "username", user.getUsername(),
@@ -33,6 +33,8 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, definitelyNotASecretKey )
                 .compact();
+
+        return Map.of("token", token);
     }
 
     public Claims getClaimsFromToken(String token) {
