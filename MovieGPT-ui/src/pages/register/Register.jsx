@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import axios from "axios";
 import "../../scss/register.scss";
@@ -20,6 +20,14 @@ export const Register = () => {
 
   // Username validation: 2 to 30 characters
   const usernameRegex = /^.{2,30}$/;
+
+    // Determine the redirect path based on where the user came from
+    const redirectPath = useMemo(() => {
+      if (location.state?.from === "/login") {
+        return "/"; // Redirect to homepage if coming from signup
+      }
+      return location.state?.from || "/"; // Otherwise fallback to the previous page or homepage
+    }, [location.state]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,6 +86,7 @@ export const Register = () => {
           email: "",
           password: "",
         });
+        navigate(redirectPath);
       }
     } catch (err) {
       setError(
@@ -87,7 +96,7 @@ export const Register = () => {
   };
 
   return (
-    <main className="register-main">
+    <main className="main">
       <img src={svg} alt="movie svg" />
       <Container className="form-container" style={{ maxWidth: "400px" }}>
         <h3 className="text-right">Sign Up</h3>
