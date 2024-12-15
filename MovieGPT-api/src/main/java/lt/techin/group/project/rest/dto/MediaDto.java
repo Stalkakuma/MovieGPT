@@ -1,5 +1,9 @@
 package lt.techin.group.project.rest.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +21,20 @@ import java.util.stream.Collectors;
 public class MediaDto {
 
     private Long id;
+    @NotNull(message = "Title cannot be null")
+    @Size(min = 1, max = 50, message = "Title's length must be 1 to 50 characters")
     private String title;
+    @NotNull(message = "Description cannot be null")
+    @Size(min = 1, max = 500, message = "Description's length must be 1 to 500 characters")
     private String description;
+    @NotNull(message = "Image url cannot be null")
     private String imageUrl;
+    @NotNull(message = "Thumbnail url cannot be null")
     private String thumbnailUrl;
+    @NotNull(message = "Release year cannot be null")
     private Integer releaseYear;
+    @NotNull(message = "Release year cannot be null")
+    @Enumerated(EnumType.STRING)
     private MediaType mediaType;
     private Set<GenreDto> genres = new HashSet<>();
 
@@ -39,5 +52,6 @@ public class MediaDto {
             this.genres = media.getGenres().stream().map(Genre::toDto).collect(Collectors.toSet());
 
         }
+
     }
 }

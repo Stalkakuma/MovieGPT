@@ -1,7 +1,6 @@
 package lt.techin.group.project.runner;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import lt.techin.group.project.model.Genre;
 import lt.techin.group.project.model.Media;
 import lt.techin.group.project.model.MediaType;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-@Slf4j
 @AllArgsConstructor
 @Component
 public class InitialMediaAndGenres implements CommandLineRunner {

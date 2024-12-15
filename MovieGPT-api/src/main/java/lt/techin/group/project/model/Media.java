@@ -23,7 +23,7 @@ public class Media {
     private String imageUrl;
     private String thumbnailUrl;
     private Integer releaseYear;
-    @ManyToMany(fetch = FetchType.EAGER)
+        @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "media_genres",
             joinColumns = @JoinColumn(name = "media_id"),
@@ -34,7 +34,8 @@ public class Media {
     private MediaType mediaType;
 
     public MediaDto toDto() {
-            return new MediaDto(this);
-        }
+        return new MediaDto(this);
     }
+
+}
 

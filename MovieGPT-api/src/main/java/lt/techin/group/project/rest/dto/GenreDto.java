@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lt.techin.group.project.model.Genre;
+import lt.techin.group.project.model.Media;
+
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -15,7 +18,7 @@ public class GenreDto {
 
     private Long id;
     @NotNull(message = "Name cannot be null")
-    @Size(min = 1, max = 20, message = "Name's length must 1 to 20 characters")
+    @Size(min = 1, max = 20, message = "Name's length must be 1 to 20 characters")
     private String name;
 
     public GenreDto(Genre genre) {

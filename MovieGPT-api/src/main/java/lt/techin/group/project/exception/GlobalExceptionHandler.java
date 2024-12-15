@@ -3,6 +3,7 @@ package lt.techin.group.project.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import lt.techin.group.project.exception.response.ErrorResponse;
 import lt.techin.group.project.exception.response.ValidationErrorResponse;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ public class GlobalExceptionHandler {
 
     public static final String NOTFOUND = "Not Found";
     public static final String DUPLICATED_VALUE = "Duplicated value";
+    public static final String BAD_REQUEST = "Bad request details";
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex, HttpServletRequest request) {
@@ -87,5 +89,15 @@ public class GlobalExceptionHandler {
                 ex.getMessage()
         );
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                BAD_REQUEST,
+                ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 }

@@ -1,14 +1,12 @@
 package lt.techin.group.project.controller;
 
-import lt.techin.group.project.model.Media;
+import jakarta.validation.Valid;
 import lt.techin.group.project.rest.dto.MediaDto;
 import lt.techin.group.project.service.MediaService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +31,33 @@ public class MediaController {
         List<MediaDto> listOfMedia = mediaService.findAllMedia();
         return ResponseEntity.status(HttpStatus.OK).body(listOfMedia);
     }
+
+    @PostMapping
+    public ResponseEntity<MediaDto> createMedia(@Valid @RequestBody MediaDto mediaDto) throws BadRequestException {
+        MediaDto createdMediaDto = mediaService.createMedia(mediaDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdMediaDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMedia(@PathVariable Long id) {
+        mediaService.deleteMedia(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<MediaDto>> findByTitleContainingIgnoreCase(@RequestParam String name) {
+        List<MediaDto> listOfMedias = mediaService.findByTitleContainingIgnoreCase(name);
+        return ResponseEntity.status(HttpStatus.OK).body(listOfMedias);
+    }
+
+    @PutMapping
+    public ResponseEntity<MediaDto> updateMedia(@Valid @RequestBody MediaDto mediaDto) throws BadRequestException {
+        MediaDto updatedMediaDto = mediaService.updateMedia(mediaDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(updatedMediaDto);
+    }
+
+
+    //todo FETCH BY GENRE
+
 
 }
