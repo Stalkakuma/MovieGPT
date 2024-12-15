@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lt.techin.group.project.model.Genre;
-import lt.techin.group.project.model.Media;
-
-import java.util.Set;
 
 @Data
 @NoArgsConstructor

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class GenreService {
 
 
-    public static final String GENRE_NOT_FOUND_WITH_ID = "Genre not found with id: ";
+    protected static final String GENRE_NOT_FOUND_WITH_ID = "Genre not found with id: ";
     private GenreRepository genreRepository;
 
 

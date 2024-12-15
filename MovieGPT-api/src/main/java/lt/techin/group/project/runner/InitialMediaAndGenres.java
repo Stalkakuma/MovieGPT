@@ -9,8 +9,6 @@ import lt.techin.group.project.repository.MediaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-
 @AllArgsConstructor
 @Component
 public class InitialMediaAndGenres implements CommandLineRunner {
@@ -39,7 +37,8 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie1.setThumbnailUrl("https://www.shutterstock.com/image-vector/model-joker-face-vector-funny-smile-2324729523");
         movie1.setReleaseYear(2008);
         movie1.setMediaType(MediaType.MOVIE);
-        movie1.setGenres(Set.of(action, drama));
+        // movie1.setGenres(Set.of(action, drama));
+        movie1.setGenre(action);
         mediaRepository.save(movie1);
 
         Media movie2 = new Media();
@@ -49,7 +48,8 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie2.setThumbnailUrl("https://www.shutterstock.com/image-photo/bangkok-thailand-dec-20-2019-jumanji-1594954729");
         movie2.setReleaseYear(2017);
         movie2.setMediaType(MediaType.MOVIE);
-        movie2.setGenres(Set.of(comedy, action));
+        // movie2.setGenres(Set.of(comedy, action));
+        movie2.setGenre(comedy);
         mediaRepository.save(movie2);
 
         Media movie3 = new Media();
@@ -59,7 +59,8 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie3.setThumbnailUrl("https://www.shutterstock.com/image-photo/viersen-germany-may-9-2024-cinema-2476746885");
         movie3.setReleaseYear(1994);
         movie3.setMediaType(MediaType.MOVIE);
-        movie3.setGenres(Set.of(drama));
+        // movie3.setGenres(Set.of(drama));
+        movie3.setGenre(drama);
         mediaRepository.save(movie3);
 
         Media tvShow = new Media();
@@ -69,7 +70,8 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         tvShow.setThumbnailUrl("https://www.shutterstock.com/image-photo/culver-city-ca-december-28-rv-545094478");
         tvShow.setReleaseYear(2008);
         tvShow.setMediaType(MediaType.SERIES);
-        tvShow.setGenres(Set.of(drama));
+        // tvShow.setGenres(Set.of(drama));
+        tvShow.setGenre(drama);
         mediaRepository.save(tvShow);
     }
 }

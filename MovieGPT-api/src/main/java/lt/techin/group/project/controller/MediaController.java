@@ -57,7 +57,9 @@ public class MediaController {
     }
 
 
-    //todo FETCH BY GENRE
-
-
+    @GetMapping("/genre")
+    public ResponseEntity<List<MediaDto>> findAllMediaByGenreId(@RequestParam Long id) {
+        List<MediaDto> listOfMedias = mediaService.findAllMediaByGenreId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(listOfMedias);
+    }
 }

@@ -10,4 +10,6 @@ import java.util.List;
 public interface MediaRepository extends JpaRepository<Media, Long> {
 
     List<Media> findByTitleContainingIgnoreCase(String title);
+
+    List<Media> findByGenreId(Long id);
 }

@@ -7,13 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lt.techin.group.project.model.Genre;
 import lt.techin.group.project.model.Media;
 import lt.techin.group.project.model.MediaType;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -36,7 +31,8 @@ public class MediaDto {
     @NotNull(message = "Release year cannot be null")
     @Enumerated(EnumType.STRING)
     private MediaType mediaType;
-    private Set<GenreDto> genres = new HashSet<>();
+    @NotNull(message = "Genre cannot be null")
+    private GenreDto genre;
 
 
     public MediaDto(Media media) {
@@ -47,11 +43,6 @@ public class MediaDto {
         this.thumbnailUrl = media.getThumbnailUrl();
         this.releaseYear = media.getReleaseYear();
         this.mediaType = media.getMediaType();
-
-        if (media.getGenres() != null) {
-            this.genres = media.getGenres().stream().map(Genre::toDto).collect(Collectors.toSet());
-
-        }
-
+        this.genre = media.getGenre().toDto();
     }
 }
