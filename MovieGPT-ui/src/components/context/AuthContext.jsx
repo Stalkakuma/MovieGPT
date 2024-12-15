@@ -1,17 +1,11 @@
 import { createContext, useEffect, useState, useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
-export const parseJwt = (token) => {
-  if (!token) {
-    return;
-  }
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace('-', '+').replace('_', '/');
-  return JSON.parse(window.atob(base64));
-};
-
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -30,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     }
     storedUser = JSON.parse(storedUser);
     if (Date.now() > storedUser.data.exp * 1000) {
-      userLogout();
+      logoutUser();
       return false;
     }
     return true;
@@ -39,6 +33,7 @@ export const AuthProvider = ({ children }) => {
   const loginUser = (user) => {
     localStorage.setItem('user', JSON.stringify(user));
     setUser(user);
+    navigate(location.state?.path || '/');
   };
 
   const logoutUser = () => {

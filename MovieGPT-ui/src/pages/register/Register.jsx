@@ -1,11 +1,14 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
-import axios from 'axios';
 import '../../scss/register.scss';
 import svg from '../../assets/Movie.svg';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../components/context/AuthContext';
+import { register, authenticate } from '../../components/api/apiService';
 
 export const Register = () => {
+  const Auth = useAuth();
+  const isAuthenticated = Auth.userIsAuthenticated();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -20,14 +23,6 @@ export const Register = () => {
 
   // Username validation: 2 to 30 characters
   const usernameRegex = /^.{2,30}$/;
-
-  // Determine the redirect path based on where the user came from
-  const redirectPath = useMemo(() => {
-    if (location.state?.from === '/login') {
-      return '/'; // Redirect to homepage if coming from signup
-    }
-    return location.state?.from || '/'; // Otherwise fallback to the previous page or homepage
-  }, [location.state]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -74,14 +69,18 @@ export const Register = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/signup', formData);
-      if (response.status === 200 || response.status === 201) {
-        setFormData({
-          username: '',
-          email: '',
-          password: '',
-        });
-        navigate(redirectPath);
+      const registerResponse = await register(formData);
+      if (registerResponse.status === 201) {
+        isAuthenticated ? Auth.logoutUser() : null;
+        const authenticatedUser = await authenticate(formData.username, formData.password);
+        if (authenticatedUser != 'error') {
+          Auth.loginUser(authenticatedUser);
+          setFormData({
+            username: '',
+            email: '',
+            password: '',
+          });
+        }
       }
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred during signup.');

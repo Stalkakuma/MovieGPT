@@ -1,11 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
 import '../../scss/register.scss';
 import svg from '../../assets/Movie.svg';
 import { Link } from 'react-router-dom';
-import { parseJwt, useAuth } from '../../components/context/AuthContext';
+import { useAuth } from '../../components/context/AuthContext';
+import { authenticate } from '../../components/api/apiService';
 
 export const Login = () => {
   const Auth = useAuth();
@@ -15,16 +14,6 @@ export const Login = () => {
     password: '',
   });
   const [error, setError] = useState('');
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // Determine the redirect path based on where the user came from
-  const redirectPath = useMemo(() => {
-    if (location.state?.from === '/register') {
-      return '/'; // Redirect to homepage if coming from signup
-    }
-    return location.state?.from || '/'; // Otherwise fallback to the previous page or homepage
-  }, [location.state]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,13 +32,9 @@ export const Login = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/login', formData);
-      if (response.status === 200) {
-        const accessToken = response.data;
-        const data = parseJwt(accessToken);
-        const authenticatedUser = { data, accessToken };
+      const authenticatedUser = await authenticate(formData.username, formData.password);
+      if (authenticatedUser != 'error') {
         Auth.loginUser(authenticatedUser);
-        navigate(redirectPath);
       }
     } catch (err) {
       setError(err.response?.data?.error || 'Invalid username or password.');
