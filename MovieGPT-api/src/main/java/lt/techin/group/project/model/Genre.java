@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import lt.techin.group.project.rest.dto.GenreDto;
 
 import java.util.HashSet;
@@ -35,6 +36,10 @@ public class Genre {
         if (genreDto.getId() != null) {
             this.id = genreDto.getId();
         }
+    }
+
+    public Genre(String name) {
+        this.name = name;
     }
 
     public GenreDto toDto() {
