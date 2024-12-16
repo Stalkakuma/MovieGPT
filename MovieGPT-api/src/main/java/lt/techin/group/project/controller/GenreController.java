@@ -44,8 +44,8 @@ public class GenreController {
     }
 
     @PostMapping
-    public ResponseEntity<GenreDto> addGenre(@Valid @RequestBody GenreDto genreDto) {
-        GenreDto newGenre = genreService.addGenre(genreDto);
+    public ResponseEntity<GenreDto> addGenre(@RequestParam String name) {
+        GenreDto newGenre = genreService.addGenre(name);
         return ResponseEntity.status(HttpStatus.CREATED).body(newGenre);
     }
 
