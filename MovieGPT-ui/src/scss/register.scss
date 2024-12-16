@@ -7,7 +7,7 @@ $colors: (
     hover-red: #c51515
 );
 
-.register-main {
+.main {
     min-height: 100vh;
     background-color: map-get($colors, secondary);
     display: flex;
@@ -76,7 +76,7 @@ $colors: (
             text-align: center;
         }
 
-        .login-link {
+        .login-link, .register-link {
             color: map-get($colors, primary);
             text-decoration: none;
         }
@@ -84,7 +84,6 @@ $colors: (
         .login-link:hover {
             color: map-get($colors, hover-red);
         }
-
     }
 }
 
