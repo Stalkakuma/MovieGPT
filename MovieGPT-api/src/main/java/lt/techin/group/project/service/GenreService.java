@@ -56,8 +56,8 @@ public class GenreService {
         return genre.toDto();
     }
 
-    public GenreDto updateGenre(GenreDto genreDto) {
-        Genre genreToUpdate = genreRepository.findById(genreDto.getId()).orElseThrow(() -> new GenreNotFoundException(GENRE_NOT_FOUND_WITH_ID + genreDto.getId()));
+    public GenreDto updateGenre(Long id, GenreDto genreDto) {
+        Genre genreToUpdate = genreRepository.findById(id).orElseThrow(() -> new GenreNotFoundException(GENRE_NOT_FOUND_WITH_ID + id));
         genreToUpdate.setName(genreDto.getName());
         genreRepository.save(genreToUpdate);
         return genreToUpdate.toDto();

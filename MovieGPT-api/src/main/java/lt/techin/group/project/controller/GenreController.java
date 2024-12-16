@@ -49,9 +49,9 @@ public class GenreController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newGenre);
     }
 
-    @PutMapping
-    public ResponseEntity<GenreDto> updateGenre(@Valid @RequestBody GenreDto genreDto) {
-        GenreDto newGenre = genreService.updateGenre(genreDto);
+    @PutMapping("/{id}")
+    public ResponseEntity<GenreDto> updateGenre(@Valid @PathVariable Long id, @RequestBody GenreDto genreDto) {
+        GenreDto newGenre = genreService.updateGenre(id, genreDto);
         return ResponseEntity.status(HttpStatus.OK).body(newGenre);
     }
 

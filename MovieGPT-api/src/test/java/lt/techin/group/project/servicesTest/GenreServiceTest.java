@@ -120,7 +120,7 @@ class GenreServiceTest {
     void testUpdateGenre_shouldThrowGenreNotFoundException() {
         when(genreRepository.findById(1L)).thenReturn(Optional.empty());
 
-        GenreNotFoundException exception = assertThrows(GenreNotFoundException.class, () -> genreService.updateGenre(genreDto));
+        GenreNotFoundException exception = assertThrows(GenreNotFoundException.class, () -> genreService.updateGenre(1L, genreDto));
 
         assertEquals("Genre not found with id: 1", exception.getMessage());
     }
@@ -132,7 +132,7 @@ class GenreServiceTest {
         when(genreRepository.findById(1L)).thenReturn(Optional.of(genre));
         when(genreRepository.save(any(Genre.class))).thenReturn(updatedGenre);
 
-        GenreDto returnedGenreDto = genreService.updateGenre(updatedGenreDto);
+        GenreDto returnedGenreDto = genreService.updateGenre(1L, updatedGenreDto);
 
         assertEquals(updatedGenreDto.getName(), returnedGenreDto.getName());
 
