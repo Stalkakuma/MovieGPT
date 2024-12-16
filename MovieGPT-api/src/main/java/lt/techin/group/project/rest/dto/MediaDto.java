@@ -35,7 +35,7 @@ public class MediaDto {
     private String thumbnailUrl;
     @NotNull(message = "Release year must be provided")
     private Integer releaseYear;
-    @NotNull(message = "Release year must be provided")
+    @NotNull(message = "Media type must be provided")
     @Enumerated(EnumType.STRING)
     private MediaType mediaType;
     @NotNull(message = "Genre(s) must be provided")
