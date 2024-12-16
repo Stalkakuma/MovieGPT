@@ -9,6 +9,8 @@ import lt.techin.group.project.repository.MediaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @Component
 public class InitialMediaAndGenres implements CommandLineRunner {
@@ -82,9 +84,9 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         family.setName("Family");
         genreRepository.save(family);
 
-        Genre music = new Genre();
-        music.setName("Music");
-        genreRepository.save(music);
+        Genre mockumentary = new Genre();
+        mockumentary.setName("Mockumentary");
+        genreRepository.save(mockumentary);
 
         Genre musical = new Genre();
         musical.setName("Musical");
@@ -105,8 +107,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie1.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/qJ2tW6WMUDux911r6m7haRef0WH.jpg");
         movie1.setReleaseYear(2008);
         movie1.setMediaType(MediaType.MOVIE);
-        // movie1.setGenres(Set.of(action, drama));
-        movie1.setGenre(action);
+        movie1.setGenres(Set.of(action, crime, thriller));
         mediaRepository.save(movie1);
 
         Media movie2 = new Media();
@@ -116,8 +117,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie2.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/r9YhfuHiled6YfOs2bjyqrOKns4.jpg");
         movie2.setReleaseYear(2017);
         movie2.setMediaType(MediaType.MOVIE);
-        // movie2.setGenres(Set.of(comedy, action));
-        movie2.setGenre(comedy);
+        movie2.setGenres(Set.of(comedy, action, adventure));
         mediaRepository.save(movie2);
 
         Media movie3 = new Media();
@@ -127,8 +127,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie3.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg");
         movie3.setReleaseYear(1994);
         movie3.setMediaType(MediaType.MOVIE);
-        // movie3.setGenres(Set.of(drama));
-        movie3.setGenre(drama);
+        movie3.setGenres(Set.of(drama));
         mediaRepository.save(movie3);
 
         Media tvShow = new Media();
@@ -138,8 +137,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         tvShow.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg");
         tvShow.setReleaseYear(2008);
         tvShow.setMediaType(MediaType.SERIES);
-        // tvShow.setGenres(Set.of(drama));
-        tvShow.setGenre(drama);
+        tvShow.setGenres(Set.of(drama, crime, thriller));
         mediaRepository.save(tvShow);
 
         Media movie4 = new Media();
@@ -149,7 +147,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie4.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg");
         movie4.setReleaseYear(1999);
         movie4.setMediaType(MediaType.MOVIE);
-        movie4.setGenre(sciFi);
+        movie4.setGenres(Set.of(sciFi, action));
         mediaRepository.save(movie4);
 
         Media movie5 = new Media();
@@ -159,7 +157,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie5.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/oU7Oq2kFAAlGqbU4VoAE36g4hoI.jpg");
         movie5.setReleaseYear(1993);
         movie5.setMediaType(MediaType.MOVIE);
-        movie5.setGenre(adventure);
+        movie5.setGenres(Set.of(adventure, sciFi));
         mediaRepository.save(movie5);
 
         Media series2 = new Media();
@@ -169,7 +167,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         series2.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/uOOtwVbSr4QDjAGIifLDwpb2Pdl.jpg");
         series2.setReleaseYear(2016);
         series2.setMediaType(MediaType.SERIES);
-        series2.setGenre(sciFi);
+        series2.setGenres(Set.of(sciFi, thriller));
         mediaRepository.save(series2);
 
         Media series3 = new Media();
@@ -179,7 +177,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         series3.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg");
         series3.setReleaseYear(2011);
         series3.setMediaType(MediaType.SERIES);
-        series3.setGenre(fantasy);
+        series3.setGenres(Set.of(fantasy, drama));
         mediaRepository.save(series3);
 
         Media series4 = new Media();
@@ -189,7 +187,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         series4.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/cZ0d3rtvXPVvuiX22sP79K3Hmjz.jpg");
         series4.setReleaseYear(2019);
         series4.setMediaType(MediaType.SERIES);
-        series4.setGenre(fantasy);
+        series4.setGenres(Set.of(fantasy, drama));
         mediaRepository.save(series4);
 
         Media series5 = new Media();
@@ -199,7 +197,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         series5.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/7DJKHzAi83BmQrWLrYYOqcoKfhR.jpg");
         series5.setReleaseYear(2005);
         series5.setMediaType(MediaType.SERIES);
-        series5.setGenre(comedy);
+        series5.setGenres(Set.of(comedy, drama, mockumentary));
         mediaRepository.save(series5);
 
         Media movie6 = new Media();
@@ -209,7 +207,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie6.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg");
         movie6.setReleaseYear(2010);
         movie6.setMediaType(MediaType.MOVIE);
-        movie6.setGenre(sciFi);
+        movie6.setGenres(Set.of(sciFi, action, thriller));
         mediaRepository.save(movie6);
 
         Media movie7 = new Media();
@@ -219,7 +217,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie7.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/3bhkrj58Vtu7enYsRolD1fZdja1.jpg");
         movie7.setReleaseYear(1972);
         movie7.setMediaType(MediaType.MOVIE);
-        movie7.setGenre(crime);
+        movie7.setGenres(Set.of(crime, drama));
         mediaRepository.save(movie7);
 
         Media movie8 = new Media();
@@ -229,7 +227,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie8.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg");
         movie8.setReleaseYear(1994);
         movie8.setMediaType(MediaType.MOVIE);
-        movie8.setGenre(crime);
+        movie8.setGenres(Set.of(crime, drama));
         mediaRepository.save(movie8);
 
         Media movie9 = new Media();
@@ -239,7 +237,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie9.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg");
         movie9.setReleaseYear(1994);
         movie9.setMediaType(MediaType.MOVIE);
-        movie9.setGenre(drama);
+        movie9.setGenres(Set.of(drama));
         mediaRepository.save(movie9);
 
         Media movie10 = new Media();
@@ -249,7 +247,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie10.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg");
         movie10.setReleaseYear(1994);
         movie10.setMediaType(MediaType.MOVIE);
-        movie10.setGenre(family);
+        movie10.setGenres(Set.of(animation, adventure, drama, family));
         mediaRepository.save(movie10);
 
         Media movie11 = new Media();
@@ -259,7 +257,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie11.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg");
         movie11.setReleaseYear(1997);
         movie11.setMediaType(MediaType.MOVIE);
-        movie11.setGenre(romance);
+        movie11.setGenres(Set.of(drama, romance));
         mediaRepository.save(movie11);
 
         Media movie12 = new Media();
@@ -269,7 +267,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie12.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/vchDkX1DtqTy3bIDJ7YqmSbX965.jpg");
         movie12.setReleaseYear(2012);
         movie12.setMediaType(MediaType.MOVIE);
-        movie12.setGenre(action);
+        movie12.setGenres(Set.of(action, adventure, sciFi));
         mediaRepository.save(movie12);
 
         Media movie13 = new Media();
@@ -279,7 +277,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie13.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg");
         movie13.setReleaseYear(2000);
         movie13.setMediaType(MediaType.MOVIE);
-        movie13.setGenre(action);
+        movie13.setGenres(Set.of(action, adventure, drama));
         mediaRepository.save(movie13);
 
         Media movie14 = new Media();
@@ -289,7 +287,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie14.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/hr0L2aueqlP2BYUblTTjmtn0hw4.jpg");
         movie14.setReleaseYear(2012);
         movie14.setMediaType(MediaType.MOVIE);
-        movie14.setGenre(action);
+        movie14.setGenres(Set.of(action, adventure, drama));
         mediaRepository.save(movie14);
 
         Media movie15 = new Media();
@@ -299,7 +297,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie15.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/kyeqWdyUXW608qlYkRqosgbbJyK.jpg");
         movie15.setReleaseYear(2009);
         movie15.setMediaType(MediaType.MOVIE);
-        movie15.setGenre(sciFi);
+        movie15.setGenres(Set.of(action, adventure, sciFi));
         mediaRepository.save(movie15);
 
         Media movie16 = new Media();
@@ -309,7 +307,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie16.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/n0ybibhJtQ5icDqTp8eRytcIHJx.jpg");
         movie16.setReleaseYear(2010);
         movie16.setMediaType(MediaType.MOVIE);
-        movie16.setGenre(drama);
+        movie16.setGenres(Set.of(drama, biography));
         mediaRepository.save(movie16);
 
         Media movie17 = new Media();
@@ -319,7 +317,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie17.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg");
         movie17.setReleaseYear(2014);
         movie17.setMediaType(MediaType.MOVIE);
-        movie17.setGenre(sciFi);
+        movie17.setGenres(Set.of(sciFi, drama, adventure));
         mediaRepository.save(movie17);
 
         Media movie18 = new Media();
@@ -329,7 +327,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie18.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg");
         movie18.setReleaseYear(2014);
         movie18.setMediaType(MediaType.MOVIE);
-        movie18.setGenre(sciFi);
+        movie18.setGenres(Set.of(sciFi, action, adventure, comedy));
         mediaRepository.save(movie18);
 
         Media movie19 = new Media();
@@ -339,7 +337,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie19.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/9TGHDvWrqKBzwDxDodHYXEmOE6J.jpg");
         movie19.setReleaseYear(2003);
         movie19.setMediaType(MediaType.MOVIE);
-        movie19.setGenre(sciFi);
+        movie19.setGenres(Set.of(sciFi, action, thriller));
         mediaRepository.save(movie19);
 
         Media movie20 = new Media();
@@ -349,7 +347,7 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie20.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg");
         movie20.setReleaseYear(1999);
         movie20.setMediaType(MediaType.MOVIE);
-        movie20.setGenre(drama);
+        movie20.setGenres(Set.of(drama, thriller));
         mediaRepository.save(movie20);
 
         Media movie21 = new Media();
@@ -359,9 +357,8 @@ public class InitialMediaAndGenres implements CommandLineRunner {
         movie21.setThumbnailUrl("https://image.tmdb.org/t/p/w1280/t1wm4PgOQ8e4z1C6tk1yDNrps4T.jpg");
         movie21.setReleaseYear(2003);
         movie21.setMediaType(MediaType.MOVIE);
-        movie21.setGenre(sciFi);
+        movie21.setGenres(Set.of(sciFi, action, thriller));
         mediaRepository.save(movie21);
-
     }
 }
 

@@ -2,13 +2,15 @@ package lt.techin.group.project.service;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lt.techin.group.project.exception.GenreNotFoundException;
 import lt.techin.group.project.exception.MediaNotFoundException;
 import lt.techin.group.project.model.Genre;
 import lt.techin.group.project.model.Media;
 import lt.techin.group.project.repository.GenreRepository;
 import lt.techin.group.project.repository.MediaRepository;
+import lt.techin.group.project.rest.dto.GenreDto;
 import lt.techin.group.project.rest.dto.MediaDto;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,8 @@ import java.util.List;
 
 import static lt.techin.group.project.service.GenreService.GENRE_NOT_FOUND_WITH_ID;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @Service
 public class MediaService {
@@ -43,7 +46,6 @@ public class MediaService {
         Media newMedia = new Media();
         newMedia = setAllMediaDetailsFromDto(mediaDto, newMedia);
         return mediaRepository.save(newMedia).toDto();
-        //todo Genres
     }
 
     public void deleteMedia(Long id) {
@@ -76,8 +78,12 @@ public class MediaService {
         newMedia.setImageUrl(mediaDto.getImageUrl());
         newMedia.setThumbnailUrl(mediaDto.getThumbnailUrl());
         newMedia.setReleaseYear(mediaDto.getReleaseYear());
-        Genre genre = genreRepository.findById(mediaDto.getGenre().getId()).orElseThrow(() -> new GenreNotFoundException(GENRE_NOT_FOUND_WITH_ID + mediaDto.getGenre().getId()));
-        newMedia.setGenre(genre);
+        newMedia.getGenres().clear();
+        for (GenreDto genreDto :
+                mediaDto.getGenres()) {
+            Genre genre = genreRepository.findById(genreDto.getId()).orElseThrow(() -> new GenreNotFoundException(GENRE_NOT_FOUND_WITH_ID + genreDto.getId()));
+            newMedia.getGenres().add(genre);
+        }
         return newMedia;
     }
 
@@ -90,7 +96,7 @@ public class MediaService {
     }
 
     public List<MediaDto> findAllMediaByGenreId(Long id) {
-        List<Media> listOfMedias = mediaRepository.findByGenreId(id);
+        List<Media> listOfMedias = mediaRepository.findByGenresId(id);
         return convertToDtoList(listOfMedias);
     }
 }

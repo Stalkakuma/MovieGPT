@@ -1,13 +1,19 @@
 package lt.techin.group.project.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lt.techin.group.project.rest.dto.MediaDto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Media {
@@ -20,10 +26,17 @@ public class Media {
     private String imageUrl;
     private String thumbnailUrl;
     private Integer releaseYear;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Genre genre;
     @Enumerated(EnumType.STRING)
     private MediaType mediaType;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @JoinTable(
+            name = "media_genre",
+            joinColumns = @JoinColumn(name = "media_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres = new HashSet<>();
+
 
     public MediaDto toDto() {
         return new MediaDto(this);
