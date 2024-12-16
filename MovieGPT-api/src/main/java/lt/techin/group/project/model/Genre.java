@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lt.techin.group.project.rest.dto.GenreDto;
 
 @Entity
@@ -27,6 +28,10 @@ public class Genre {
         if (genreDto.getId() != null) {
             this.id = genreDto.getId();
         }
+    }
+
+    public Genre(String name) {
+        this.name = name;
     }
 
     public GenreDto toDto() {

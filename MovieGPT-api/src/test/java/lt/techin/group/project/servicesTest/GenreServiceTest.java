@@ -100,7 +100,7 @@ class GenreServiceTest {
     void testAddGenre_shouldThrowGenreAlreadyExistsException() {
         when(genreRepository.findByNameIgnoreCase(genreDto.getName())).thenReturn(Optional.of(genre));
 
-        GenreAlreadyExistsException exception = assertThrows(GenreAlreadyExistsException.class, () -> genreService.addGenre(genreDto));
+        GenreAlreadyExistsException exception = assertThrows(GenreAlreadyExistsException.class, () -> genreService.addGenre(genreDto.getName()));
 
         assertEquals("Genre with name Fantasy already exists, it's id = 1", exception.getMessage());
     }
@@ -110,7 +110,7 @@ class GenreServiceTest {
         Genre newGenre = new Genre(2L, "Sci-Fi");
         when(genreRepository.save(any(Genre.class))).thenReturn(newGenre);
 
-        GenreDto addedGenreDto = genreService.addGenre(newGenre.toDto());
+        GenreDto addedGenreDto = genreService.addGenre(newGenre.getName());
 
         assertEquals(newGenre.getName(), addedGenreDto.getName());
 
