@@ -1,17 +1,23 @@
 package lt.techin.group.project.model;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import lt.techin.group.project.rest.dto.GenreDto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Genre {
@@ -20,8 +26,10 @@ public class Genre {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(unique = true)
     private String name;
+    @ManyToMany(mappedBy = "genres")
+    @JsonBackReference
+    private Set<Media> medias = new HashSet<>();
 
     public Genre(GenreDto genreDto) {
         this.name = genreDto.getName();
@@ -35,7 +43,7 @@ public class Genre {
     }
 
     public GenreDto toDto() {
-        return new GenreDto(this);
+        return new GenreDto(this.id, this.name);
     }
 
 }
