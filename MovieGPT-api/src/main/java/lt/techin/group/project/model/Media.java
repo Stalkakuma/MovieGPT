@@ -16,6 +16,11 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"title", "releaseYear", "mediaType", "imageUrl"}),
+        }
+)
 public class Media {
 
     @Id

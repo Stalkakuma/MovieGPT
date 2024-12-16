@@ -1,7 +1,8 @@
 package lt.techin.group.project.service;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lt.techin.group.project.exception.GenreAlreadyExistsException;
 import lt.techin.group.project.exception.GenreNotFoundException;
 import lt.techin.group.project.model.Genre;
@@ -13,7 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class GenreService {
 

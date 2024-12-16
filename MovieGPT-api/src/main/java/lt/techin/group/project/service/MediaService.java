@@ -13,6 +13,7 @@ import lt.techin.group.project.repository.MediaRepository;
 import lt.techin.group.project.rest.dto.GenreDto;
 import lt.techin.group.project.rest.dto.MediaDto;
 import org.apache.coyote.BadRequestException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.Year;
@@ -45,7 +46,16 @@ public class MediaService {
         validateReleaseYear(mediaDto);
         Media newMedia = new Media();
         newMedia = setAllMediaDetailsFromDto(mediaDto, newMedia);
-        return mediaRepository.save(newMedia).toDto();
+        saveMediaIfUnique(newMedia);
+        return newMedia.toDto();
+    }
+
+    private void saveMediaIfUnique(Media newMedia) {
+        try {
+            mediaRepository.save(newMedia);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalArgumentException("Media with such title, release year, media type and image URL already exists");
+        }
     }
 
     public void deleteMedia(Long id) {
@@ -64,7 +74,8 @@ public class MediaService {
         validateReleaseYear(mediaDto);
         Media media = mediaRepository.findById(mediaDto.getId()).orElseThrow(() -> new MediaNotFoundException(MEDIA_NOT_FOUND_WITH_ID + mediaDto.getId()));
         media = setAllMediaDetailsFromDto(mediaDto, media);
-        return mediaRepository.save(media).toDto();
+        saveMediaIfUnique(media);
+        return media.toDto();
     }
 
     private List<MediaDto> convertToDtoList(List<Media> listOfMedias) {
