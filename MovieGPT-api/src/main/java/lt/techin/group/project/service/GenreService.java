@@ -54,6 +54,7 @@ public class GenreService {
                 .ifPresent(genre -> {
                     throw new GenreAlreadyExistsException("Genre with name " + genre.getName() + " already exists, it's id = " + genre.getId());
                 });
+        genreDto.setId(null);
         Genre genre = genreRepository.save(new Genre(genreDto));
         return genre.toDto();
     }
