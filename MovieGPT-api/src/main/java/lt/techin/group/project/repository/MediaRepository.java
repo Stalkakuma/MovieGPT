@@ -12,4 +12,6 @@ public interface MediaRepository extends JpaRepository<Media, Long> {
     List<Media> findByTitleContainingIgnoreCase(String title);
 
     List<Media> findByGenresId(Long id);
+
+    List<Media> findByGenresNameIgnoreCase(String name);
 }

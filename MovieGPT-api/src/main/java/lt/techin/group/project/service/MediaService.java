@@ -110,4 +110,9 @@ public class MediaService {
         List<Media> listOfMedias = mediaRepository.findByGenresId(id);
         return convertToDtoList(listOfMedias);
     }
+
+    public List<MediaDto> findAllMediaByGenreName(String name) {
+        List<Media> listOfMedias = mediaRepository.findByGenresNameIgnoreCase(name);
+        return convertToDtoList(listOfMedias);
+    }
 }

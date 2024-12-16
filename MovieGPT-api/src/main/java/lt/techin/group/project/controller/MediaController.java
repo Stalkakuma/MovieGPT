@@ -57,9 +57,15 @@ public class MediaController {
     }
 
 
-    @GetMapping("/genre")
+    @GetMapping("/genreId")
     public ResponseEntity<List<MediaDto>> findAllMediaByGenreId(@RequestParam Long id) {
         List<MediaDto> listOfMedias = mediaService.findAllMediaByGenreId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(listOfMedias);
+    }
+
+    @GetMapping("/genre/{name}")
+    public ResponseEntity<List<MediaDto>> findAllMediaByGenreName(@PathVariable String name) {
+        List<MediaDto> listOfMedias = mediaService.findAllMediaByGenreName(name);
         return ResponseEntity.status(HttpStatus.OK).body(listOfMedias);
     }
 }
