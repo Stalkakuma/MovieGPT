@@ -30,8 +30,8 @@ public class SecurityConfig {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     private UserDetailsServiceImpl userDetailsService;
 
-    public static final String GENRES = "v1/genres/**";
-    public static final String MEDIA = "v1/media/**";
+    public static final String GENRES = "/v1/genres/**";
+    public static final String MEDIA = "/v1/media/**";
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     @Bean
@@ -42,12 +42,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers(HttpMethod.GET, GENRES, MEDIA).permitAll()
-                                .requestMatchers(HttpMethod.POST, GENRES).hasAuthority(ROLE_ADMIN)
-                                .requestMatchers(HttpMethod.DELETE, GENRES).hasAuthority(ROLE_ADMIN)
-                                .requestMatchers(HttpMethod.PUT, GENRES).hasAuthority(ROLE_ADMIN)
-                                .requestMatchers(HttpMethod.POST, MEDIA).hasAuthority(ROLE_ADMIN)
-                                .requestMatchers(HttpMethod.DELETE, MEDIA).hasAuthority(ROLE_ADMIN)
-                                .requestMatchers(HttpMethod.PUT, MEDIA).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.POST, GENRES, MEDIA).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.DELETE, GENRES, MEDIA).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.PUT, GENRES, MEDIA).hasAuthority(ROLE_ADMIN)
                                 .requestMatchers("/auth/**", "/h2-console/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
                                 .anyRequest().authenticated()
                 )

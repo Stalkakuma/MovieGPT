@@ -1,0 +1,91 @@
+@use 'sass:map';
+
+$colors: (
+  primary: #ff0000,
+  secondary: #10141e,
+  background: #161d2f,
+  text-light: #ffffff,
+  text-gray: gray,
+  hover-red: #c51515,
+);
+
+.main {
+  min-height: 100vh;
+  background-color: map.get($colors, secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    margin-top: 100px;
+    margin-bottom: 100px;
+  }
+  .form-container {
+    background-color: map.get($colors, background);
+    border-radius: 20px;
+
+    * {
+      padding: 5px;
+    }
+
+    h3 {
+      color: map.get($colors, text-light);
+      padding: 10px;
+      margin-top: 20px;
+      font-weight: 400;
+    }
+
+    .form-input {
+      background-color: map.get($colors, background);
+      border: none;
+      border-bottom: 1px solid map.get($colors, text-gray);
+      border-radius: 0;
+      color: map.get($colors, text-light);
+      transition: 1s;
+    }
+
+    .form-input:focus {
+      outline-style: none !important;
+      border-bottom: 1px solid map.get($colors, text-light);
+      box-shadow: none;
+      transition: 1s;
+    }
+
+    .form-input:active {
+      background-color: map.get($colors, background) !important;
+    }
+
+    .form-input::placeholder {
+      color: map.get($colors, text-gray);
+    }
+
+    .form-button {
+      background-color: map.get($colors, primary);
+      border: none;
+      padding: 10px;
+      transition: 0.7s;
+      margin-bottom: 10px;
+    }
+
+    .form-button:hover {
+      background-color: map.get($colors, text-light);
+      color: map.get($colors, secondary);
+      transition: 0.7s;
+    }
+
+    p {
+      color: map.get($colors, text-light);
+      text-align: center;
+    }
+
+    .login-link,
+    .register-link {
+      color: map.get($colors, primary);
+      text-decoration: none;
+    }
+
+    .login-link:hover {
+      color: map.get($colors, hover-red);
+    }
+  }
+}
