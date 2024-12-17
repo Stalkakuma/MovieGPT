@@ -18,7 +18,7 @@ public class UserSignupRequest {
     @Size(min = 2, max = 30)
     private String username;
     @NotNull
-    @Size(min = 2, max = 30)
+    @Size(min = 6, max = 30)
     private String password;
     @NotNull
     @Email

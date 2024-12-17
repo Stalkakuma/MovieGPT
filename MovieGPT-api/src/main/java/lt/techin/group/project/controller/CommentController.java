@@ -3,6 +3,7 @@ package lt.techin.group.project.controller;
 import lombok.AllArgsConstructor;
 import lt.techin.group.project.model.Comment;
 import lt.techin.group.project.rest.CommentRequest;
+import lt.techin.group.project.rest.CommentPutRequest;
 import lt.techin.group.project.rest.dto.CommentDto;
 import lt.techin.group.project.service.CommentService;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,13 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<List<Comment>> getAllComments() {
+    public ResponseEntity<List<CommentDto>> getAllComments() {
         return ResponseEntity.ok(commentService.getAllComments());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<CommentDto>> getCommentById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.getCommentsByMediaId(id));
     }
 
     @PostMapping
@@ -32,8 +38,8 @@ public class CommentController {
     }
 
     @PutMapping
-    public ResponseEntity<Map<String, String>> updateComment(@RequestBody CommentDto commentDto) {
-        commentService.updateComment(commentDto);
+    public ResponseEntity<Map<String, String>> updateComment(@RequestBody CommentPutRequest commentPutRequest) {
+        commentService.updateComment(commentPutRequest);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(Map.of(MESSAGE, "Comment updated successfully"));
     }
 

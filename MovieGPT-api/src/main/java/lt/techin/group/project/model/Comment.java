@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Setter
 @Getter
 @Entity
@@ -18,6 +19,8 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
     private String userComment;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Media media;
 
 
 }
