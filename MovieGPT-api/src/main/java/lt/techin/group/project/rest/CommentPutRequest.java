@@ -14,8 +14,8 @@ public class CommentPutRequest {
     private Long commentId;
     @NotNull(message = "Object User must be given.")
     private User user;
-    @NotBlank(message = "To delete message use another path.")
-    @Size(max = 300, message = "Comment can't extend 300 letters.")
+    @NotBlank(message = "Comment cannot be empty.")
+    @Size(max = 300, message = "Comment cannot extend 300 letters.")
     private String userComment;
 
 }

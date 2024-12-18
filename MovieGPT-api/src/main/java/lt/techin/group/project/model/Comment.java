@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 
 @Setter
 @Getter
@@ -21,6 +23,7 @@ public class Comment {
     private String userComment;
     @ManyToOne(fetch = FetchType.EAGER)
     private Media media;
+    private LocalDateTime createdAt;
 
 
 }
