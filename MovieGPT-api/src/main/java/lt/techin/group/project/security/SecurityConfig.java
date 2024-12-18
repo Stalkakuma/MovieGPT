@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,11 +29,12 @@ import java.util.List;
 public class SecurityConfig {
 
     private JwtAuthenticationFilter jwtAuthenticationFilter;
-    private UserDetailsServiceImpl userDetailsService;
 
+    public static final String COMMENTS = "/v1/comments/**";
     public static final String GENRES = "/v1/genres/**";
     public static final String MEDIA = "/v1/media/**";
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_USER = "ROLE_USER";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,14 +43,16 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers(HttpMethod.GET, GENRES, MEDIA).permitAll()
-                                .requestMatchers(HttpMethod.POST, GENRES, MEDIA).hasAuthority(ROLE_ADMIN)
-                                .requestMatchers(HttpMethod.DELETE, GENRES, MEDIA).hasAuthority(ROLE_ADMIN)
-                                .requestMatchers(HttpMethod.PUT, GENRES, MEDIA).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.GET, GENRES, MEDIA, COMMENTS).permitAll()
+                                .requestMatchers(HttpMethod.POST, COMMENTS).hasAuthority(ROLE_USER)
+                                .requestMatchers(HttpMethod.PUT, COMMENTS).hasAuthority(ROLE_USER)
+                                .requestMatchers(HttpMethod.POST, GENRES, MEDIA, COMMENTS).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.DELETE, GENRES, MEDIA, COMMENTS).hasAuthority(ROLE_ADMIN)
+                                .requestMatchers(HttpMethod.PUT, GENRES, MEDIA, COMMENTS).hasAuthority(ROLE_ADMIN)
                                 .requestMatchers("/auth/**", "/h2-console/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
