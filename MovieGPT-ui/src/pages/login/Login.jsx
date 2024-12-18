@@ -57,7 +57,7 @@ export const Login = () => {
       {!isAuthenticated && (
         <Container className="form-container" style={{ maxWidth: '400px' }}>
           <h3 className="text-right">Login</h3>
-          {error && <Alert variant="danger">{error}</Alert>}
+          {error && <Alert variant="danger" className="alert">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formUsername" className="mb-3">
               <Form.Control
