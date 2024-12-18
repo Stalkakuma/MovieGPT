@@ -1,7 +1,7 @@
 package lt.techin.group.project.service;
 
 import lombok.AllArgsConstructor;
-import lt.techin.group.project.exception.CannotEditAnotherUserException;
+import lt.techin.group.project.exception.CannotEditAnotherUserCommentException;
 import lt.techin.group.project.exception.CommentNotFoundException;
 import lt.techin.group.project.exception.MediaNotFoundException;
 import lt.techin.group.project.exception.UserNotFoundException;
@@ -16,6 +16,7 @@ import lt.techin.group.project.rest.CommentPutRequest;
 import lt.techin.group.project.rest.dto.CommentDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -45,6 +46,7 @@ public class CommentService {
         comment.setUser(user);
         comment.setUserComment(commentRequest.getUserComment());
         comment.setMedia(media);
+        comment.setCreatedAt(LocalDateTime.now());
         commentRepository.save(comment);
     }
 
@@ -57,7 +59,7 @@ public class CommentService {
             comment.setUserComment(commentPutRequest.getUserComment());
             commentRepository.save(comment);
         } else {
-            throw new CannotEditAnotherUserException("User with ID: " + commentPutRequest.getUser().getId() + " cannot edit user ID: " + comment.getUser().getId() + " comment.");
+            throw new CannotEditAnotherUserCommentException("User with ID: " + commentPutRequest.getUser().getId() + " cannot edit user ID: " + comment.getUser().getId() + " comment.");
         }
     }
 

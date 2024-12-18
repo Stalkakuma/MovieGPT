@@ -144,8 +144,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
-    @ExceptionHandler(CannotEditAnotherUserException.class)
-    public ResponseEntity<ErrorResponse> handleCannotEditAnotherUserException(CannotEditAnotherUserException ex) {
+    @ExceptionHandler(CannotEditAnotherUserCommentException.class)
+    public ResponseEntity<ErrorResponse> handleCannotEditAnotherUserCommentException(CannotEditAnotherUserCommentException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.UNAUTHORIZED.value(),
                 UNAUTHORIZED,

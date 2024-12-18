@@ -27,7 +27,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<CommentDto>> getCommentById(@PathVariable Long id) {
+    public ResponseEntity<List<CommentDto>> getCommentsByMediaId(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(commentService.getCommentsByMediaId(id));
     }
 

@@ -6,20 +6,28 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lt.techin.group.project.model.Comment;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Data
 public class CommentDto {
 
     @NotNull(message = "Comment ID must be given.")
     private Long commentId;
-    @NotNull(message = "Media ID must be given.")
-    private Long mediaId;
-    @NotBlank(message = "To delete message use another path.")
-    @Size(max = 300, message = "Comment can't extend 300 letters.")
+    @NotBlank(message = "Comment cannot be empty.")
+    @Size(max = 300, message = "Comment cannot extend 300 letters.")
     private String userComment;
+    @NotNull(message = "User object must be given.")
+    private UserDto user;
+    private String dateCreated;
+
 
     public CommentDto(Comment comment) {
         this.commentId = comment.getId();
-        this.mediaId = comment.getMedia().getId();
         this.userComment = comment.getUserComment();
+        this.user = new UserDto(comment.getUser());
+        LocalDateTime createdAt = comment.getCreatedAt();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.dateCreated = createdAt.format(formatter);
     }
 }
