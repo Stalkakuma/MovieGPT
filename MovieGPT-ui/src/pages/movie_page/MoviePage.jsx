@@ -21,7 +21,6 @@ export const MoviePage = () => {
     // Fetch movie data
     const fetchMovieData = async () => {
       try {
-        // Replace api/movie/1 with the correct endpoint: v1/media/{id}
         const response = await axios.get("http://localhost:8080/v1/media/1");
         if (response.data) {
           const { title, description, imageUrl, releaseYear, mediaType, genres } = response.data;
