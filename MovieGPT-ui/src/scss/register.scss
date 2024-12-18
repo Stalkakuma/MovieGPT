@@ -28,6 +28,13 @@ $colors: (
       padding: 5px;
     }
 
+    .alert {
+      margin-right: 10px;
+      margin-left: 10px;
+      border-radius: 0;
+    }
+
+
     h3 {
       color: map.get($colors, text-light);
       padding: 10px;
