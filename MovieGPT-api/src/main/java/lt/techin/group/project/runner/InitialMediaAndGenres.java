@@ -7,12 +7,14 @@ import lt.techin.group.project.model.MediaType;
 import lt.techin.group.project.repository.GenreRepository;
 import lt.techin.group.project.repository.MediaRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
 @AllArgsConstructor
 @Component
+@Order(2)
 public class InitialMediaAndGenres implements CommandLineRunner {
 
     private GenreRepository genreRepository;

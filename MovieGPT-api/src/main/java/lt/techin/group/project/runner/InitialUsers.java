@@ -1,19 +1,20 @@
 package lt.techin.group.project.runner;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import lt.techin.group.project.model.Roles;
 import lt.techin.group.project.model.User;
 import lt.techin.group.project.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-@Slf4j
+
 @AllArgsConstructor
 @Component
+@Order(1)
 public class InitialUsers implements CommandLineRunner {
 
     private UserRepository userRepository;
