@@ -3,9 +3,9 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Dropdown from 'react-bootstrap/Dropdown';
-import '../cssStyles/SearchComponent.css';
-import { MovieCardComponent } from './MovieCardComponent';
-import { getGenres, getMovies } from './api/apiMovies';
+import '../../cssStyles/SearchComponent.css';
+import { MovieCardComponent } from '../movie-card/MovieCardComponent';
+import { getGenres, getMovies } from '../api/apiMovies';
 
 export const SearchComponent = () => {
   const [movieData, setMovieData] = useState([]);

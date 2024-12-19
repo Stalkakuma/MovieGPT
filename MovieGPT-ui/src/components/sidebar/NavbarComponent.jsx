@@ -1,6 +1,6 @@
 import { FaHome, FaStar, FaUser } from 'react-icons/fa';
-import styles from '../scss/navbar.module.scss';
-import svg from '../assets/Movie.svg';
+import styles from '../../scss/navbar.module.scss';
+import svg from '../../assets/Movie.svg';
 
 export const NavbarComponent = () => {
   return (

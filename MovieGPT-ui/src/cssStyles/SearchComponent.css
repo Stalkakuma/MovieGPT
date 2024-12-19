@@ -1,15 +1,16 @@
 /* Search Navbar Styling */
 .search-navbar {
-  background-color: #161d2f;
-  padding: 16px 24px;
+  background-color: #10141e;
+  padding: 16px 0px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .search-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 .search-form {

@@ -6,7 +6,7 @@ import { Movies } from './pages/movies/Movies';
 import { Register } from './pages/register/Register';
 import { Login } from './pages/login/Login';
 import { AuthProvider } from './components/context/AuthContext';
-import { NavbarComponent as Sidebar } from './components/NavbarComponent';
+import { NavbarComponent as Sidebar } from './components/sidebar/NavbarComponent';
 import { NotFound } from './pages/notFoundPage/NotFoundPage';
 import styles from './scss/App.module.scss';
 

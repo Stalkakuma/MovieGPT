@@ -1,4 +1,4 @@
-import { SearchComponent } from '../../components/SearchComponent';
+import { SearchComponent } from '../../components/searchbar/SearchComponent';
 import styles from '../../scss/homepage.module.scss';
 
 export const Movies = () => {
