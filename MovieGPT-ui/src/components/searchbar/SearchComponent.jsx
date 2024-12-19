@@ -6,16 +6,17 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import '../../cssStyles/SearchComponent.css';
 import { MovieCardComponent } from '../movie-card/MovieCardComponent';
 import { getGenres, getMovies } from '../api/apiMovies';
+import { Alert } from 'react-bootstrap';
 
 export const SearchComponent = () => {
   const [movieData, setMovieData] = useState([]);
   const [genresData, setGenresData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
   const [searchQuery, setSearchQuery] = useState('');
   const [genreFilter, setGenreFilter] = useState('');
-
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [error, setError] = useState('');
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -28,7 +29,8 @@ export const SearchComponent = () => {
         setMovieData(moviedData.data);
         setGenresData(sortedGenres);
       } catch (error) {
-        console.error('Error loading data:', error);
+        setError(error?.message || 'Invalid username or password.');
+        handleError();
       }
       setIsLoading(false);
     };
@@ -51,6 +53,14 @@ export const SearchComponent = () => {
     };
     filterMovies();
   }, [searchQuery, genreFilter, movieData]);
+
+  const handleError = () => {
+    setShowError(true);
+    setTimeout(() => {
+      setShowError(false);
+      setError('');
+    }, 15000);
+  };
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -95,10 +105,24 @@ export const SearchComponent = () => {
         </Container>
       </Navbar>
 
+      {showError && (
+        <Alert variant="danger" className="alert fs-4">
+          {error}
+        </Alert>
+      )}
+
+      {filteredMovies.length === 0 && !error && (
+        <Alert className="fs-5">No movies found matching your search criteria.</Alert>
+      )}
+
+      {isLoading && (
+        <Alert variant="success" className="fs-5">
+          Loading movies...
+        </Alert>
+      )}
+
       <div className="ReturnedMovieCard">
-        {isLoading ? (
-          <p className="SearchMessage">Loading movies...</p>
-        ) : filteredMovies.length > 0 ? (
+        {!isLoading &&
           filteredMovies.map((movie) => (
             <MovieCardComponent
               key={movie.id}
@@ -109,10 +133,7 @@ export const SearchComponent = () => {
               title={movie.title}
               genres={movie.genres}
             />
-          ))
-        ) : (
-          <p className="SearchMessage">No movies found matching your search criteria.</p>
-        )}
+          ))}
       </div>
     </>
   );
