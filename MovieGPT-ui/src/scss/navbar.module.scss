@@ -1,0 +1,27 @@
+@use 'sass:map';
+
+$colors: (
+  grayishBlue: #5a698f,
+  pureWhite: #ffffff,
+  semiDarkBlue: #161d2f,
+);
+
+.navbarStyles {
+  background-color: map.get($colors, semiDarkBlue);
+  width: 100px;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+}
+
+.navItem {
+  color: map.get($colors, grayishBlue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  :hover {
+    color: map.get($colors, pureWhite);
+    transition: color 0.3s ease;
+  }
+}
