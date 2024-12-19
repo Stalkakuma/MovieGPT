@@ -15,6 +15,7 @@ $colors: (
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 
   img {
     margin-top: 100px;
@@ -33,7 +34,7 @@ $colors: (
       margin-left: 10px;
       border-radius: 0;
     }
-    
+
     h3 {
       color: map.get($colors, text-light);
       padding: 10px;
