@@ -29,7 +29,7 @@ export const SearchComponent = () => {
     'Mockumentary',
     'Family',
     'Animation',
-    'Romance'
+    'Romance',
   ];
 
   useEffect(() => {
@@ -38,12 +38,11 @@ export const SearchComponent = () => {
       try {
         // Fetch data from DataLoad() (assuming it's async)
         const data = await DataLoad(); // Replace with actual data fetching logic
-        console.log("Fetched Data:", data); // Log the structure to check
+        console.log('Fetched Data:', data); // Log the structure to check
 
         setGetData(data);
-
       } catch (error) {
-        console.error("Error loading data:", error);
+        console.error('Error loading data:', error);
       }
       setIsLoading(false);
     };
@@ -63,16 +62,12 @@ export const SearchComponent = () => {
     // Apply search query filter
     if (searchQuery) {
       const lowerCaseQuery = searchQuery.toLowerCase();
-      filtered = filtered.filter((movie) =>
-        movie.title.toLowerCase().includes(lowerCaseQuery)
-      );
+      filtered = filtered.filter((movie) => movie.title.toLowerCase().includes(lowerCaseQuery));
     }
 
     // Apply genre filter
     if (selectedGenre !== 'All Genres') {
-      filtered = filtered.filter((movie) =>
-        movie.genres.some((genre) => genre.name === selectedGenre)
-      );
+      filtered = filtered.filter((movie) => movie.genres.some((genre) => genre.name === selectedGenre));
     }
 
     setFilteredMovies(filtered);
@@ -112,10 +107,7 @@ export const SearchComponent = () => {
 
             <Dropdown.Menu>
               {allGenres.map((genre) => (
-                <Dropdown.Item
-                  key={genre}
-                  onClick={() => handleGenreChange(genre)}
-                >
+                <Dropdown.Item key={genre} onClick={() => handleGenreChange(genre)}>
                   {genre}
                 </Dropdown.Item>
               ))}
@@ -140,9 +132,7 @@ export const SearchComponent = () => {
             />
           ))
         ) : (
-          <p className="SearchMessage">
-            No movies found matching your search criteria.
-          </p>
+          <p className="SearchMessage">No movies found matching your search criteria.</p>
         )}
       </div>
 

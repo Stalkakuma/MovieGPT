@@ -1,15 +1,14 @@
-
 import { SearchComponent } from '../../components/SearchComponent';
-import "../../cssStyles/HomePage.css"
-
+import styles from '../../scss/homepage.module.scss';
 
 export const Movies = () => {
   return (
-    <div className='homePage'>
-     <main>
-        <SearchComponent />
-
-      </main>  
+    <div className={`${styles.mainContent}`}>
+      <div className={`${styles.homepageStyles}`}>
+        <main>
+          <SearchComponent />
+        </main>
+      </div>
     </div>
   );
 };

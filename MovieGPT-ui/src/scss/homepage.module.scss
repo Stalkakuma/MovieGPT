@@ -1,0 +1,19 @@
+@use 'sass:map';
+
+$colors: (
+  grayishBlue: #5a698f,
+  pureWhite: #ffffff,
+  hover-red: #c51515,
+  semiDarkBlue: #161d2f,
+  darkBlue: #10141e,
+);
+
+.homepageStyles {
+  background-color: map.get($colors, darkBlue);
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+.mainContent {
+  width: 100%;
+}

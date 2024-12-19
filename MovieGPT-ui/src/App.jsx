@@ -1,30 +1,26 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 import { Route, Routes } from 'react-router-dom';
 import { Movies } from './pages/movies/Movies';
 import { Register } from './pages/register/Register';
 import { Login } from './pages/login/Login';
 import { AuthProvider } from './components/context/AuthContext';
-import { NavbarComponent } from './components/NavbarComponent';
-import { Favorites } from './pages/favorites/Favorites';
+import { NavbarComponent as Sidebar } from './components/NavbarComponent';
 import { NotFound } from './pages/notFoundPage/NotFoundPage';
+import styles from './scss/App.module.scss';
 
 const App = () => {
   return (
     <AuthProvider>
-      <div className="app-container">
-        <div>
-          <NavbarComponent></NavbarComponent>
-        </div>
-
-        <div className="main-content">
-          <Routes>
-            <Route path="/" element={<Movies />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
-        </div>
+      <div className={`d-flex ${styles.appStyles}`}>
+        <Sidebar />
+        <Routes>
+          <Route path="/*" element={<NotFound />} />
+          <Route path="/" element={<Movies />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </div>
     </AuthProvider>
   );
