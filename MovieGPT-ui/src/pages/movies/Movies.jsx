@@ -3,12 +3,10 @@ import styles from '../../scss/homepage.module.scss';
 
 export const Movies = () => {
   return (
-    <div className={`${styles.mainContent}`}>
+    <main className={`${styles.mainContent}`}>
       <div className={`${styles.homepageStyles}`}>
-        <main>
-          <SearchComponent />
-        </main>
+        <SearchComponent />
       </div>
-    </div>
+    </main>
   );
 };
