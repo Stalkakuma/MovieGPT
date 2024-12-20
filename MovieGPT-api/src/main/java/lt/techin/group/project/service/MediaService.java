@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lt.techin.group.project.exception.GenreNotFoundException;
+import lt.techin.group.project.exception.MediaAlreadyExistsException;
 import lt.techin.group.project.exception.MediaNotFoundException;
 import lt.techin.group.project.model.Genre;
 import lt.techin.group.project.model.Media;
@@ -17,6 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.Year;
+import java.util.HashSet;
 import java.util.List;
 
 import static lt.techin.group.project.service.GenreService.GENRE_NOT_FOUND_WITH_ID;
@@ -45,7 +47,7 @@ public class MediaService {
     public MediaDto createMedia(MediaDto mediaDto) throws BadRequestException {
         validateReleaseYear(mediaDto);
         Media newMedia = new Media();
-        newMedia = setAllMediaDetailsFromDto(mediaDto, newMedia);
+        mapMediaDetailsFromDto(mediaDto, newMedia);
         saveMediaIfUnique(newMedia);
         return newMedia.toDto();
     }
@@ -54,48 +56,46 @@ public class MediaService {
         try {
             mediaRepository.save(newMedia);
         } catch (DataIntegrityViolationException e) {
-            throw new IllegalArgumentException("Media with such title, release year, media type and image URL already exists");
+            throw new MediaAlreadyExistsException("Media with such title, release year, media type and image URL already exists");
         }
     }
 
     public void deleteMedia(Long id) {
-        if (!mediaRepository.existsById(id)) {
-            throw new MediaNotFoundException(MEDIA_NOT_FOUND_WITH_ID + id);
-        }
+        Media media = mediaRepository.findById(id).orElseThrow(() -> new MediaNotFoundException(MEDIA_NOT_FOUND_WITH_ID + id));
         mediaRepository.deleteById(id);
     }
 
     public List<MediaDto> findByTitleContainingIgnoreCase(String title) {
         List<Media> listOfMedias = mediaRepository.findByTitleContainingIgnoreCase(title);
-        return convertToDtoList(listOfMedias);
+        return toDtoList(listOfMedias);
     }
 
     public MediaDto updateMedia(MediaDto mediaDto) throws BadRequestException {
         validateReleaseYear(mediaDto);
         Media media = mediaRepository.findById(mediaDto.getId()).orElseThrow(() -> new MediaNotFoundException(MEDIA_NOT_FOUND_WITH_ID + mediaDto.getId()));
-        media = setAllMediaDetailsFromDto(mediaDto, media);
+        mapMediaDetailsFromDto(mediaDto, media);
         saveMediaIfUnique(media);
         return media.toDto();
     }
 
-    private List<MediaDto> convertToDtoList(List<Media> listOfMedias) {
+    private List<MediaDto> toDtoList(List<Media> listOfMedias) {
         return listOfMedias.stream().map(Media::toDto).toList();
     }
 
-    private Media setAllMediaDetailsFromDto(MediaDto mediaDto, Media newMedia) {
+    private void mapMediaDetailsFromDto(MediaDto mediaDto, Media newMedia) {
+        newMedia.setGenres(new HashSet<>());
+        for (GenreDto genreDto :
+                mediaDto.getGenres()) {
+            Genre genre = genreRepository.findById(genreDto.getId()).orElseThrow(() -> new GenreNotFoundException(GENRE_NOT_FOUND_WITH_ID + genreDto.getId()));
+            newMedia.getGenres().add(genre);
+        }
+
         newMedia.setTitle(mediaDto.getTitle());
         newMedia.setDescription(mediaDto.getDescription());
         newMedia.setMediaType(mediaDto.getMediaType());
         newMedia.setImageUrl(mediaDto.getImageUrl());
         newMedia.setThumbnailUrl(mediaDto.getThumbnailUrl());
         newMedia.setReleaseYear(mediaDto.getReleaseYear());
-        newMedia.getGenres().clear();
-        for (GenreDto genreDto :
-                mediaDto.getGenres()) {
-            Genre genre = genreRepository.findById(genreDto.getId()).orElseThrow(() -> new GenreNotFoundException(GENRE_NOT_FOUND_WITH_ID + genreDto.getId()));
-            newMedia.getGenres().add(genre);
-        }
-        return newMedia;
     }
 
     private void validateReleaseYear(MediaDto mediaDto) throws BadRequestException {
@@ -108,11 +108,11 @@ public class MediaService {
 
     public List<MediaDto> findAllMediaByGenreId(Long id) {
         List<Media> listOfMedias = mediaRepository.findByGenresId(id);
-        return convertToDtoList(listOfMedias);
+        return toDtoList(listOfMedias);
     }
 
     public List<MediaDto> findAllMediaByGenreName(String name) {
         List<Media> listOfMedias = mediaRepository.findByGenresNameIgnoreCase(name);
-        return convertToDtoList(listOfMedias);
+        return toDtoList(listOfMedias);
     }
 }

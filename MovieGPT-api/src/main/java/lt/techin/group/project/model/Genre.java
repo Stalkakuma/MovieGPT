@@ -1,10 +1,7 @@
 package lt.techin.group.project.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +33,14 @@ public class Genre {
         if (genreDto.getId() != null) {
             this.id = genreDto.getId();
         }
+    }
+
+    @PreRemove
+    private void removeMediaConnections() {
+        for (Media media : medias) {
+            media.getGenres().remove(this);
+        }
+        medias.clear();
     }
 
     public Genre(String name) {
