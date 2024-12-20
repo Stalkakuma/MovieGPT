@@ -1,10 +1,12 @@
-import styles from '../../scss/App.module.scss';
+import { SearchComponent } from '../../components/searchbar/SearchComponent';
+import styles from '../../scss/homepage.module.scss';
 
 export const Movies = () => {
   return (
-    <div className={`text-dark text-center container py-4 px-3 mx-auto ${styles.gradiantBackground}`}>
-      <h1>Hello, Bootstrap and Vite!</h1>
-      <button class="btn btn-primary">Primary button</button>
-    </div>
+    <main className={`${styles.mainContent}`}>
+      <div className={`${styles.homepageStyles}`}>
+        <SearchComponent />
+      </div>
+    </main>
   );
 };
