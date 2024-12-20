@@ -1,15 +1,11 @@
 package lt.techin.group.project.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import lt.techin.group.project.rest.dto.GenreDto;
 
 import java.util.HashSet;
@@ -40,6 +36,14 @@ public class Genre {
 
     public Genre(String name) {
         this.name = name;
+    }
+
+    @PreRemove
+    private void removeMediaConnections() {
+        for (Media media : medias) {
+            media.getGenres().remove(this);
+        }
+        medias.clear();
     }
 
     public GenreDto toDto() {

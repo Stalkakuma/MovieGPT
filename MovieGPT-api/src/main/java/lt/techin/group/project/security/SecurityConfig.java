@@ -28,13 +28,12 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
-
     public static final String COMMENTS = "/v1/comments/**";
     public static final String GENRES = "/v1/genres/**";
     public static final String MEDIA = "/v1/media/**";
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
     public static final String ROLE_USER = "ROLE_USER";
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

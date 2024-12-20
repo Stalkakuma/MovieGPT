@@ -22,6 +22,7 @@ public class Comment {
     private User user;
     private String userComment;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "media_id")
     private Media media;
     private LocalDateTime createdAt;
 

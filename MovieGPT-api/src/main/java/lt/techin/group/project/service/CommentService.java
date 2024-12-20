@@ -11,8 +11,8 @@ import lt.techin.group.project.model.User;
 import lt.techin.group.project.repository.CommentRepository;
 import lt.techin.group.project.repository.MediaRepository;
 import lt.techin.group.project.repository.UserRepository;
-import lt.techin.group.project.rest.CommentRequest;
 import lt.techin.group.project.rest.CommentPutRequest;
+import lt.techin.group.project.rest.CommentRequest;
 import lt.techin.group.project.rest.dto.CommentDto;
 import org.springframework.stereotype.Service;
 
@@ -53,9 +53,9 @@ public class CommentService {
     public void updateComment(CommentPutRequest commentPutRequest) {
         Comment comment = commentRepository.findById(commentPutRequest.getCommentId())
                 .orElseThrow(() -> new CommentNotFoundException("Comment with ID: " + commentPutRequest.getCommentId() + NOT_FOUND));
-        if(comment.getUser().getId().compareTo(commentPutRequest.getUser().getId()) == 0
+        if (comment.getUser().getId().compareTo(commentPutRequest.getUser().getId()) == 0
                 ||
-        commentPutRequest.getUser().getRoles().stream().anyMatch(roles -> roles.name().matches("ADMIN"))) {
+                commentPutRequest.getUser().getRoles().stream().anyMatch(roles -> roles.name().matches("ADMIN"))) {
             comment.setUserComment(commentPutRequest.getUserComment());
             commentRepository.save(comment);
         } else {
@@ -64,7 +64,7 @@ public class CommentService {
     }
 
     public void deleteComment(Long id) {
-        if (commentRepository.existsById(id)){
+        if (commentRepository.existsById(id)) {
             commentRepository.deleteById(id);
         } else {
             throw new CommentNotFoundException("Comment with ID: " + id + NOT_FOUND);

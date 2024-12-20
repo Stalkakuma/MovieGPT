@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lt.techin.group.project.rest.dto.MediaDto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,9 +44,19 @@ public class Media {
     )
     private Set<Genre> genres = new HashSet<>();
 
+    @OneToMany(mappedBy = "media", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     public MediaDto toDto() {
         return new MediaDto(this);
+    }
+
+    @PreRemove
+    public void deleteMedia() {
+        for (Genre genre : genres) {
+            genre.getMedias().remove(this);
+        }
+        genres.clear();
     }
 
 }
