@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import lt.techin.group.project.rest.dto.GenreDto;
 
 import java.util.HashSet;
@@ -35,16 +34,16 @@ public class Genre {
         }
     }
 
+    public Genre(String name) {
+        this.name = name;
+    }
+
     @PreRemove
     private void removeMediaConnections() {
         for (Media media : medias) {
             media.getGenres().remove(this);
         }
         medias.clear();
-    }
-
-    public Genre(String name) {
-        this.name = name;
     }
 
     public GenreDto toDto() {
