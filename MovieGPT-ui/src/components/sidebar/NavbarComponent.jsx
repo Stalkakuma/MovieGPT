@@ -4,12 +4,10 @@ import svg from '../../assets/Movie.svg';
 
 export const NavbarComponent = () => {
   return (
-    <>
-      <nav
-        className={`navbar navbar-expand-md navbar-dark justify-content-center align-items-start vh-100  ${styles.navbarStyles}`}
-      >
+    <nav className={`navbar navbar-expand-md navbar-dark flex-row sticky-md-top fixed-top  ${styles.navbarStyles}`}>
+      <div className="container-fluid g-0 px-4 flex-row">
         <button
-          className={`navbar-toggler mt-2`}
+          className={`navbar-toggler`}
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#sidebarMenu"
@@ -19,12 +17,9 @@ export const NavbarComponent = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div
-          className="collapse navbar-collapse flex-column align-items-center gap-5 align-self-md-center"
-          id="sidebarMenu"
-        >
+        <div className="collapse navbar-collapse flex-column gap-5 my-md-5" id="sidebarMenu">
           <img src={svg} alt="movie svg" className="d-none d-md-block" />
-          <ul className="navbar-nav flex-column gap-4">
+          <ul className="navbar-nav flex-md-column flex-row gap-5 justify-content-start p-3 mx-5 mx-md-0 p-md-2 gap-md-4">
             <li>
               <a href="/" className={`${styles.navItem}`}>
                 <FaHome size={24} />
@@ -42,7 +37,7 @@ export const NavbarComponent = () => {
             </li>
           </ul>
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 };
