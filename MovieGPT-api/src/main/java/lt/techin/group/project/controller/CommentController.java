@@ -1,5 +1,6 @@
 package lt.techin.group.project.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lt.techin.group.project.model.Comment;
 import lt.techin.group.project.rest.CommentRequest;
@@ -32,13 +33,13 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> addComment(@RequestBody CommentRequest commentRequest) {
+    public ResponseEntity<Map<String, String>> addComment(@RequestBody @Valid CommentRequest commentRequest) {
         commentService.addComment(commentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(MESSAGE, "Comment added successfully"));
     }
 
     @PutMapping
-    public ResponseEntity<Map<String, String>> updateComment(@RequestBody CommentPutRequest commentPutRequest) {
+    public ResponseEntity<Map<String, String>> updateComment(@RequestBody @Valid CommentPutRequest commentPutRequest) {
         commentService.updateComment(commentPutRequest);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(Map.of(MESSAGE, "Comment updated successfully"));
     }
