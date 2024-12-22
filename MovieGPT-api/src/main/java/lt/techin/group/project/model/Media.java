@@ -1,5 +1,6 @@
 package lt.techin.group.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -44,7 +45,8 @@ public class Media {
     )
     private Set<Genre> genres = new HashSet<>();
 
-    @OneToMany(mappedBy = "media", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
     public MediaDto toDto() {
