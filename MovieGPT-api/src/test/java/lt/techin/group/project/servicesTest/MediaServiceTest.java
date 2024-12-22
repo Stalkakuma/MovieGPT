@@ -2,6 +2,7 @@ package lt.techin.group.project.servicesTest;
 
 import lt.techin.group.project.exception.GenreNotFoundException;
 import lt.techin.group.project.exception.MediaNotFoundException;
+import lt.techin.group.project.model.Comment;
 import lt.techin.group.project.model.Genre;
 import lt.techin.group.project.model.Media;
 import lt.techin.group.project.model.MediaType;
@@ -30,6 +31,7 @@ class MediaServiceTest {
     private Genre genre1;
     private Genre genre2;
     private Set<Genre> genres;
+    private List<Comment> comments;
 
     @BeforeEach
     public void setUp() {
@@ -58,7 +60,7 @@ class MediaServiceTest {
     @Test
     void testCreateMedia() throws BadRequestException {
         Media mockMedia = new Media(1L, "Inception", "A mind-bending thriller",
-                "imageUrl", "thumbUrl", 2010, MediaType.MOVIE, genres);
+                "imageUrl", "thumbUrl", 2010, MediaType.MOVIE, genres, comments);
 
         when(mediaRepository.save(any(Media.class))).thenReturn(mockMedia);
 
@@ -72,7 +74,7 @@ class MediaServiceTest {
     @Test
     void testUpdateMedia() throws BadRequestException {
         Media mockMedia = new Media(2L, "Titanic", "A love story on the Titanic",
-                "imageUrl", "thumbUrl", 1997, MediaType.MOVIE, genres);
+                "imageUrl", "thumbUrl", 1997, MediaType.MOVIE, genres, comments);
 
         when(mediaRepository.findById(2L)).thenReturn(Optional.of(mockMedia));
         when(mediaRepository.save(any(Media.class))).thenReturn(mockMedia);
@@ -88,7 +90,7 @@ class MediaServiceTest {
     void testFindMediaByTitleContaining() {
 
         Media mockMedia = new Media(3L, "The Matrix", "A cyberpunk thriller",
-                "imageUrl", "thumbUrl", 1999, MediaType.MOVIE, genres);
+                "imageUrl", "thumbUrl", 1999, MediaType.MOVIE, genres, comments);
 
         when(mediaRepository.findByTitleContainingIgnoreCase("matrix")).thenReturn(List.of(mockMedia));
 
@@ -103,7 +105,10 @@ class MediaServiceTest {
     @Test
     void testDeleteMedia() {
 
-        when(mediaRepository.existsById(4L)).thenReturn(true);
+        Media mockMedia = new Media(4L, "The Matrix Reloaded", "A cyberpunk thriller",
+                "imageUrl", "thumbUrl", 1999, MediaType.MOVIE, genres, comments);
+
+        when(mediaRepository.findById(4L)).thenReturn(Optional.of(mockMedia));
 
         mediaService.deleteMedia(4L);
 
@@ -114,7 +119,7 @@ class MediaServiceTest {
     void testFindAllMediaByGenre() {
 
         Media mockMedia = new Media(5L, "The Avengers", "A superhero movie",
-                "imageUrl", "thumbUrl", 2012, MediaType.MOVIE, genres);
+                "imageUrl", "thumbUrl", 2012, MediaType.MOVIE, genres, comments);
 
         when(mediaRepository.findByGenresId(1L)).thenReturn(List.of(mockMedia));
 
@@ -130,7 +135,7 @@ class MediaServiceTest {
     void testCreateMediaWithInvalidReleaseYear_shouldThrowBadRequestException() {
 
         Media mockMedia = new Media(6L, "Old Movie", "A movie from the 1800s",
-                "imageUrl", "thumbUrl", 1799, MediaType.MOVIE, genres);
+                "imageUrl", "thumbUrl", 1799, MediaType.MOVIE, genres, comments);
 
         assertThrows(BadRequestException.class, () -> mediaService.createMedia(mockMedia.toDto()));
     }
@@ -139,7 +144,7 @@ class MediaServiceTest {
     void testUpdateMediaWithInvalidGenres_shouldThrowGenreNotFoundException() {
 
         Media mockMedia = new Media(7L, "Comedy Show", "A hilarious comedy",
-                "imageUrl", "thumbUrl", 2023, MediaType.MOVIE, genres);
+                "imageUrl", "thumbUrl", 2023, MediaType.MOVIE, genres, comments);
 
         when(mediaRepository.findById(7L)).thenReturn(java.util.Optional.of(mockMedia));
         when(genreRepository.findById(1L)).thenReturn(Optional.empty());
@@ -159,7 +164,7 @@ class MediaServiceTest {
         when(mediaRepository.findById(8L)).thenReturn(Optional.empty());
 
         Media mockMedia = new Media(8L, "Titanic", "A love story on the Titanic",
-                "imageUrl", "thumbUrl", 1997, MediaType.MOVIE, genres);
+                "imageUrl", "thumbUrl", 1997, MediaType.MOVIE, genres, comments);
 
         assertThrows(MediaNotFoundException.class, () -> mediaService.updateMedia(mockMedia.toDto()));
 
@@ -169,7 +174,7 @@ class MediaServiceTest {
     void testFindAllMediaByGenreName() {
 
         Media mockMedia = new Media(9L, "The Truman show", "An insurance salesman begins to suspect that his whole life is actually some sort of reality TV show",
-                "imageUrl", "thumbUrl", 1998, MediaType.MOVIE, genres);
+                "imageUrl", "thumbUrl", 1998, MediaType.MOVIE, genres, comments);
 
         when(mediaRepository.findByGenresNameIgnoreCase("Adventure")).thenReturn(List.of(mockMedia));
 
