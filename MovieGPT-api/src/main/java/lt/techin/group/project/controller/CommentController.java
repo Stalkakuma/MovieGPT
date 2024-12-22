@@ -32,13 +32,13 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> addComment(@RequestBody @Valid CommentRequest commentRequest) {
+    public ResponseEntity<Map<String, String>> addComment(@Valid @RequestBody CommentRequest commentRequest) {
         commentService.addComment(commentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(MESSAGE, "Comment added successfully"));
     }
 
     @PutMapping
-    public ResponseEntity<Map<String, String>> updateComment(@RequestBody @Valid CommentPutRequest commentPutRequest) {
+    public ResponseEntity<Map<String, String>> updateComment(@Valid @RequestBody CommentPutRequest commentPutRequest) {
         commentService.updateComment(commentPutRequest);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(Map.of(MESSAGE, "Comment updated successfully"));
     }
