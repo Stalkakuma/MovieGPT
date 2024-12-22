@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Component
 @Order(3)
-public class InitialComments implements CommandLineRunner{
+public class InitialComments implements CommandLineRunner {
 
     private MediaRepository mediaRepository;
     private CommentService commentService;
@@ -53,12 +53,12 @@ public class InitialComments implements CommandLineRunner{
                 "Not perfect, but it has a charm that’s hard to resist."
         );
 
-        for(Media media : mediaRepository.findAll()){
+        for (Media media : mediaRepository.findAll()) {
             commentRequest.setMovieId(media.getId());
             commentRequest.setUserId(1L);
-            commentRequest.setUserComment(adminComments.get((int)(media.getId()-1L)));
+            commentRequest.setUserComment(adminComments.get((int) (media.getId() - 1L)));
             commentService.addComment(commentRequest);
-            if(media.getId()>adminComments.size()){
+            if (media.getId() > adminComments.size()) {
                 break;
             }
         }
@@ -92,12 +92,12 @@ public class InitialComments implements CommandLineRunner{
                 "I haven’t stopped thinking about this movie since I watched it. Its themes, characters, and ending will stay with me for a long time."
         );
 
-        for(Media media : mediaRepository.findAll()){
+        for (Media media : mediaRepository.findAll()) {
             commentRequest.setMovieId(media.getId());
             commentRequest.setUserId(2L);
-            commentRequest.setUserComment(userComments.get((int)(media.getId()-1L)));
+            commentRequest.setUserComment(userComments.get((int) (media.getId() - 1L)));
             commentService.addComment(commentRequest);
-            if(media.getId()>userComments.size()){
+            if (media.getId() > userComments.size()) {
                 break;
             }
         }
@@ -131,12 +131,12 @@ public class InitialComments implements CommandLineRunner{
                 "This is the kind of movie you can watch again and still notice something new."
         );
 
-        for(Media media : mediaRepository.findAll()){
+        for (Media media : mediaRepository.findAll()) {
             commentRequest.setMovieId(media.getId());
             commentRequest.setUserId(3L);
-            commentRequest.setUserComment(user2Comments.get((int)(media.getId()-1L)));
+            commentRequest.setUserComment(user2Comments.get((int) (media.getId() - 1L)));
             commentService.addComment(commentRequest);
-            if(media.getId()>user2Comments.size()){
+            if (media.getId() > user2Comments.size()) {
                 break;
             }
         }

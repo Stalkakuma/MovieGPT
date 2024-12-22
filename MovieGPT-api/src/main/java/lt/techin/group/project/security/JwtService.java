@@ -31,7 +31,7 @@ public class JwtService {
                 ))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS256, definitelyNotASecretKey )
+                .signWith(SignatureAlgorithm.HS256, definitelyNotASecretKey)
                 .compact();
 
         return Map.of("token", token);
@@ -45,8 +45,8 @@ public class JwtService {
 
     }
 
-    public boolean isTokenValid(String token){
-        try{
+    public boolean isTokenValid(String token) {
+        try {
             Claims claims = getClaimsFromToken(token);
             return !claims.getExpiration().before(new Date());
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class JwtService {
         }
     }
 
-    public String getUsernameFromToken(String token){
+    public String getUsernameFromToken(String token) {
         return getClaimsFromToken(token).get("username").toString();
     }
 }
