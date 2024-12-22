@@ -2,9 +2,8 @@ package lt.techin.group.project.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lt.techin.group.project.model.Comment;
-import lt.techin.group.project.rest.CommentRequest;
 import lt.techin.group.project.rest.CommentPutRequest;
+import lt.techin.group.project.rest.CommentRequest;
 import lt.techin.group.project.rest.dto.CommentDto;
 import lt.techin.group.project.service.CommentService;
 import org.springframework.http.HttpStatus;

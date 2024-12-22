@@ -22,20 +22,17 @@ public class MediaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MediaDto> findMediaById(@PathVariable Long id) {
-        MediaDto mediaDto = mediaService.findMediaById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(mediaDto);
+        return ResponseEntity.status(HttpStatus.OK).body(mediaService.findMediaById(id));
     }
 
     @GetMapping
     public ResponseEntity<List<MediaDto>> findAllMedia() {
-        List<MediaDto> listOfMedia = mediaService.findAllMedia();
-        return ResponseEntity.status(HttpStatus.OK).body(listOfMedia);
+        return ResponseEntity.status(HttpStatus.OK).body(mediaService.findAllMedia());
     }
 
     @PostMapping
     public ResponseEntity<MediaDto> createMedia(@Valid @RequestBody MediaDto mediaDto) throws BadRequestException {
-        MediaDto createdMediaDto = mediaService.createMedia(mediaDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdMediaDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mediaService.createMedia(mediaDto));
     }
 
     @DeleteMapping("/{id}")
@@ -46,26 +43,22 @@ public class MediaController {
 
     @GetMapping("/search")
     public ResponseEntity<List<MediaDto>> findByTitleContainingIgnoreCase(@RequestParam String name) {
-        List<MediaDto> listOfMedias = mediaService.findByTitleContainingIgnoreCase(name);
-        return ResponseEntity.status(HttpStatus.OK).body(listOfMedias);
+        return ResponseEntity.status(HttpStatus.OK).body(mediaService.findByTitleContainingIgnoreCase(name));
     }
 
     @PutMapping
     public ResponseEntity<MediaDto> updateMedia(@Valid @RequestBody MediaDto mediaDto) throws BadRequestException {
-        MediaDto updatedMediaDto = mediaService.updateMedia(mediaDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(updatedMediaDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mediaService.updateMedia(mediaDto));
     }
 
 
     @GetMapping("/genreId")
     public ResponseEntity<List<MediaDto>> findAllMediaByGenreId(@RequestParam Long id) {
-        List<MediaDto> listOfMedias = mediaService.findAllMediaByGenreId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(listOfMedias);
+        return ResponseEntity.status(HttpStatus.OK).body(mediaService.findAllMediaByGenreId(id));
     }
 
     @GetMapping("/genre/{name}")
     public ResponseEntity<List<MediaDto>> findAllMediaByGenreName(@PathVariable String name) {
-        List<MediaDto> listOfMedias = mediaService.findAllMediaByGenreName(name);
-        return ResponseEntity.status(HttpStatus.OK).body(listOfMedias);
+        return ResponseEntity.status(HttpStatus.OK).body(mediaService.findAllMediaByGenreName(name));
     }
 }

@@ -21,20 +21,17 @@ public class GenreController {
 
     @GetMapping
     public ResponseEntity<List<GenreDto>> findAllGenres() {
-        List<GenreDto> listOfGenres = genreService.findAllGenres();
-        return ResponseEntity.status(HttpStatus.OK).body(listOfGenres);
+        return ResponseEntity.status(HttpStatus.OK).body(genreService.findAllGenres());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GenreDto> findGenreById(@PathVariable Long id) {
-        GenreDto genreDto = genreService.findGenreById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(genreDto);
+        return ResponseEntity.status(HttpStatus.OK).body(genreService.findGenreById(id));
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<GenreDto>> findGenresByNameContaining(@RequestParam String name) {
-        List<GenreDto> listOfGenres = genreService.findGenresByNameContaining(name);
-        return ResponseEntity.status(HttpStatus.OK).body(listOfGenres);
+        return ResponseEntity.status(HttpStatus.OK).body(genreService.findGenresByNameContaining(name));
     }
 
     @DeleteMapping("/{id}")
@@ -45,14 +42,12 @@ public class GenreController {
 
     @PostMapping
     public ResponseEntity<GenreDto> addGenre(@RequestParam String name) {
-        GenreDto newGenre = genreService.addGenre(name);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newGenre);
+        return ResponseEntity.status(HttpStatus.CREATED).body(genreService.addGenre(name));
     }
 
     @PutMapping
     public ResponseEntity<GenreDto> updateGenre(@Valid @RequestBody GenreDto genreDto) {
-        GenreDto newGenre = genreService.updateGenre(genreDto);
-        return ResponseEntity.status(HttpStatus.OK).body(newGenre);
+        return ResponseEntity.status(HttpStatus.OK).body(genreService.updateGenre(genreDto));
     }
 
 }
