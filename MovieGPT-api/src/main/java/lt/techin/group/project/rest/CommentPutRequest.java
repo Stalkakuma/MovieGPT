@@ -4,9 +4,11 @@ package lt.techin.group.project.rest;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lt.techin.group.project.model.User;
 
+@AllArgsConstructor
 @Data
 public class CommentPutRequest {
 
