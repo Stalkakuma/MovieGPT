@@ -9,15 +9,20 @@ $colors: (
 .navbarStyles {
   background-color: map.get($colors, semiDarkBlue);
   border-radius: 10pt;
+  height: 80vh;
 }
 
 .navItem {
   color: map.get($colors, grayishBlue);
-  // align-items: center;
-  // justify-content: center;
 
   :hover {
     color: map.get($colors, pureWhite);
     transition: color 0.3s ease;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbarStyles {
+    height: auto;
   }
 }
