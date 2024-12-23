@@ -26,8 +26,7 @@
 
 .movie-card-image img {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   border-bottom: 4px solid transparent;
   display: block;
