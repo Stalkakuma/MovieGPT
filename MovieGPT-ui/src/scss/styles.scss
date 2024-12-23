@@ -1,0 +1,12 @@
+@import 'bootstrap/scss/bootstrap';
+
+$bg-body: #10141e;
+$pureWhite: #ffffff;
+$semiDarkBlue: #161d2f;
+
+body {
+  background-color: $bg-body;
+  color: $pureWhite;
+  scrollbar-color: auto;
+  scrollbar-color: $semiDarkBlue $bg-body;
+}

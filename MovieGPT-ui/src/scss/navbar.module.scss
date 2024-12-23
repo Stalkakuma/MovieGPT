@@ -8,20 +8,22 @@ $colors: (
 
 .navbarStyles {
   background-color: map.get($colors, semiDarkBlue);
-  width: 100px;
-  position: sticky;
-  top: 0;
-  overflow-y: auto;
+  border-radius: 10pt;
+  height: 80vh;
+  min-width: 90px;
 }
 
 .navItem {
   color: map.get($colors, grayishBlue);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   :hover {
     color: map.get($colors, pureWhite);
     transition: color 0.3s ease;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbarStyles {
+    height: auto;
   }
 }

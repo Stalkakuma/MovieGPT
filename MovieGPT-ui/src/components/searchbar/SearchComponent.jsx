@@ -76,8 +76,8 @@ export const SearchComponent = () => {
 
   return (
     <>
-      <Navbar expand="lg" className="search-navbar">
-        <Container fluid className="search-container">
+      <Navbar expand="lg" className="search-navbar my-md-4 p-0 mt-5 mb-3">
+        <Container fluid className="search-container g-0 mt-4 mt-md-0">
           <Form className="search-form">
             <Form.Control
               type="search"

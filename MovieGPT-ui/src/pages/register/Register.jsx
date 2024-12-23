@@ -51,7 +51,7 @@ export const Register = () => {
     if (name === 'password') {
       if (!passwordRegex.test(value)) {
         setPasswordError(
-          'Password must be between 6 and 30 characters long, include one uppercase letter, and one special symbol.'
+          'Password must be between 6 and 30 characters long, include one uppercase letter, and one special symbol.',
         );
       } else {
         setPasswordError('');
@@ -72,7 +72,9 @@ export const Register = () => {
     }
     // Check password validation
     if (!passwordRegex.test(formData.password)) {
-      setPasswordError('Password must be between 6 and 30 characters long, include one uppercase letter, and one special symbol.');
+      setPasswordError(
+        'Password must be between 6 and 30 characters long, include one uppercase letter, and one special symbol.',
+      );
       return;
     }
     try {
@@ -98,7 +100,11 @@ export const Register = () => {
       <img src={svg} alt="movie svg" />
       <Container className="form-container" style={{ maxWidth: '400px' }}>
         <h3 className="text-right">Sign Up</h3>
-        {error && <Alert variant="danger" className="alert">{error}</Alert>}
+        {error && (
+          <Alert variant="danger" className="alert">
+            {error}
+          </Alert>
+        )}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formUsername" className="mb-3">
             <Form.Control
