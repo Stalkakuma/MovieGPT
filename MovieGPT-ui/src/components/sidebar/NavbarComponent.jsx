@@ -8,7 +8,7 @@ export const NavbarComponent = () => {
   const Auth = useAuth();
   const isAuthenticated = Auth.userIsAuthenticated();
   return (
-    <nav className={`navbar navbar-expand-md navbar-dark flex-row sticky-md-top fixed-top   ${styles.navbarStyles}`}>
+    <nav className={`navbar navbar-expand-md navbar-dark flex-row sticky-md-top fixed-top ${styles.navbarStyles}`}>
       <div className="container-fluid g-0 px-4 py-md-5 flex-row">
         <button
           className={`navbar-toggler`}

@@ -10,6 +10,7 @@ $colors: (
   background-color: map.get($colors, semiDarkBlue);
   border-radius: 10pt;
   height: 80vh;
+  min-width: 90px;
 }
 
 .navItem {
