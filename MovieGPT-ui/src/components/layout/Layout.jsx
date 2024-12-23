@@ -7,7 +7,7 @@ export const Layout = ({ children }) => {
         <div className="col-md-1 col-12 g-0">
           <Sidebar />
         </div>
-        <div className="col g-0 ">{children}</div>
+        <div className="col-md-11 col-12 g-0 ">{children}</div>
       </div>
     </div>
   );
