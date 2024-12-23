@@ -21,9 +21,10 @@ public class User {
     private String email;
     @JsonIgnore
     private String password;
-
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Media> favoritesMedia;
 
 }
