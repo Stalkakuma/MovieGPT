@@ -54,7 +54,7 @@ public class InitialComments implements CommandLineRunner {
         );
 
         for (Media media : mediaRepository.findAll()) {
-            commentRequest.setMovieId(media.getId());
+            commentRequest.setMediaId(media.getId());
             commentRequest.setUserId(1L);
             commentRequest.setUserComment(adminComments.get((int) (media.getId() - 1L)));
             commentService.addComment(commentRequest);
@@ -93,7 +93,7 @@ public class InitialComments implements CommandLineRunner {
         );
 
         for (Media media : mediaRepository.findAll()) {
-            commentRequest.setMovieId(media.getId());
+            commentRequest.setMediaId(media.getId());
             commentRequest.setUserId(2L);
             commentRequest.setUserComment(userComments.get((int) (media.getId() - 1L)));
             commentService.addComment(commentRequest);
@@ -132,7 +132,7 @@ public class InitialComments implements CommandLineRunner {
         );
 
         for (Media media : mediaRepository.findAll()) {
-            commentRequest.setMovieId(media.getId());
+            commentRequest.setMediaId(media.getId());
             commentRequest.setUserId(3L);
             commentRequest.setUserComment(user2Comments.get((int) (media.getId() - 1L)));
             commentService.addComment(commentRequest);
