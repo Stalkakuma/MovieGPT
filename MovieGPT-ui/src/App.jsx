@@ -7,6 +7,7 @@ import { Login } from './pages/login/Login';
 import { AuthProvider } from './components/context/AuthContext';
 import { NotFound } from './pages/notFoundPage/NotFoundPage';
 import { Layout } from './components/layout/Layout';
+import { AdminRoute } from './pages/security/AdminRoute';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/" element={<Movies />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<AdminRoute>Page</AdminRoute>} />
         </Routes>
       </Layout>
     </AuthProvider>
