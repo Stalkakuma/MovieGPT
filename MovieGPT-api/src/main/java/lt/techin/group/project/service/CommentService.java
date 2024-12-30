@@ -40,8 +40,8 @@ public class CommentService {
     public void addComment(CommentRequest commentRequest) {
         User user = userRepository.findById(commentRequest.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("User with ID: " + commentRequest.getUserId() + NOT_FOUND));
-        Media media = mediaRepository.findById(commentRequest.getMovieId())
-                .orElseThrow(() -> new MediaNotFoundException("Media with ID: " + commentRequest.getMovieId() + NOT_FOUND));
+        Media media = mediaRepository.findById(commentRequest.getMediaId())
+                .orElseThrow(() -> new MediaNotFoundException("Media with ID: " + commentRequest.getMediaId() + NOT_FOUND));
         Comment comment = new Comment();
         comment.setUser(user);
         comment.setUserComment(commentRequest.getUserComment());
