@@ -1,0 +1,15 @@
+@use 'sass:map';
+
+$colors: (
+  grayishBlue: #5a698f,
+  pureWhite: #ffffff,
+  semiDarkBlue: #161d2f,
+);
+
+.genreCard {
+  text-align: center;
+  background-color: map.get($colors, semiDarkBlue);
+  outline: map.get($colors, pureWhite) 1px solid;
+  border-radius: 6pt;
+  padding: 0.5rem 1rem;
+}
