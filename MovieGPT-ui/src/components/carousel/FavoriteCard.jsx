@@ -7,12 +7,13 @@ export const FavoriteCard = ({ thumbnail, title, genres, releaseYear, mediaId, u
   const { user } = useAuth();
 
   const isFavorite = userFavorites.some((favorite) => favorite.id == mediaId);
-  
+
   const handleDeleteFavorite = async () => {
     if (user) {
-        const token = user.accessToken;
-        await deleteFavorites(user.data.id, mediaId, token);
-      }
+      const token = user.accessToken;
+      await deleteFavorites(user.data.id, mediaId, token);
+      window.location.reload();
+    }
   };
 
   return (
@@ -32,7 +33,17 @@ export const FavoriteCard = ({ thumbnail, title, genres, releaseYear, mediaId, u
           </p>
         </div>
         {isFavorite && (
-          <button onClick={handleDeleteFavorite}>
+          <button
+            onClick={handleDeleteFavorite}
+            style={{
+              background: 'none',
+              border: 'none',
+              position: 'absolute',
+              bottom: '10px',
+              right: '10px',
+              cursor: 'pointer',
+            }}
+          >
             <FaStar size={24} className="position-absolute" style={{ bottom: '10px', right: '10px', color: 'gold' }} />
           </button>
         )}
