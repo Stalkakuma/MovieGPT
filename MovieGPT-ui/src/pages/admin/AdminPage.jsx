@@ -49,7 +49,7 @@ export const AdminPage = () => {
               </div>
             );
           })}
-          <div className="col align-content-center" key="0">
+          <div className="col d-flex align-content-center justify-content-center" key="0">
             <CiCirclePlus data-bs-toggle="modal" data-bs-target="#genreFormModal" className={`${styles.genreNew}`} />
           </div>
         </section>
