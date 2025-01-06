@@ -17,4 +17,35 @@ export const getGenres = async () => {
   return response;
 };
 
+export const deleteGenre = async (genreId, token) => {
+  const response = await apiMovieClient.delete(`/genres/${genreId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
+export const createGenre = async (genreName, token) => {
+  const response = await apiMovieClient.post(
+    `/genres?name=${genreName}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response;
+};
+
+export const createMedia = async (mediaData, token) => {
+  const response = await apiMovieClient.post('/media', mediaData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
 export default apiMovieClient;

@@ -4,6 +4,7 @@ $colors: (
   grayishBlue: #5a698f,
   pureWhite: #ffffff,
   semiDarkBlue: #161d2f,
+  bg: #10141e,
 );
 
 .genreCard {
@@ -12,4 +13,25 @@ $colors: (
   outline: map.get($colors, pureWhite) 1px solid;
   border-radius: 6pt;
   padding: 0.5rem 1rem;
+}
+
+.genreDelete {
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(110%);
+  }
+}
+
+.genreNew {
+  cursor: pointer;
+  font-size: 50px;
+
+  &:hover {
+    transform: scale(110%);
+  }
+}
+
+.genreModalContent {
+  background-color: map.get($colors, bg);
 }

@@ -1,42 +1,62 @@
-import { useEffect, useState } from 'react';
-import { getGenres } from '../../components/api/apiMovies';
+import { useCallback, useEffect, useState } from 'react';
+import { deleteGenre, getGenres } from '../../components/api/apiMovies';
+import { AiTwotoneDelete } from 'react-icons/ai';
+import { CiCirclePlus } from 'react-icons/ci';
 import styles from '../../scss/admin.module.scss';
+import { useAuth } from '../../components/context/AuthContext';
+
+import { NewGenre } from './NewGenre';
+import { NewMedia } from './NewMedia';
 
 export const AdminPage = () => {
+  const Auth = useAuth();
   const [error, setError] = useState('');
   const [genres, setGenres] = useState([]);
-  console.log(genres);
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const genresData = await getGenres();
-        setGenres(genresData.data);
-      } catch (error) {
-        setError('We have error, CHANGE this');
-        alert(error);
-      }
-    };
-    loadData();
+  const loadData = useCallback(async () => {
+    try {
+      const genresData = await getGenres();
+      setGenres(genresData.data);
+    } catch (error) {
+      setError('We have error, CHANGE this');
+      alert(error);
+    }
   }, []);
 
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const handleGenreDelete = async (genreId) => {
+    const adminToken = Auth.user.accessToken;
+    deleteGenre(genreId, adminToken);
+    setGenres((prevGenres) => prevGenres.filter((genre) => genre.id !== genreId));
+  };
+
   return (
-    <main className="container-fluid px-4">
-      <h1>Admin Page</h1>
-      <h2>Genres</h2>
-      <section className="row justify-content-center row-cols-3 row-cols-md-6 gap-3 g-0">
-        {genres.map((genre) => {
-          return (
-            <div className={`col ${styles.genreCard}`}>
-              {genre.name}
-              <span>
-                <button></button>
-              </span>
-            </div>
-          );
-        })}
-        <div className="col">Add New</div>
-      </section>
-    </main>
+    <>
+      <main className="container-fluid px-4">
+        <h1>Admin Page</h1>
+        <h2>Genres</h2>
+        <section className="row justify-content-center row-cols-3 row-cols-md-6 gap-3 g-0">
+          {genres.map((genre) => {
+            return (
+              <div key={genre.id} className={`d-flex flex-column justify-content-center  ${styles.genreCard}`}>
+                <span>{genre.name}</span>
+                <span>
+                  <AiTwotoneDelete className={`${styles.genreDelete}`} onClick={() => handleGenreDelete(genre.id)} />
+                </span>
+              </div>
+            );
+          })}
+          <div className="col align-content-center" key="0">
+            <CiCirclePlus data-bs-toggle="modal" data-bs-target="#genreFormModal" className={`${styles.genreNew}`} />
+          </div>
+        </section>
+        <h2>Media</h2>
+        <NewMedia />
+      </main>
+      <NewGenre setGenres={setGenres} />
+    </>
   );
 };
