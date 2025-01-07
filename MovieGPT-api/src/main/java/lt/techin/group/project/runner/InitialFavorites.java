@@ -27,7 +27,10 @@ public class InitialFavorites implements CommandLineRunner {
         userDto.setRoles(Set.of("USER"));
 
         favoriteService.addMediaToFavorite(2L,1L, userDto);
-        favoriteService.addMediaToFavorite(2L,3L, userDto);
+        favoriteService.addMediaToFavorite(2L,4L, userDto);
+        favoriteService.addMediaToFavorite(2L,6L, userDto);
+        favoriteService.addMediaToFavorite(2L,8L, userDto);
+        favoriteService.addMediaToFavorite(2L,15L, userDto);
         favoriteService.addMediaToFavorite(2L,16L, userDto);
         favoriteService.addMediaToFavorite(2L,21L, userDto);
 

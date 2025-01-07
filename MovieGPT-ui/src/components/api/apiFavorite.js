@@ -11,7 +11,7 @@ export const getFavorites = async (userId, token) => {
     const response = await apiFavorite.get(`/favorite?userId=${userId}`);
     return response;
 };
-export const deleteFavorites = async (userId, mediaId, token) => {
+export const deleteFavorites = async (userId, mediaId, token, userDto) => {
   const apiFavorite = axios.create({
     baseURL: 'http://localhost:8080/v1',
     headers: {
@@ -19,6 +19,6 @@ export const deleteFavorites = async (userId, mediaId, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-    const response = await apiFavorite.delete(`/favorite?userId=${userId}&mediaId=${mediaId}`);
+    const response = await apiFavorite.delete(`/favorite?userId=${userId}&mediaId=${mediaId}`, {data: userDto});
     return response;
 };
