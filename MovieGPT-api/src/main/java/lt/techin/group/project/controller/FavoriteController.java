@@ -1,8 +1,10 @@
 package lt.techin.group.project.controller;
 
 import lombok.AllArgsConstructor;
+import lt.techin.group.project.exception.CannotEditAnotherUserFavoriteListException;
 import lt.techin.group.project.exception.MediaNotFoundException;
 import lt.techin.group.project.exception.UserNotFoundException;
+import lt.techin.group.project.rest.dto.UserDto;
 import lt.techin.group.project.service.FavoriteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,22 +30,26 @@ public class FavoriteController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> addFavorite(@RequestParam Long userId, @RequestParam Long mediaId) {
+    public ResponseEntity<Map<String, String>> addFavorite(@RequestParam Long userId, @RequestParam Long mediaId, @RequestBody UserDto userDto) {
         try {
-            favoriteService.addMediaToFavorite(userId, mediaId);
+            favoriteService.addMediaToFavorite(userId, mediaId, userDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(MESSAGE, "Media added successfully"));
         } catch (UserNotFoundException | MediaNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(MESSAGE, ex.getMessage()));
+        } catch (CannotEditAnotherUserFavoriteListException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(MESSAGE, ex.getMessage()));
         }
     }
 
     @DeleteMapping
-    public ResponseEntity<Map<String, String>> deleteFavorite(@RequestParam Long userId, @RequestParam Long mediaId) {
+    public ResponseEntity<Map<String, String>> deleteFavorite(@RequestParam Long userId, @RequestParam Long mediaId, @RequestBody UserDto userDto) {
         try {
-            favoriteService.removeMediaFromFavorite(userId, mediaId);
+            favoriteService.removeMediaFromFavorite(userId, mediaId, userDto);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Map.of(MESSAGE, "Media deleted successfully"));
         } catch (UserNotFoundException | MediaNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(MESSAGE, ex.getMessage()));
+        } catch (CannotEditAnotherUserFavoriteListException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(MESSAGE, ex.getMessage()));
         }
     }
 
