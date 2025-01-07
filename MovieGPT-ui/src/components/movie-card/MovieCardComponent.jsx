@@ -1,13 +1,15 @@
 import '../../cssStyles/MovieCard.css';
 import { FavoritesButton } from '../favorite/favorites';
+import { useAuth } from '../context/AuthContext';
 
 export const MovieCardComponent = ({ id, title, mediaType, releaseYear, thumbnailUrl, genres, media }) => {
+  const { user } = useAuth();
   const genresString = genres.map((genre) => genre.name).join(', ');
 
   return (
     <div className="movie-card">
       <div className="movie-card-image position-relative">
-        <FavoritesButton media={media} />
+        {user && <FavoritesButton media={media} />}
         <img src={thumbnailUrl} alt={`${title} poster`} />
       </div>
       <div className="movie-card-info">

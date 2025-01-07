@@ -1,6 +1,8 @@
 import { FavoritesButton } from '../favorite/favorites';
+import { useAuth } from '../context/AuthContext';
 
 export const FavoriteCard = ({ thumbnail, title, genres, releaseYear, media }) => {
+  const { user } = useAuth();
   const genresString = genres.map((genre) => genre.name).join(', ');
 
   return (
@@ -22,9 +24,7 @@ export const FavoriteCard = ({ thumbnail, title, genres, releaseYear, media }) =
             <small>{releaseYear}</small>
           </p>
         </div>
-        <div>
-          <FavoritesButton media={media} />
-        </div>
+        <div>{user && <FavoritesButton media={media} />}</div>
       </div>
     </div>
   );
