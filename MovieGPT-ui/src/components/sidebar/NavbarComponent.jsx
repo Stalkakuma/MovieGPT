@@ -1,5 +1,6 @@
 import { FaHome, FaStar, FaUser } from 'react-icons/fa';
 import { useAuth } from '../../components/context/AuthContext';
+import { FaGear } from 'react-icons/fa6';
 
 import styles from '../../scss/navbar.module.scss';
 import svg from '../../assets/Movie.svg';
@@ -44,6 +45,13 @@ export const NavbarComponent = () => {
                 } border border-light rounded-circle`}
               ></span>
             </li>
+            {Auth?.user?.data?.roles[0] === 'ADMIN' && (
+              <li>
+                <a href="/admin" className={styles.navItem}>
+                  <FaGear />
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </div>

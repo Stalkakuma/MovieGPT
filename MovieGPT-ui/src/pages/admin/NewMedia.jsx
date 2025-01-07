@@ -236,7 +236,7 @@ export const NewMedia = ({ genres }) => {
           )}
         </div>
 
-        <button type="submit" className="btn btn-secondary">
+        <button type="submit" className="btn btn-primary px-5 py-2">
           Create
         </button>
       </Form>

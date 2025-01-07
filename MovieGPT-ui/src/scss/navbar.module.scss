@@ -14,6 +14,7 @@ $colors: (
 }
 
 .navItem {
+  font-size: 1.5rem;
   color: map.get($colors, grayishBlue);
 
   :hover {
