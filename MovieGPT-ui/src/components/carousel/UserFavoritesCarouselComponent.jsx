@@ -56,6 +56,19 @@ export const UserFavoritesCarousel = () => {
       <div>
         <h2>{userFavorites.length > 0 ? 'Your Favorites' : 'Trending for You'}</h2>
         <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
+          <div className="carousel-indicators" style={{ bottom: '-35px' }}>
+            {allSlides.map((slide, index) => (
+              <button
+                key={index}
+                type="button"
+                data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide-to={index}
+                className={index === 0 ? 'active' : ''}
+                aria-current={index === 0 ? 'true' : 'false'}
+                aria-label={`Slide ${index + 1}`}
+              ></button>
+            ))}
+          </div>
           <div className="carousel-inner">
             {allSlides.map((mediaGroup, index) => (
               <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
@@ -82,8 +95,9 @@ export const UserFavoritesCarousel = () => {
             type="button"
             data-bs-target="#carouselExampleAutoplaying"
             data-bs-slide="prev"
+            style={{ height: '25%', width: '50px', top: '50%' }}
           >
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="carousel-control-prev-icon visually-hidden" aria-hidden="true"></span>
             <span className="visually-hidden">Previous</span>
           </button>
           <button
@@ -91,13 +105,14 @@ export const UserFavoritesCarousel = () => {
             type="button"
             data-bs-target="#carouselExampleAutoplaying"
             data-bs-slide="next"
+            style={{ height: '25%', width: '50px', top: '50%' }}
           >
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="carousel-control-next-icon visually-hidden" aria-hidden="true"></span>
             <span className="visually-hidden">Next</span>
           </button>
         </div>
       </div>
-      <h2>Recommended for you</h2>
+      <h2 style={{ marginTop: '20px' }}>Recommended for you</h2>
     </>
   );
 };

@@ -7,7 +7,6 @@ import styles from './favorite.module.scss';
 export const FavoritesButton = ({ media }) => {
   const Auth = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
-  console.log(isFavorite);
 
   useEffect(() => {
     if (Auth.userFavorites.some((favorite) => favorite.id === media.id)) {
