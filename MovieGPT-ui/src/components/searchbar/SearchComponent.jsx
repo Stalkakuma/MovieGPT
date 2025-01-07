@@ -122,13 +122,14 @@ export const SearchComponent = () => {
         </Alert>
       )}
 
-      <UserFavoritesCarousel/>
+      <UserFavoritesCarousel />
 
       <div className="ReturnedMovieCard">
         {!isLoading &&
           filteredMovies.map((movie) => (
             <MovieCardComponent
               key={movie.id}
+              media={movie}
               id={movie.id}
               thumbnailUrl={movie.thumbnailUrl}
               releaseYear={movie.releaseYear}
