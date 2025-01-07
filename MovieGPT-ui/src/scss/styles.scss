@@ -10,3 +10,9 @@ body {
   scrollbar-color: auto;
   scrollbar-color: $semiDarkBlue $bg-body;
 }
+
+$custom-colors: (
+  'pdark': $bg-body,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
