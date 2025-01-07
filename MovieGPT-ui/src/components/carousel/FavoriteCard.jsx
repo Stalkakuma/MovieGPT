@@ -1,31 +1,7 @@
-import { FaStar } from 'react-icons/fa';
-import { useAuth } from '../context/AuthContext';
-import { deleteFavorites } from '../api/apiFavorite';
+import { FavoritesButton } from '../favorite/favorites';
 
-export const FavoriteCard = ({ thumbnail, title, genres, releaseYear, mediaId, userFavorites }) => {
+export const FavoriteCard = ({ thumbnail, title, genres, releaseYear, media }) => {
   const genresString = genres.map((genre) => genre.name).join(', ');
-  const { user } = useAuth();
-
-  let userDto;
-
-  if (user) {
-    userDto = {
-      id: `${user.data.id}`,
-      username: `${user.data.username}`,
-      email: `${user.data.email}`,
-      roles: [`${user.data.roles}`],
-    };
-  }
-
-  const isFavorite = userFavorites.some((favorite) => favorite.id == mediaId);
-
-  const handleDeleteFavorite = async () => {
-    if (user) {
-      const token = user.accessToken;
-      await deleteFavorites(user.data.id, mediaId, token, userDto);
-      window.location.reload();
-    }
-  };
 
   return (
     <div id="favoriteCard" className="card text-bg-dark">
@@ -46,21 +22,9 @@ export const FavoriteCard = ({ thumbnail, title, genres, releaseYear, mediaId, u
             <small>{releaseYear}</small>
           </p>
         </div>
-        {isFavorite && (
-          <button
-            onClick={handleDeleteFavorite}
-            style={{
-              background: 'none',
-              border: 'none',
-              position: 'absolute',
-              bottom: '10px',
-              right: '10px',
-              cursor: 'pointer',
-            }}
-          >
-            <FaStar size={24} className="position-absolute" style={{ bottom: '10px', right: '10px', color: 'gold' }} />
-          </button>
-        )}
+        <div>
+          <FavoritesButton media={media} />
+        </div>
       </div>
     </div>
   );
