@@ -24,6 +24,7 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles;
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Media> favoritesMedia;
 

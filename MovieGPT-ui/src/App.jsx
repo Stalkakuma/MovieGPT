@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Movies } from './pages/movies/Movies';
 import { Register } from './pages/register/Register';
 import { Login } from './pages/login/Login';
+import { MoviePage } from './pages/movie_page/MoviePage';
 import { AuthProvider } from './components/context/AuthContext';
 import { NotFound } from './pages/notFoundPage/NotFoundPage';
 import { Layout } from './components/layout/Layout';
@@ -27,6 +28,7 @@ const App = () => {
               </AdminRoute>
             }
           />
+          <Route path="/movie/:id" element={<MoviePage />} />
         </Routes>
       </Layout>
     </AuthProvider>

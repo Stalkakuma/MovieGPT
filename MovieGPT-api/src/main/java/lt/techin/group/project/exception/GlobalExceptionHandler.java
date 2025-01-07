@@ -164,5 +164,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
+    @ExceptionHandler(CannotEditAnotherUserFavoriteListException.class)
+    public ResponseEntity<ErrorResponse> handleCannotEditAnotherUserFavoriteListException(CannotEditAnotherUserFavoriteListException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.UNAUTHORIZED.value(),
+                UNAUTHORIZED,
+                ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+    }
+
 }
 

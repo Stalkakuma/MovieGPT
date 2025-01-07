@@ -1,0 +1,74 @@
+$theme: (
+  background-color: #10141E,
+  text-color: #dcdcdc,
+  text-color-strong: #ffffff,
+  badge-bg-color: #6c757d,
+  shadow-color: rgba(0, 0, 0, 0.2),
+  font-size-base: 1rem,
+  font-size-title: 2.5rem,
+  font-size-title-sm: 2rem,
+  font-size-badge: 0.85rem,
+  spacing: 2rem,
+);
+
+@function theme($key) {
+  @return map-get($theme, $key);
+}
+
+.movie-page {
+  padding: theme(spacing);
+  background-color: theme(background-color);
+  min-height: 100vh;
+
+  .movie-poster {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 4px 10px theme(shadow-color);
+    border-radius: 8px;
+
+    @media (min-width: 992px) {
+      max-height: 600px;
+    }
+  }
+
+  .movie-details {
+    padding: theme(font-size-base);
+
+    .movie-title {
+      font-size: theme(font-size-title);
+      font-weight: bold;
+      color: theme(text-color-strong);
+    }
+
+    p {
+      font-size: theme(font-size-base);
+      color: theme(text-color);
+
+      strong {
+        color: theme(text-color-strong);
+      }
+    }
+
+    .badge {
+      font-size: theme(font-size-badge);
+      background-color: theme(badge-bg-color);
+      margin: 3px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    text-align: center;
+
+    .movie-details {
+      padding: theme(font-size-base) 0;
+
+      .movie-title {
+        font-size: theme(font-size-title-sm);
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
