@@ -10,6 +10,7 @@ import lt.techin.group.project.model.User;
 import lt.techin.group.project.repository.MediaRepository;
 import lt.techin.group.project.repository.UserRepository;
 import lt.techin.group.project.rest.dto.MediaDto;
+import lt.techin.group.project.rest.dto.UserDto;
 import lt.techin.group.project.service.FavoriteService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,11 +77,12 @@ class FavoriteServiceTest {
         user.setFavoritesMedia(favoriteMedia);
         Media media = new Media();
         media.setId(mediaId);
+        UserDto userDto = new UserDto();
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(mediaRepository.findById(mediaId)).thenReturn(Optional.of(media));
 
-        favoriteService.addMediaToFavorite(userId, mediaId);
+        favoriteService.addMediaToFavorite(userId, mediaId, userDto);
 
         assertTrue(user.getFavoritesMedia().contains(media));
         verify(userRepository, times(1)).save(user);
@@ -90,10 +92,11 @@ class FavoriteServiceTest {
     void testAddMediaToFavorite_UserNotFound() {
         Long userId = 1L;
         Long mediaId = 1L;
+        UserDto userDto = new UserDto();
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () ->
-                favoriteService.addMediaToFavorite(userId, mediaId));
+                favoriteService.addMediaToFavorite(userId, mediaId, userDto));
         assertEquals("User with ID: 1 not found", exception.getMessage());
     }
 
@@ -105,12 +108,13 @@ class FavoriteServiceTest {
         user.setId(userId);
         Set<Media> favoriteMedia = new HashSet<>();
         user.setFavoritesMedia(favoriteMedia);
+        UserDto userDto = new UserDto();
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(mediaRepository.findById(mediaId)).thenReturn(Optional.empty());
 
         MediaNotFoundException exception = assertThrows(MediaNotFoundException.class, () ->
-                favoriteService.addMediaToFavorite(userId, mediaId));
+                favoriteService.addMediaToFavorite(userId, mediaId, userDto));
         assertEquals("Media with ID: 1 not found", exception.getMessage());
     }
 
@@ -125,10 +129,11 @@ class FavoriteServiceTest {
         media.setId(mediaId);
         favoriteMedia.add(media);
         user.setFavoritesMedia(favoriteMedia);
+        UserDto userDto = new UserDto();
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
-        favoriteService.removeMediaFromFavorite(userId, mediaId);
+        favoriteService.removeMediaFromFavorite(userId, mediaId, userDto);
 
         assertFalse(user.getFavoritesMedia().contains(media));
         verify(userRepository, times(1)).save(user);
@@ -138,10 +143,11 @@ class FavoriteServiceTest {
     void testRemoveMediaFromFavorite_UserNotFound() {
         Long userId = 1L;
         Long mediaId = 1L;
+        UserDto userDto = new UserDto();
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () ->
-                favoriteService.removeMediaFromFavorite(userId, mediaId));
+                favoriteService.removeMediaFromFavorite(userId, mediaId, userDto));
         assertEquals("User with ID: 1 not found", exception.getMessage());
     }
 
@@ -153,11 +159,12 @@ class FavoriteServiceTest {
         user.setId(userId);
         Set<Media> favoriteMedia = new HashSet<>();
         user.setFavoritesMedia(favoriteMedia);
+        UserDto userDto = new UserDto();
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
         MediaNotFoundException exception = assertThrows(MediaNotFoundException.class, () ->
-                favoriteService.removeMediaFromFavorite(userId, mediaId));
+                favoriteService.removeMediaFromFavorite(userId, mediaId, userDto));
         assertEquals("Media with ID: 1 not found", exception.getMessage());
     }
 }

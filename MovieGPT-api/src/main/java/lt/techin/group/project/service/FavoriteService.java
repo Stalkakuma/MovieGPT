@@ -1,6 +1,7 @@
 package lt.techin.group.project.service;
 
 import lombok.AllArgsConstructor;
+import lt.techin.group.project.exception.CannotEditAnotherUserFavoriteListException;
 import lt.techin.group.project.exception.MediaNotFoundException;
 import lt.techin.group.project.exception.UserNotFoundException;
 import lt.techin.group.project.model.Media;
@@ -8,6 +9,7 @@ import lt.techin.group.project.model.User;
 import lt.techin.group.project.repository.MediaRepository;
 import lt.techin.group.project.repository.UserRepository;
 import lt.techin.group.project.rest.dto.MediaDto;
+import lt.techin.group.project.rest.dto.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,18 +34,22 @@ public class FavoriteService {
                 .toList();
     }
 
-    public void addMediaToFavorite(Long userId, Long mediaId) {
+    public void addMediaToFavorite(Long userId, Long mediaId, UserDto userDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId)));
 
         Media media = mediaRepository.findById(mediaId)
                 .orElseThrow(() -> new MediaNotFoundException(String.format(MEDIA_NOT_FOUND_MESSAGE, mediaId)));
 
-        user.getFavoritesMedia().add(media);
-        userRepository.save(user);
+        if(user.getId().compareTo(userDto.getId()) == 0) {
+            user.getFavoritesMedia().add(media);
+            userRepository.save(user);
+        } else {
+            throw new CannotEditAnotherUserFavoriteListException("User with ID: " + userDto.getId() + " cannot add favorite to user ID: " + userId + " favorite list.");
+        }
     }
 
-    public void removeMediaFromFavorite(Long userId, Long mediaId) {
+    public void removeMediaFromFavorite(Long userId, Long mediaId, UserDto userDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId)));
 
@@ -53,8 +59,12 @@ public class FavoriteService {
                 .findFirst()
                 .orElseThrow(() -> new MediaNotFoundException(String.format(MEDIA_NOT_FOUND_MESSAGE, mediaId)));
 
+        if(user.getId().compareTo(userDto.getId()) == 0) {
         user.getFavoritesMedia().remove(media);
         userRepository.save(user);
+        } else {
+            throw new CannotEditAnotherUserFavoriteListException("User with ID: " + userDto.getId() + " cannot delete favorite from user ID: " + userId + " favorite list.");
+        }
     }
 
 }
