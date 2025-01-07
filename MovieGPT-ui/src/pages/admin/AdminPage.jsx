@@ -37,7 +37,7 @@ export const AdminPage = () => {
     <>
       <main className="container-fluid px-4">
         <h1>Admin Page</h1>
-        <h2>Genres</h2>
+        <h2>Genres:</h2>
         <section className="row justify-content-center row-cols-3 row-cols-md-6 gap-3 g-0">
           {genres.map((genre) => {
             return (
@@ -53,8 +53,8 @@ export const AdminPage = () => {
             <CiCirclePlus data-bs-toggle="modal" data-bs-target="#genreFormModal" className={`${styles.genreNew}`} />
           </div>
         </section>
-        <h2>Media</h2>
-        <NewMedia />
+        <h2>Media:</h2>
+        <NewMedia genres={genres} />
       </main>
       <NewGenre setGenres={setGenres} />
     </>
