@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getFavorites } from '../api/apiFavorite';
 
 export const AuthContext = createContext();
 
@@ -7,11 +8,25 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(null);
+  const [userFavorites, setUserFavorites] = useState([]);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     setUser(storedUser);
   }, []);
+
+  useEffect(() => {
+    const loadFavorites = async () => {
+      try {
+        const response = await getFavorites(user.data.id, user.accessToken);
+
+        setUserFavorites(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    user?.data && loadFavorites();
+  }, [user]);
 
   const getUser = () => {
     return JSON.parse(localStorage.getItem('user'));
@@ -47,6 +62,8 @@ export const AuthProvider = ({ children }) => {
     loginUser,
     logoutUser,
     userIsAuthenticated,
+    userFavorites,
+    setUserFavorites,
   };
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

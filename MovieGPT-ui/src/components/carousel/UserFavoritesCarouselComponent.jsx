@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { FavoriteCard } from './FavoriteCard';
 import { getMovies } from '../api/apiMovies';
-import { getFavorites } from '../api/apiFavorite';
 
 const getCardsPerSlide = () => {
   if (window.innerWidth >= 992) return 4;
@@ -11,10 +10,9 @@ const getCardsPerSlide = () => {
 };
 
 export const UserFavoritesCarousel = () => {
-  const { user } = useAuth();
+  const { userFavorites } = useAuth();
   const [movieData, setMovieData] = useState([]);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
-  const [favoritesMedia, setFavoritesMedia] = useState([]);
   const [cardsPerSlide, setCardsPerSlide] = useState(getCardsPerSlide);
 
   useEffect(() => {
@@ -26,20 +24,6 @@ export const UserFavoritesCarousel = () => {
         console.log(error);
       });
   }, []);
-
-  useEffect(() => {
-    if (user) {
-      const token = user.accessToken;
-
-      getFavorites(user.data.id, token)
-        .then((response) => {
-          setFavoritesMedia(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [user]);
 
   useEffect(() => {
     setRecommendedMovies(() => {
@@ -65,12 +49,12 @@ export const UserFavoritesCarousel = () => {
     return slide;
   };
 
-  const allSlides = slideMedia(favoritesMedia.length !== 0 ? favoritesMedia : recommendedMovies, cardsPerSlide);
+  const allSlides = slideMedia(userFavorites.length !== 0 ? userFavorites : recommendedMovies, cardsPerSlide);
 
   return (
     <>
       <div>
-        <h2>{favoritesMedia.length > 0 ? 'Your Favorites' : 'Trending for You'}</h2>
+        <h2>{userFavorites.length > 0 ? 'Your Favorites' : 'Trending for You'}</h2>
         <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
           <div className="carousel-inner">
             {allSlides.map((mediaGroup, index) => (
@@ -79,12 +63,13 @@ export const UserFavoritesCarousel = () => {
                   {mediaGroup.map((media) => (
                     <div key={media.id} className="col-lg-3 col-md-4 col-6">
                       <FavoriteCard
+                        media={media}
                         mediaId={media.id}
                         thumbnail={media.thumbnailUrl}
                         title={media.title}
                         genres={media.genres}
                         releaseYear={media.releaseYear}
-                        userFavorites={favoritesMedia}
+                        userFavorites={userFavorites}
                       />
                     </div>
                   ))}
