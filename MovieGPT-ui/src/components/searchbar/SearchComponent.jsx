@@ -7,6 +7,7 @@ import '../../cssStyles/SearchComponent.css';
 import { MovieCardComponent } from '../movie-card/MovieCardComponent';
 import { getGenres, getMovies } from '../api/apiMovies';
 import { Alert } from 'react-bootstrap';
+import { UserFavoritesCarousel } from '../carousel/UserFavoritesCarouselComponent';
 
 export const SearchComponent = () => {
   const [movieData, setMovieData] = useState([]);
@@ -120,6 +121,8 @@ export const SearchComponent = () => {
           Loading movies...
         </Alert>
       )}
+
+      <UserFavoritesCarousel/>
 
       <div className="ReturnedMovieCard">
         {!isLoading &&
