@@ -7,23 +7,6 @@ import { FaMinus } from 'react-icons/fa';
 
 import styles from '../../scss/admin.module.scss';
 
-// @Size(min = 1, max = 50, message = "Title's length must be 1 to 50 characters")
-//   @NotNull(message = "Description must be provided")
-//   private String title;
-//   @Size(min = 1, max = 500, message = "Description's length must be 1 to 500 characters")
-//   private String description;
-//   @NotNull(message = "Image url must be provided")
-//   private String imageUrl;
-//   @NotNull(message = "Thumbnail url must be provided")
-//   private String thumbnailUrl;
-//   @NotNull(message = "Release year must be provided")
-//   private Integer releaseYear;
-//   @NotNull(message = "Media type must be provided")
-//   @Enumerated(EnumType.STRING)
-//   private MediaType mediaType;
-//   @NotNull(message = "Genre(s) must be provided")
-//   private Set<GenreDto> genres = new HashSet<>();
-
 export const NewMedia = ({ genres }) => {
   const Auth = useAuth();
   const [mediaFormData, setMediaFormData] = useState({
@@ -38,7 +21,6 @@ export const NewMedia = ({ genres }) => {
   const [genresCount, setGenresCount] = useState(1);
   const [genreSelectError, setGenreSelectError] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
-  console.log(mediaFormData);
 
   const handleMediaFormChange = (e) => {
     const { name, value } = e.target;
@@ -138,7 +120,7 @@ export const NewMedia = ({ genres }) => {
           />
         </Form.Group>
         <div className="row justify-content-between">
-          <div className="col-5">
+          <div className="col-7">
             <Form.Group controlId="formYear" className="mb-3 d-flex align-items-end">
               <Form.Control
                 className="form-input"
@@ -229,14 +211,12 @@ export const NewMedia = ({ genres }) => {
           </div>
           {genreSelectError && (
             <div className='container-fluid p-5"'>
-              <Alert variant="danger" className="">
-                {genreSelectError}
-              </Alert>
+              <Alert variant="danger">{genreSelectError}</Alert>
             </div>
           )}
         </div>
 
-        <button type="submit" className="btn btn-primary px-5 py-2">
+        <button type="submit" className="btn btn-primary px-5 py-2 my-4">
           Create
         </button>
       </Form>

@@ -1,27 +1,35 @@
-import { Form } from 'react-bootstrap';
+import { Form, Alert } from 'react-bootstrap';
 import { useAuth } from '../../components/context/AuthContext';
 
 import styles from '../../scss/admin.module.scss';
 import { createGenre } from '../../components/api/apiMovies';
 import { useState } from 'react';
 
-export const NewGenre = ({ setGenres }) => {
+export const NewGenre = ({ setGenres, setGenreError }) => {
   const Auth = useAuth();
   const [genreName, setGenreName] = useState('');
+  const [submitError, setSubmitError] = useState('');
 
   const handleGenreNameChange = (e) => {
+    setSubmitError('');
     setGenreName(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setGenreError('');
+
+    if (!genreName.trim()) {
+      setSubmitError('Genre name is required.');
+      return;
+    }
     const adminToken = Auth.user.accessToken;
+
     try {
       const response = await createGenre(genreName, adminToken);
       setGenres((prevGenres) => [...prevGenres, response.data]);
-      setModalClose(true);
     } catch (error) {
-      console.error(error);
+      setGenreError(error.response?.data?.message || 'An error occurred while creating the genre.');
     }
   };
 
@@ -36,7 +44,8 @@ export const NewGenre = ({ setGenres }) => {
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
           </div>
           <div className="modal-body">
-            <Form onSubmit={handleSubmit}>
+            {submitError && <Alert>{submitError}</Alert>}
+            <Form onSubmit={handleSubmit} noValidate>
               <Form.Group controlId="formGenreName" className="mb-3">
                 <Form.Control
                   className="form-input"

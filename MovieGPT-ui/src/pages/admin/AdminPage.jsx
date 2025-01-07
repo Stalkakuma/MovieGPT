@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { deleteGenre, getGenres } from '../../components/api/apiMovies';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { CiCirclePlus } from 'react-icons/ci';
+import { Alert } from 'react-bootstrap';
+
 import styles from '../../scss/admin.module.scss';
 import { useAuth } from '../../components/context/AuthContext';
 
@@ -10,7 +12,7 @@ import { NewMedia } from './NewMedia';
 
 export const AdminPage = () => {
   const Auth = useAuth();
-  const [error, setError] = useState('');
+  const [genreError, setGenreError] = useState('');
   const [genres, setGenres] = useState([]);
 
   const loadData = useCallback(async () => {
@@ -38,6 +40,7 @@ export const AdminPage = () => {
       <main className="container-fluid px-4">
         <h1>Admin Page</h1>
         <h2 className="my-4">Genres:</h2>
+        {genreError && <Alert variant="danger">{genreError}</Alert>}
         <section className="row justify-content-center row-cols-3 row-cols-md-6 gap-3 g-0">
           {genres.map((genre) => {
             return (
@@ -56,7 +59,7 @@ export const AdminPage = () => {
         <h2 className="my-4">Media:</h2>
         <NewMedia genres={genres} />
       </main>
-      <NewGenre setGenres={setGenres} />
+      <NewGenre setGenres={setGenres} setGenreError={setGenreError} />
     </>
   );
 };
