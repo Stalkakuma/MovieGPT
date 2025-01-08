@@ -95,8 +95,8 @@ export const NewMedia = ({ genres }) => {
 
     mediaFormData.releaseYear < 1880
       ? (submitFormErrors.releaseYearError = 'Release year must be 1880 or higher')
-      : mediaFormData.releaseYear > thisYear
-      ? (submitFormErrors.releaseYearError = 'You cannot publish movies from the future!')
+      : mediaFormData.releaseYear > thisYear + 5
+      ? (submitFormErrors.releaseYearError = 'Release year should be within 5 years from today')
       : 'Publishing year is invalid';
 
     mediaFormData.genres.length === 0 ? (submitFormErrors.genresError = 'At least one Genre must be selected') : '';
