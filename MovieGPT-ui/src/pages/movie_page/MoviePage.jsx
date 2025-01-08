@@ -31,6 +31,10 @@ export const MoviePage = () => {
     fetchMovieData();
   }, [id]);
 
+  const updateMovieData = (updatedMovie) => {
+    setMovieData(updatedMovie);
+  };
+
   if (isLoading) {
     return (
       <div className="text-center my-5">
@@ -53,7 +57,7 @@ export const MoviePage = () => {
     <Container fluid className="movie-page">
       {user?.data?.roles?.includes('ADMIN') && (
         <div className="d-inline-flex justify-content-end w-100">
-          <AdminButtons movieData={movieData}></AdminButtons>
+          <AdminButtons movieData={movieData} updateMovieData={updateMovieData} />
         </div>
       )}
       <Row className="justify-content-center align-items-center">

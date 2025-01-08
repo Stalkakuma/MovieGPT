@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 
 const DeletionModal = ({ show, onClose, onConfirm, movieTitle }) => {
   return (
-    <Modal show={show} onHide={onClose} >
+    <Modal show={show} onHide={onClose} className="mt-5">
       <Modal.Header closeButton className="bg-dark pe-5 ps-5">
         <Modal.Title className="color-danger">Confirm Deletion</Modal.Title>
       </Modal.Header>
@@ -14,7 +14,7 @@ const DeletionModal = ({ show, onClose, onConfirm, movieTitle }) => {
         <p>
           <strong>{movieTitle}</strong>
         </p>
-        <p className="text-danger">This action can not be undone.</p>
+        <p className="text-danger"><strong>This action can not be undone.</strong></p>
       </Modal.Body>
       <Modal.Footer className="d-flex justify-content-between bg-dark">
         <Button variant="secondary" onClick={onClose}>

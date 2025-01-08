@@ -7,7 +7,7 @@ import { useAuth } from '../../components/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import EditMovieModal from './EditMovieModal';
 
-export const AdminButtons = ({ movieData }) => {
+export const AdminButtons = ({ movieData, updateMovieData }) => {
   const [showModal, setShowModal] = useState(false);
   const [showDeletionToast, setShowDeletionToast] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
@@ -68,6 +68,7 @@ export const AdminButtons = ({ movieData }) => {
       setShowSuccessToast(true);
       setShowEditModal(false);
       setTimeout(() => setShowSuccessToast(false), 3000);
+      updateMovieData(movieToUpdate);
     } catch (error) {
       setShowEditModal(false);
       setError('Failed to update movie. Please try again.');
@@ -117,7 +118,6 @@ export const AdminButtons = ({ movieData }) => {
         onClose={handleCloseModal}
         onConfirm={handleConfirmDelete}
         movieTitle={movieData.title}
-        className="position-absolute top-50 start-50 translate-middle"
       />
 
       <ToastContainer
@@ -125,27 +125,29 @@ export const AdminButtons = ({ movieData }) => {
         className="bg-success-subtle opacity-100 text-secondary-emphasis rounded-3 mt-3"
       >
         <Toast show={showDeletionToast} onClose={() => setShowDeletionToast(false)} delay={3000} autohide>
-          <Toast.Body>{movieData.title} deleted successfully!</Toast.Body>
+          <Toast.Body>
+            <strong>{movieData.title} deleted successfully!</strong>
+          </Toast.Body>
         </Toast>
       </ToastContainer>
 
       {error && (
         <ToastContainer
           position="top-center"
-          className="bg-danger-subtle opacity-100 text-danger rounded-3 border-danger  mt-3"
+          className="bg-danger-subtle opacity-100 text-danger rounded-3 border-danger mt-3"
         >
           <Toast delay={3000} autohide>
-            <Toast.Body>{error}</Toast.Body>
+            <Toast.Body><strong>{error}</strong></Toast.Body>
           </Toast>
         </ToastContainer>
       )}
 
       <ToastContainer
         position="top-center"
-        className="bg-success-subtle opacity-100 text-secondary-emphasis rounded-3  mt-3"
+        className="bg-success-subtle opacity-100 text-secondary-emphasis rounded-3 mt-3"
       >
         <Toast show={showSuccessToast} onClose={() => setShowSuccessToast(false)} delay={3000} autohide>
-          <Toast.Body>Movie updated successfully!</Toast.Body>
+          <Toast.Body><strong>Movie updated successfully!</strong></Toast.Body>
         </Toast>
       </ToastContainer>
 
@@ -157,7 +159,6 @@ export const AdminButtons = ({ movieData }) => {
         handleSubmit={handleSubmit}
         availableGenres={availableGenres}
         selectedGenres={updatedMovie.genres}
-        className="position-absolute top-50 start-50 translate-middle"
       />
     </div>
   );
