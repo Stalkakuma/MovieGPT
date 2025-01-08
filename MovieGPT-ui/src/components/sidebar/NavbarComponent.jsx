@@ -1,4 +1,4 @@
-import { FaHome, FaStar, FaUser } from 'react-icons/fa';
+import { FaHome, FaUser } from 'react-icons/fa';
 import { useAuth } from '../../components/context/AuthContext';
 import { FaGear } from 'react-icons/fa6';
 
@@ -28,11 +28,6 @@ export const NavbarComponent = () => {
             <li>
               <a href="/" className={`${styles.navItem}`}>
                 <FaHome size={24} />
-              </a>
-            </li>
-            <li>
-              <a href="/*" className={`${styles.navItem}`}>
-                <FaStar size={24} />
               </a>
             </li>
             <li className=" position-relative">

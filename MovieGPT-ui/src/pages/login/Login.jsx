@@ -46,7 +46,7 @@ export const Login = () => {
       <img src={svg} alt="movie svg" />
       {isAuthenticated && (
         <Container className="form-container" style={{ maxWidth: '400px' }}>
-          <Alert variant="success" className="text-center">
+          <Alert variant="success" className="text-center mt-3">
             Already logged in
           </Alert>
           <Button variant="primary" className="w-100 form-button" onClick={handleLogout}>
@@ -57,7 +57,11 @@ export const Login = () => {
       {!isAuthenticated && (
         <Container className="form-container" style={{ maxWidth: '400px' }}>
           <h3 className="text-right">Login</h3>
-          {error && <Alert variant="danger" className="alert">{error}</Alert>}
+          {error && (
+            <Alert variant="danger" className="alert">
+              {error}
+            </Alert>
+          )}
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formUsername" className="mb-3">
               <Form.Control
