@@ -112,9 +112,10 @@ export const SearchComponent = () => {
         </Alert>
       )}
 
-      {filteredMovies.length === 0 && !error && (
-        <Alert className="fs-5">No movies found matching your search criteria.</Alert>
-      )}
+{filteredMovies.length === 0 && !error && (searchQuery || genreFilter) && (
+  <Alert className="fs-5">No movies found matching your search criteria.</Alert>
+)}
+
 
       {isLoading && (
         <Alert variant="success" className="fs-5">
