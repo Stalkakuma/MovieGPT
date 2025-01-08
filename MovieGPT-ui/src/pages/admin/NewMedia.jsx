@@ -18,12 +18,30 @@ export const NewMedia = ({ genres }) => {
     mediaType: '',
     genres: [],
   });
+
+  const [mediaFormErrors, setMediaFormErrors] = useState({
+    tittleError: '',
+    descriptionError: '',
+    iUrlError: '',
+    thumbUrlError: '',
+    mediaTypeError: '',
+  });
+
   const [genresCount, setGenresCount] = useState(1);
   const [genreSelectError, setGenreSelectError] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
 
   const handleMediaFormChange = (e) => {
     const { name, value } = e.target;
+    setResponseMessage('');
+    setMediaFormErrors({
+      ...mediaFormErrors,
+      tittleError: '',
+      descriptionError: '',
+      iUrlError: '',
+      thumbUrlError: '',
+      mediaTypeError: '',
+    });
     setMediaFormData({
       ...mediaFormData,
       [name]: value,
@@ -32,6 +50,7 @@ export const NewMedia = ({ genres }) => {
 
   const handleMediaTypeChange = (e) => {
     e.preventDefault();
+
     setMediaFormData({
       ...mediaFormData,
       mediaType: e.target.name === 'movie' ? 'MOVIE' : 'SERIES',
@@ -54,13 +73,25 @@ export const NewMedia = ({ genres }) => {
 
   const handleMediaSubmit = async (e) => {
     e.preventDefault();
-    setResponseMessage('');
     const adminToken = Auth.user.accessToken;
-    try {
-      const response = await createMedia(mediaFormData, adminToken);
-      response.status === 201 && setResponseMessage('Media created successfully!');
-    } catch (error) {
-      setResponseMessage(error);
+    setResponseMessage('');
+    const submitFormErrors = {};
+
+    mediaFormData.title.length > 50
+      ? (submitFormErrors.tittleError = 'Title must be less than 50 characters')
+      : mediaFormData.title.length <= 0
+      ? (submitFormErrors.tittleError = 'Title cannot be empty')
+      : 'Title is invalid';
+
+    if (Object.keys(submitFormErrors).length > 0) {
+      setMediaFormErrors({ ...mediaFormErrors, ...submitFormErrors });
+    } else {
+      try {
+        const response = await createMedia(mediaFormData, adminToken);
+        response.status === 201 && setResponseMessage('Media created successfully!');
+      } catch (error) {
+        setResponseMessage(error.message);
+      }
     }
   };
 
@@ -85,7 +116,11 @@ export const NewMedia = ({ genres }) => {
             onChange={handleMediaFormChange}
             required
           />
+          <Alert className="p-0" variant="danger">
+            {mediaFormErrors.tittleError}
+          </Alert>
         </Form.Group>
+
         <Form.Group controlId="formDescription" className="mb-3">
           <textarea
             className="form-control"
