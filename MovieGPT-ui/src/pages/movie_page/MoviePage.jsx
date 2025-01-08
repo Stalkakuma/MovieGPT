@@ -5,6 +5,7 @@ import { Container, Row, Col, Image, Spinner, Alert, Badge } from 'react-bootstr
 import '../../scss/movie_page.scss';
 import { useAuth } from '../../components/context/AuthContext';
 import { AdminButtons } from './AdminButtons';
+import { CommentsComponent } from '../../components/comments/CommentsComponent';
 
 export const MoviePage = () => {
   const { id } = useParams();
@@ -54,6 +55,7 @@ export const MoviePage = () => {
   }
 
   return (
+ <>
     <Container fluid className="movie-page">
       {user?.data?.roles?.includes('ADMIN') && (
         <div className="d-inline-flex justify-content-end w-100">
@@ -97,5 +99,7 @@ export const MoviePage = () => {
         </Col>
       </Row>
     </Container>
+      <CommentsComponent mediaId={id} />
+    </>
   );
 };

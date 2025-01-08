@@ -9,6 +9,7 @@ import styles from '../../scss/admin.module.scss';
 
 export const NewMedia = ({ genres }) => {
   const Auth = useAuth();
+  const thisYear = new Date().getFullYear();
   const [mediaFormData, setMediaFormData] = useState({
     title: '',
     description: '',
@@ -18,12 +19,30 @@ export const NewMedia = ({ genres }) => {
     mediaType: '',
     genres: [],
   });
+
+  const [mediaFormErrors, setMediaFormErrors] = useState({
+    tittleError: '',
+    descriptionError: '',
+    releaseYearError: '',
+    mediaTypeError: '',
+    genresError: '',
+  });
+
   const [genresCount, setGenresCount] = useState(1);
   const [genreSelectError, setGenreSelectError] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
 
   const handleMediaFormChange = (e) => {
     const { name, value } = e.target;
+    setResponseMessage('');
+    setMediaFormErrors({
+      ...mediaFormErrors,
+      tittleError: '',
+      descriptionError: '',
+      releaseYearError: '',
+      mediaTypeError: '',
+      genresError: '',
+    });
     setMediaFormData({
       ...mediaFormData,
       [name]: value,
@@ -32,6 +51,9 @@ export const NewMedia = ({ genres }) => {
 
   const handleMediaTypeChange = (e) => {
     e.preventDefault();
+
+    setMediaFormErrors({ ...mediaFormErrors, mediaTypeError: '' });
+
     setMediaFormData({
       ...mediaFormData,
       mediaType: e.target.name === 'movie' ? 'MOVIE' : 'SERIES',
@@ -41,6 +63,7 @@ export const NewMedia = ({ genres }) => {
   const handleGenreSelect = (index, selectedGenre, e) => {
     e.preventDefault();
     setGenreSelectError('');
+    setMediaFormErrors({ ...mediaFormErrors, genresError: '' });
     setMediaFormData((prev) => {
       if (prev.genres.some((genre) => genre?.id === selectedGenre.id)) {
         setGenreSelectError(`The genre ${selectedGenre.name} has already been selected.`);
@@ -54,13 +77,44 @@ export const NewMedia = ({ genres }) => {
 
   const handleMediaSubmit = async (e) => {
     e.preventDefault();
-    setResponseMessage('');
     const adminToken = Auth.user.accessToken;
-    try {
-      const response = await createMedia(mediaFormData, adminToken);
-      response.status === 201 && setResponseMessage('Media created successfully!');
-    } catch (error) {
-      setResponseMessage(error);
+    setResponseMessage('');
+    const submitFormErrors = {};
+
+    mediaFormData.title.length > 50
+      ? (submitFormErrors.tittleError = 'Title must be less than 50 characters')
+      : mediaFormData.title.length <= 0
+      ? (submitFormErrors.tittleError = 'Title cannot be empty')
+      : 'Title is invalid';
+
+    mediaFormData.description.length > 500
+      ? (submitFormErrors.descriptionError = 'Description must be less than 500 characters')
+      : mediaFormData.description.length <= 0
+      ? (submitFormErrors.descriptionError = 'Description cannot be empty')
+      : 'Description is invalid';
+
+    mediaFormData.releaseYear < 1880
+      ? (submitFormErrors.releaseYearError = 'Release year must be 1880 or higher')
+      : mediaFormData.releaseYear > thisYear
+      ? (submitFormErrors.releaseYearError = 'You cannot publish movies from the future!')
+      : 'Publishing year is invalid';
+
+    mediaFormData.genres.length === 0 ? (submitFormErrors.genresError = 'At least one Genre must be selected') : '';
+    !mediaFormData.mediaType ? (submitFormErrors.mediaTypeError = 'Must select Media type') : '';
+
+    if (Object.keys(submitFormErrors).length > 0) {
+      setMediaFormErrors({ ...mediaFormErrors, ...submitFormErrors });
+    } else {
+      try {
+        const response = await createMedia(mediaFormData, adminToken);
+        response.status === 201 && setResponseMessage('Media created successfully!');
+      } catch (error) {
+        setResponseMessage(
+          error.status === 409
+            ? 'Duplicated data error, try changing one of the fields'
+            : error.message || 'An unexpected error occurred.',
+        );
+      }
     }
   };
 
@@ -83,9 +137,14 @@ export const NewMedia = ({ genres }) => {
             name="title"
             value={mediaFormData.title}
             onChange={handleMediaFormChange}
-            required
           />
+          {mediaFormErrors.tittleError && (
+            <Alert className="p-0" variant="danger">
+              {mediaFormErrors.tittleError}
+            </Alert>
+          )}
         </Form.Group>
+
         <Form.Group controlId="formDescription" className="mb-3">
           <textarea
             className="form-control"
@@ -96,6 +155,11 @@ export const NewMedia = ({ genres }) => {
             value={mediaFormData.description}
             onChange={handleMediaFormChange}
           />
+          {mediaFormErrors.descriptionError && (
+            <Alert className="p-0" variant="danger">
+              {mediaFormErrors.descriptionError}
+            </Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formImage" className="mb-3">
           <Form.Control
@@ -124,8 +188,6 @@ export const NewMedia = ({ genres }) => {
             <Form.Group controlId="formYear" className="mb-3 d-flex align-items-end">
               <Form.Control
                 className="form-input"
-                min="1880"
-                max="2099"
                 type="number"
                 name="releaseYear"
                 value={mediaFormData.releaseYear}
@@ -135,6 +197,11 @@ export const NewMedia = ({ genres }) => {
               <span className="mx-2"> Publication </span>
               <span> Year.</span>
             </Form.Group>
+            {mediaFormErrors.releaseYearError && (
+              <Alert className="p-0" variant="danger">
+                {mediaFormErrors.releaseYearError}
+              </Alert>
+            )}
           </div>
 
           <div className="col-5">
@@ -166,6 +233,7 @@ export const NewMedia = ({ genres }) => {
                 </ul>
               </div>
             </Form.Group>
+            {mediaFormErrors.mediaTypeError && <Alert variant="danger">{mediaFormErrors.mediaTypeError}</Alert>}
           </div>
 
           <div className="container-fluid d-flex justify-content-center">
@@ -208,6 +276,7 @@ export const NewMedia = ({ genres }) => {
                 </div>
               </Form.Group>
             ))}
+            {mediaFormErrors.genresError && <Alert variant="danger">{mediaFormErrors.genresError}</Alert>}
           </div>
           {genreSelectError && (
             <div className='container-fluid p-5"'>
