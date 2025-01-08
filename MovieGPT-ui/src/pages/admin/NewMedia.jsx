@@ -9,6 +9,7 @@ import styles from '../../scss/admin.module.scss';
 
 export const NewMedia = ({ genres }) => {
   const Auth = useAuth();
+  const thisYear = new Date().getFullYear();
   const [mediaFormData, setMediaFormData] = useState({
     title: '',
     description: '',
@@ -22,8 +23,7 @@ export const NewMedia = ({ genres }) => {
   const [mediaFormErrors, setMediaFormErrors] = useState({
     tittleError: '',
     descriptionError: '',
-    iUrlError: '',
-    thumbUrlError: '',
+    releaseYearError: '',
     mediaTypeError: '',
   });
 
@@ -38,8 +38,7 @@ export const NewMedia = ({ genres }) => {
       ...mediaFormErrors,
       tittleError: '',
       descriptionError: '',
-      iUrlError: '',
-      thumbUrlError: '',
+      releaseYearError: '',
       mediaTypeError: '',
     });
     setMediaFormData({
@@ -77,8 +76,6 @@ export const NewMedia = ({ genres }) => {
     setResponseMessage('');
     const submitFormErrors = {};
 
-    console.log(mediaFormData.description.length);
-
     mediaFormData.title.length > 50
       ? (submitFormErrors.tittleError = 'Title must be less than 50 characters')
       : mediaFormData.title.length <= 0
@@ -90,6 +87,12 @@ export const NewMedia = ({ genres }) => {
       : mediaFormData.description.length <= 0
       ? (submitFormErrors.descriptionError = 'Description cannot be empty')
       : 'Description is invalid';
+
+    mediaFormData.releaseYear < 1880
+      ? (submitFormErrors.releaseYearError = 'Release year must be 1880 or higher')
+      : mediaFormData.releaseYear > thisYear
+      ? (submitFormErrors.releaseYearError = 'You cannot publish movies from the future!')
+      : 'Publishing year is invalid';
 
     if (Object.keys(submitFormErrors).length > 0) {
       setMediaFormErrors({ ...mediaFormErrors, ...submitFormErrors });
@@ -173,8 +176,6 @@ export const NewMedia = ({ genres }) => {
             <Form.Group controlId="formYear" className="mb-3 d-flex align-items-end">
               <Form.Control
                 className="form-input"
-                min="1880"
-                max="2099"
                 type="number"
                 name="releaseYear"
                 value={mediaFormData.releaseYear}
@@ -184,6 +185,11 @@ export const NewMedia = ({ genres }) => {
               <span className="mx-2"> Publication </span>
               <span> Year.</span>
             </Form.Group>
+            {mediaFormErrors.releaseYearError && (
+              <Alert className="p-0" variant="danger">
+                {mediaFormErrors.releaseYearError}
+              </Alert>
+            )}
           </div>
 
           <div className="col-5">
