@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { Container, Row, Col, Image, Spinner, Alert, Badge } from "react-bootstrap";
-import "../../scss/movie_page.scss";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { Container, Row, Col, Image, Spinner, Alert, Badge } from 'react-bootstrap';
+import '../../scss/movie_page.scss';
+import { CommentsComponent } from '../../components/comments/CommentsComponent';
 
 export const MoviePage = () => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ export const MoviePage = () => {
           setMovieData(response.data);
         }
       } catch (error) {
-        console.error("Error fetching movie data:", error);
+        console.error('Error fetching movie data:', error);
         setError(true);
       } finally {
         setIsLoading(false);
@@ -47,39 +48,42 @@ export const MoviePage = () => {
   }
 
   return (
-    <Container fluid className="movie-page">
-      <Row className="justify-content-center align-items-center">
-        <Col xs={12} lg={5} className="text-center text-lg-end mb-4 mb-lg-0">
-          <Image
-            src={movieData.imageUrl || "https://via.placeholder.com/400x600"}
-            alt={`${movieData.title} Poster`}
-            fluid
-            className="movie-poster"
-          />
-        </Col>
-        <Col xs={12} lg={7} className="movie-details">
-          <h1 className="movie-title mb-3">{movieData.title}</h1>
-          <p>
-            <strong>Release Year:</strong> {movieData.releaseYear || "N/A"}
-          </p>
-          <p>
-            <strong>Genres:</strong>{" "}
-            {movieData.genres?.length > 0
-              ? movieData.genres.map((genre, index) => (
-                  <Badge bg="secondary" key={index} className="me-2">
-                    {genre.name}
-                  </Badge>
-                ))
-              : "No Genres Available"}
-          </p>
-          <p>
-            <strong>Rating:</strong> {movieData.rating || "Not Rated"}
-          </p>
-          <p>
-            <strong>Description:</strong> {movieData.description || "No description available."}
-          </p>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <Container fluid className="movie-page">
+        <Row className="justify-content-center align-items-center">
+          <Col xs={12} lg={5} className="text-center text-lg-end mb-4 mb-lg-0">
+            <Image
+              src={movieData.imageUrl || 'https://via.placeholder.com/400x600'}
+              alt={`${movieData.title} Poster`}
+              fluid
+              className="movie-poster"
+            />
+          </Col>
+          <Col xs={12} lg={7} className="movie-details">
+            <h1 className="movie-title mb-3">{movieData.title}</h1>
+            <p>
+              <strong>Release Year:</strong> {movieData.releaseYear || 'N/A'}
+            </p>
+            <p>
+              <strong>Genres:</strong>{' '}
+              {movieData.genres?.length > 0
+                ? movieData.genres.map((genre, index) => (
+                    <Badge bg="secondary" key={index} className="me-2">
+                      {genre.name}
+                    </Badge>
+                  ))
+                : 'No Genres Available'}
+            </p>
+            <p>
+              <strong>Rating:</strong> {movieData.rating || 'Not Rated'}
+            </p>
+            <p>
+              <strong>Description:</strong> {movieData.description || 'No description available.'}
+            </p>
+          </Col>
+        </Row>
+      </Container>
+      <CommentsComponent mediaId={id} />
+    </>
   );
 };
