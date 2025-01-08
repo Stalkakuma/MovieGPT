@@ -128,7 +128,9 @@ export const Register = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              isInvalid={emailError !== ''}
             />
+            <Form.Control.Feedback type="invalid">{emailError}</Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formPassword" className="mb-3">
             <Form.Control
