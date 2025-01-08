@@ -77,11 +77,19 @@ export const NewMedia = ({ genres }) => {
     setResponseMessage('');
     const submitFormErrors = {};
 
+    console.log(mediaFormData.description.length);
+
     mediaFormData.title.length > 50
       ? (submitFormErrors.tittleError = 'Title must be less than 50 characters')
       : mediaFormData.title.length <= 0
       ? (submitFormErrors.tittleError = 'Title cannot be empty')
       : 'Title is invalid';
+
+    mediaFormData.description.length > 500
+      ? (submitFormErrors.descriptionError = 'Description must be less than 500 characters')
+      : mediaFormData.description.length <= 0
+      ? (submitFormErrors.descriptionError = 'Description cannot be empty')
+      : 'Description is invalid';
 
     if (Object.keys(submitFormErrors).length > 0) {
       setMediaFormErrors({ ...mediaFormErrors, ...submitFormErrors });
@@ -90,7 +98,11 @@ export const NewMedia = ({ genres }) => {
         const response = await createMedia(mediaFormData, adminToken);
         response.status === 201 && setResponseMessage('Media created successfully!');
       } catch (error) {
-        setResponseMessage(error.message);
+        setResponseMessage(
+          error.status === 409
+            ? 'Duplicated data error, try changing one of the fields'
+            : error.message || 'An unexpected error occurred.',
+        );
       }
     }
   };
@@ -114,7 +126,6 @@ export const NewMedia = ({ genres }) => {
             name="title"
             value={mediaFormData.title}
             onChange={handleMediaFormChange}
-            required
           />
           <Alert className="p-0" variant="danger">
             {mediaFormErrors.tittleError}
@@ -131,6 +142,9 @@ export const NewMedia = ({ genres }) => {
             value={mediaFormData.description}
             onChange={handleMediaFormChange}
           />
+          <Alert className="p-0" variant="danger">
+            {mediaFormErrors.descriptionError}
+          </Alert>
         </Form.Group>
         <Form.Group controlId="formImage" className="mb-3">
           <Form.Control
