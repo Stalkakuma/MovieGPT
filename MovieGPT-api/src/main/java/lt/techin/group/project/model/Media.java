@@ -49,6 +49,10 @@ public class Media {
     @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "favoritesMedia", fetch = FetchType.EAGER)
+    private Set<User> users;
+
     public MediaDto toDto() {
         return new MediaDto(this);
     }
@@ -59,6 +63,10 @@ public class Media {
             genre.getMedias().remove(this);
         }
         genres.clear();
+
+        for (User user : users) {
+            user.getFavoritesMedia().remove(this);
+        }
     }
 
 }
