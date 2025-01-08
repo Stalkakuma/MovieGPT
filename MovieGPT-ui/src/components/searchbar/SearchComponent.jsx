@@ -92,7 +92,7 @@ export const SearchComponent = () => {
 
           <Dropdown className="genre-dropdown">
             <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-              All Genres
+              {genreFilter ? genreFilter.name : 'All Genres'}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -112,10 +112,9 @@ export const SearchComponent = () => {
         </Alert>
       )}
 
-{filteredMovies.length === 0 && !error && (searchQuery || genreFilter) && (
-  <Alert className="fs-5">No movies found matching your search criteria.</Alert>
-)}
-
+      {filteredMovies.length === 0 && !error && (searchQuery || genreFilter) && (
+        <Alert className="fs-5">No movies found matching your search criteria.</Alert>
+      )}
 
       {isLoading && (
         <Alert variant="success" className="fs-5">
