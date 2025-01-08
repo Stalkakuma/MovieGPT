@@ -52,6 +52,8 @@ export const NewMedia = ({ genres }) => {
   const handleMediaTypeChange = (e) => {
     e.preventDefault();
 
+    setMediaFormErrors({ ...mediaFormErrors, mediaTypeError: '' });
+
     setMediaFormData({
       ...mediaFormData,
       mediaType: e.target.name === 'movie' ? 'MOVIE' : 'SERIES',
@@ -61,6 +63,7 @@ export const NewMedia = ({ genres }) => {
   const handleGenreSelect = (index, selectedGenre, e) => {
     e.preventDefault();
     setGenreSelectError('');
+    setMediaFormErrors({ ...mediaFormErrors, genresError: '' });
     setMediaFormData((prev) => {
       if (prev.genres.some((genre) => genre?.id === selectedGenre.id)) {
         setGenreSelectError(`The genre ${selectedGenre.name} has already been selected.`);
@@ -97,6 +100,7 @@ export const NewMedia = ({ genres }) => {
       : 'Publishing year is invalid';
 
     mediaFormData.genres.length === 0 ? (submitFormErrors.genresError = 'At least one Genre must be selected') : '';
+    !mediaFormData.mediaType ? (submitFormErrors.mediaTypeError = 'Must select Media type') : '';
 
     if (Object.keys(submitFormErrors).length > 0) {
       setMediaFormErrors({ ...mediaFormErrors, ...submitFormErrors });
@@ -229,6 +233,7 @@ export const NewMedia = ({ genres }) => {
                 </ul>
               </div>
             </Form.Group>
+            {mediaFormErrors.mediaTypeError && <Alert variant="danger">{mediaFormErrors.mediaTypeError}</Alert>}
           </div>
 
           <div className="container-fluid d-flex justify-content-center">
