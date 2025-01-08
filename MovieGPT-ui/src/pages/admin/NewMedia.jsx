@@ -25,6 +25,7 @@ export const NewMedia = ({ genres }) => {
     descriptionError: '',
     releaseYearError: '',
     mediaTypeError: '',
+    genresError: '',
   });
 
   const [genresCount, setGenresCount] = useState(1);
@@ -40,6 +41,7 @@ export const NewMedia = ({ genres }) => {
       descriptionError: '',
       releaseYearError: '',
       mediaTypeError: '',
+      genresError: '',
     });
     setMediaFormData({
       ...mediaFormData,
@@ -94,6 +96,8 @@ export const NewMedia = ({ genres }) => {
       ? (submitFormErrors.releaseYearError = 'You cannot publish movies from the future!')
       : 'Publishing year is invalid';
 
+    mediaFormData.genres.length === 0 ? (submitFormErrors.genresError = 'At least one Genre must be selected') : '';
+
     if (Object.keys(submitFormErrors).length > 0) {
       setMediaFormErrors({ ...mediaFormErrors, ...submitFormErrors });
     } else {
@@ -130,9 +134,11 @@ export const NewMedia = ({ genres }) => {
             value={mediaFormData.title}
             onChange={handleMediaFormChange}
           />
-          <Alert className="p-0" variant="danger">
-            {mediaFormErrors.tittleError}
-          </Alert>
+          {mediaFormErrors.tittleError && (
+            <Alert className="p-0" variant="danger">
+              {mediaFormErrors.tittleError}
+            </Alert>
+          )}
         </Form.Group>
 
         <Form.Group controlId="formDescription" className="mb-3">
@@ -145,9 +151,11 @@ export const NewMedia = ({ genres }) => {
             value={mediaFormData.description}
             onChange={handleMediaFormChange}
           />
-          <Alert className="p-0" variant="danger">
-            {mediaFormErrors.descriptionError}
-          </Alert>
+          {mediaFormErrors.descriptionError && (
+            <Alert className="p-0" variant="danger">
+              {mediaFormErrors.descriptionError}
+            </Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="formImage" className="mb-3">
           <Form.Control
@@ -263,6 +271,7 @@ export const NewMedia = ({ genres }) => {
                 </div>
               </Form.Group>
             ))}
+            {mediaFormErrors.genresError && <Alert variant="danger">{mediaFormErrors.genresError}</Alert>}
           </div>
           {genreSelectError && (
             <div className='container-fluid p-5"'>
