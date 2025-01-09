@@ -3,6 +3,7 @@ import { CommentCard } from './CommentCard';
 import { Spinner, Alert } from 'react-bootstrap';
 import { getComments } from '../api/apiComments';
 import { CommentAdd } from './CommentAdd';
+import styles from '../../scss/admin.module.scss';
 
 export const CommentsComponent = ({ mediaId }) => {
   const [comments, setComments] = useState([]);
@@ -45,14 +46,14 @@ export const CommentsComponent = ({ mediaId }) => {
   }
 
   return (
-    <div>
-      <h1>Comments</h1>
+    <section className={`text-start mt-4 py-4 ${styles.genreCard}`}>
+      <h2>Comments</h2>
+      <CommentAdd mediaId={mediaId} />
       {comments && comments.length > 0 ? (
         comments.map((comment) => <CommentCard key={comment.commentId} comment={comment} />)
       ) : (
         <p>No comments available.</p>
       )}
-      <CommentAdd mediaId={mediaId} />
-    </div>
+    </section>
   );
 };

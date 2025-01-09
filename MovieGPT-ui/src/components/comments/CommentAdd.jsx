@@ -19,9 +19,9 @@ export const CommentAdd = ({ mediaId }) => {
     }
 
     if (newComment.length > 300) {
-        setError('Comment cannot be more than 255 characters.');
-        return;
-      }
+      setError('Comment cannot be more than 255 characters.');
+      return;
+    }
 
     const commentData = {
       userComment: newComment,
@@ -48,7 +48,7 @@ export const CommentAdd = ({ mediaId }) => {
   };
 
   return (
-    <Card className="mb-3 bg-dark text-white">
+    <Card className="mb-3 py-3 bg-dark text-white sticky-top">
       {getUser() == null ? (
         <h2>
           Please <a href="/login">login</a> to leave a comment
@@ -61,7 +61,7 @@ export const CommentAdd = ({ mediaId }) => {
             <InputGroup>
               <Form.Control
                 as="textarea"
-                rows={1}
+                rows={2}
                 type="text"
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
