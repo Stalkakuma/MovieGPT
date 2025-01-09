@@ -28,13 +28,13 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
-
     public static final String COMMENTS = "/v1/comments/**";
     public static final String GENRES = "/v1/genres/**";
     public static final String MEDIA = "/v1/media/**";
+    public static final String FAVORITE = "/v1/favorite/**";
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
     public static final String ROLE_USER = "ROLE_USER";
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,8 +44,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers(HttpMethod.GET, GENRES, MEDIA, COMMENTS).permitAll()
-                                .requestMatchers(HttpMethod.POST, COMMENTS).hasAuthority(ROLE_USER)
+                                .requestMatchers(HttpMethod.GET, FAVORITE).hasAuthority(ROLE_USER)
+                                .requestMatchers(HttpMethod.POST, COMMENTS, FAVORITE).hasAuthority(ROLE_USER)
                                 .requestMatchers(HttpMethod.PUT, COMMENTS).hasAuthority(ROLE_USER)
+                                .requestMatchers(HttpMethod.DELETE, FAVORITE).hasAuthority(ROLE_USER)
                                 .requestMatchers(HttpMethod.POST, GENRES, MEDIA, COMMENTS).hasAuthority(ROLE_ADMIN)
                                 .requestMatchers(HttpMethod.DELETE, GENRES, MEDIA, COMMENTS).hasAuthority(ROLE_ADMIN)
                                 .requestMatchers(HttpMethod.PUT, GENRES, MEDIA, COMMENTS).hasAuthority(ROLE_ADMIN)

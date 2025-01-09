@@ -57,6 +57,6 @@ public class UserService {
         newUser.setRoles(Set.of(Roles.USER));
         userRepository.save(newUser);
 
-        return Map.of("message" , "User successfully created.");
+        return Map.of("message", "User successfully created.");
     }
 }

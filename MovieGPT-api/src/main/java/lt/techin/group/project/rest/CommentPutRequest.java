@@ -4,9 +4,11 @@ package lt.techin.group.project.rest;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lt.techin.group.project.model.User;
 
+@AllArgsConstructor
 @Data
 public class CommentPutRequest {
 
@@ -15,7 +17,7 @@ public class CommentPutRequest {
     @NotNull(message = "Object User must be given.")
     private User user;
     @NotBlank(message = "Comment cannot be empty.")
-    @Size(max = 300, message = "Comment cannot extend 300 letters.")
+    @Size(max = 255, message = "Comment cannot extend 255 letters.")
     private String userComment;
 
 }

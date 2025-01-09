@@ -1,5 +1,6 @@
 package lt.techin.group.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lt.techin.group.project.rest.dto.MediaDto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,9 +45,28 @@ public class Media {
     )
     private Set<Genre> genres = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "favoritesMedia", fetch = FetchType.EAGER)
+    private Set<User> users;
 
     public MediaDto toDto() {
         return new MediaDto(this);
+    }
+
+    @PreRemove
+    public void deleteMedia() {
+        for (Genre genre : genres) {
+            genre.getMedias().remove(this);
+        }
+        genres.clear();
+
+        for (User user : users) {
+            user.getFavoritesMedia().remove(this);
+        }
     }
 
 }

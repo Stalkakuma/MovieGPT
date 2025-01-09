@@ -1,0 +1,37 @@
+@use 'sass:map';
+
+$colors: (
+  grayishBlue: #5a698f,
+  pureWhite: #ffffff,
+  semiDarkBlue: #161d2f,
+);
+
+.favorite {
+  right: 10px;
+  top: 3px;
+  background-color: rgba(3, 3, 27, 0.36);
+  border-radius: 100%;
+  aspect-ratio: 1;
+  width: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.icon {
+  color: map.get($colors, pureWhite);
+  :hover {
+    color: map.get($colors, grayishBlue);
+    transition: color 0.3s ease;
+  }
+}
+.iconFilled {
+  color: map.get($colors, pureWhite);
+  fill: map.get($colors, pureWhite);
+  :hover {
+    color: map.get($colors, grayishBlue);
+    fill: map.get($colors, grayishBlue);
+    transition: color 0.3s ease;
+  }
+}

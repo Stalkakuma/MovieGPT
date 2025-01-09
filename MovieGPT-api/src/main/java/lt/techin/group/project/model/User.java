@@ -11,7 +11,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "users")
-public class User{
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +21,11 @@ public class User{
     private String email;
     @JsonIgnore
     private String password;
-
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles;
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Media> favoritesMedia;
 
 }
