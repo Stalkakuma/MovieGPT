@@ -105,7 +105,7 @@ export const AdminButtons = ({ movieData, updateMovieData }) => {
   };
 
   return (
-    <div>
+    <div className="my-5 my-md-0">
       <Button onClick={handleEdit} variant="secondary" className="me-2">
         <FaEdit className="mb-1" />
       </Button>
@@ -137,7 +137,9 @@ export const AdminButtons = ({ movieData, updateMovieData }) => {
           className="bg-danger-subtle opacity-100 text-danger rounded-3 border-danger mt-3"
         >
           <Toast delay={3000} autohide>
-            <Toast.Body><strong>{error}</strong></Toast.Body>
+            <Toast.Body>
+              <strong>{error}</strong>
+            </Toast.Body>
           </Toast>
         </ToastContainer>
       )}
@@ -147,7 +149,9 @@ export const AdminButtons = ({ movieData, updateMovieData }) => {
         className="bg-success-subtle opacity-100 text-secondary-emphasis rounded-3 mt-3"
       >
         <Toast show={showSuccessToast} onClose={() => setShowSuccessToast(false)} delay={3000} autohide>
-          <Toast.Body><strong>Movie updated successfully!</strong></Toast.Body>
+          <Toast.Body>
+            <strong>Movie updated successfully!</strong>
+          </Toast.Body>
         </Toast>
       </ToastContainer>
 
