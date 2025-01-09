@@ -17,7 +17,7 @@ public class CommentRequest {
     @NotNull(message = "User ID must be given.")
     private Long userId;
     @NotBlank(message = "Write something.")
-    @Size(max = 300, message = "Comment can't extend 300 letters.")
+    @Size(max = 255, message = "Comment can't extend 255 letters.")
     private String userComment;
 
 }

@@ -18,7 +18,7 @@ export const CommentAdd = ({ mediaId }) => {
       return;
     }
 
-    if (newComment.length > 300) {
+    if (newComment.length > 255) {
       setError('Comment cannot be more than 255 characters.');
       return;
     }

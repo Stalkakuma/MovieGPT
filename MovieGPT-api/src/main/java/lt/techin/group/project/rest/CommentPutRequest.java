@@ -17,7 +17,7 @@ public class CommentPutRequest {
     @NotNull(message = "Object User must be given.")
     private User user;
     @NotBlank(message = "Comment cannot be empty.")
-    @Size(max = 300, message = "Comment cannot extend 300 letters.")
+    @Size(max = 255, message = "Comment cannot extend 255 letters.")
     private String userComment;
 
 }
