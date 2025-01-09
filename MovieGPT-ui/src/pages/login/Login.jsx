@@ -15,8 +15,17 @@ export const Login = () => {
   });
   const [error, setError] = useState('');
 
+  const [formErrors, setFormErrors] = useState({
+    usernameErr: '',
+    passwordErr: '',
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setFormErrors({
+      usernameErr: '',
+      passwordErr: '',
+    });
     setFormData({
       ...formData,
       [name]: value,
@@ -30,14 +39,21 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    const submitFormErrors = {};
+    formData.username.length < 2 ? (submitFormErrors.usernameErr = 'Username should contain at least 2 letters') : 'as';
+    formData.password.length <= 0 ? (submitFormErrors.passwordErr = 'Should include password') : '';
 
-    try {
-      const authenticatedUser = await authenticate(formData.username, formData.password);
-      if (authenticatedUser != 'error') {
-        Auth.loginUser(authenticatedUser);
+    if (Object.keys(submitFormErrors).length > 0) {
+      setFormErrors({ ...formErrors, ...submitFormErrors });
+    } else {
+      try {
+        const authenticatedUser = await authenticate(formData.username, formData.password);
+        if (authenticatedUser != 'error') {
+          Auth.loginUser(authenticatedUser);
+        }
+      } catch (err) {
+        setError('Invalid username or password.');
       }
-    } catch (err) {
-      setError(err.response?.data?.error || 'Invalid username or password.');
     }
   };
 
@@ -71,8 +87,12 @@ export const Login = () => {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                required
               />
+              {formErrors.usernameErr && (
+                <Alert className="p-2 my-2" variant="danger">
+                  {formErrors.usernameErr}
+                </Alert>
+              )}
             </Form.Group>
             <Form.Group controlId="formPassword" className="mb-3">
               <Form.Control
@@ -82,8 +102,12 @@ export const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                required
               />
+              {formErrors.passwordErr && (
+                <Alert className="p-2 my-2" variant="danger">
+                  {formErrors.passwordErr}
+                </Alert>
+              )}
             </Form.Group>
             <Button variant="primary" type="submit" className="w-100 form-button">
               Login to your account
