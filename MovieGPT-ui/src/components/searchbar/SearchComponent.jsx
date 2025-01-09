@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import '../../cssStyles/SearchComponent.css';
 import { MovieCardComponent } from '../movie-card/MovieCardComponent';
 import { getGenres, getMovies } from '../api/apiMovies';
@@ -14,7 +15,7 @@ export const SearchComponent = () => {
   const [genresData, setGenresData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [genreFilter, setGenreFilter] = useState('');
+  const [genreFilter, setGenreFilter] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [error, setError] = useState('');
   const [showError, setShowError] = useState(false);
@@ -47,8 +48,10 @@ export const SearchComponent = () => {
         );
       }
 
-      if (genreFilter) {
-        updatedMovies = updatedMovies.filter((movie) => movie.genres.some((genre) => genre.name === genreFilter.name));
+      if (genreFilter.length > 0) {
+        updatedMovies = updatedMovies.filter((movie) =>
+          movie.genres.some((genre) => genreFilter.some((selected) => selected.id === genre.id)),
+        );
       }
       setFilteredMovies(updatedMovies);
     };
@@ -69,10 +72,18 @@ export const SearchComponent = () => {
 
   const handleGenreChange = (genre) => {
     if (genre.name === 'All Genres') {
-      setGenreFilter('');
+      setGenreFilter([]);
       return;
     }
-    setGenreFilter(genre);
+
+    setGenreFilter((prev) => {
+      const exists = prev.some((selected) => selected.id === genre.id);
+      if (exists) {
+        return prev.filter((selected) => selected.id !== genre.id);
+      }
+
+      return [...prev, genre];
+    });
   };
 
   return (
@@ -90,14 +101,18 @@ export const SearchComponent = () => {
             />
           </Form>
 
-          <Dropdown className="genre-dropdown">
+          <Dropdown className="genre-dropdown" autoClose="outside">
             <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-              {genreFilter ? genreFilter.name : 'All Genres'}
+              Select by Genre
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
               {genresData.map((genre) => (
-                <Dropdown.Item key={genre.id} onClick={() => handleGenreChange(genre)}>
+                <Dropdown.Item
+                  key={genre.id}
+                  onClick={() => handleGenreChange(genre)}
+                  active={genreFilter.some((selected) => selected.id === genre.id)}
+                >
                   {genre.name}
                 </Dropdown.Item>
               ))}
@@ -112,7 +127,7 @@ export const SearchComponent = () => {
         </Alert>
       )}
 
-      {filteredMovies.length === 0 && !error && (searchQuery || genreFilter) && (
+      {filteredMovies.length === 0 && !error && (searchQuery || genreFilter.length > 0) && (
         <Alert className="fs-5">No movies found matching your search criteria.</Alert>
       )}
 
